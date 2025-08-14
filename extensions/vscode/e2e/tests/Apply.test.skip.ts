@@ -2,10 +2,10 @@ import { TextEditor, VSBrowser, WebView } from "vscode-extension-tester";
 
 import { ApplyActions } from "../actions/Apply.actions";
 import { GlobalActions } from "../actions/Global.actions";
-import { GUIActions } from "../actions/GUI.actions";
+import { UIActions } from "../actions/UI.actions";
 import { KeyboardShortcutsActions } from "../actions/KeyboardShortcuts.actions";
 import { DEFAULT_TIMEOUT } from "../constants";
-import { GUISelectors } from "../selectors/GUI.selectors";
+import { UISelectors } from "../selectors/UI.selectors";
 import { TestUtils } from "../TestUtils";
 
 /**
@@ -25,7 +25,7 @@ describe("Apply Test", () => {
   before(async function () {
     this.timeout(DEFAULT_TIMEOUT.XL);
 
-    await GUIActions.moveContinueToSidebar(VSBrowser.instance.driver);
+    await UIActions.moveContinueToSidebar(VSBrowser.instance.driver);
     await GlobalActions.openTestWorkspace();
 
     ({ editor } = await GlobalActions.createAndSaveNewFile());
@@ -35,10 +35,10 @@ describe("Apply Test", () => {
     this.timeout(DEFAULT_TIMEOUT.XL);
 
     await editor.typeTextAt(1, 1, fileContent);
-    await GUIActions.toggleGui();
+    await UIActions.toggleUi();
 
-    ({ view } = await GUIActions.switchToReactIframe());
-    await GUIActions.selectModelFromDropdown(view, "TEST LLM");
+    ({ view } = await UIActions.switchToReactIframe());
+    await UIActions.selectModelFromDropdown(view, "TEST LLM");
   });
 
   afterEach(async function () {
@@ -46,8 +46,8 @@ describe("Apply Test", () => {
 
     await editor.clearText();
 
-    ({ view } = await GUIActions.switchToReactIframe());
-    const tipTapEditor = await GUISelectors.getMessageInputFieldAtIndex(
+    ({ view } = await UIActions.switchToReactIframe());
+    const tipTapEditor = await UISelectors.getMessageInputFieldAtIndex(
       view,
       0,
     );
@@ -62,7 +62,7 @@ describe("Apply Test", () => {
   it("Can reject and apply changes from sidebar", async () => {
     const newFileContent = fileContent + "!";
 
-    const [messageInput] = await GUISelectors.getMessageInputFields(view);
+    const [messageInput] = await UISelectors.getMessageInputFields(view);
 
     await KeyboardShortcutsActions.typeWithNewlines({
       submit: true,
@@ -83,7 +83,7 @@ describe("Apply Test", () => {
 
     await TestUtils.waitForSuccess(async () => editorText === fileContent);
 
-    ({ view } = await GUIActions.switchToReactIframe());
+    ({ view } = await UIActions.switchToReactIframe());
 
     await ApplyActions.performAction(view, "apply");
     await ApplyActions.performAction(view, "accept");

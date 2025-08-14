@@ -64,14 +64,14 @@
       "request": "attach",
       "name": "Vite",
       "url": "http://localhost:5173",
-      "webRoot": "${workspaceFolder}/gui/src",
+      "webRoot": "${workspaceFolder}/ui/src",
       "sourceMapPathOverrides": {
         "webpack:///./src/*": "${webRoot}/*"
       },
       "port": 9222,
       // "runtimeArgs": ["--remote-debugging-port=9222"],
       "sourceMaps": true
-      // "preLaunchTask": "gui:dev"
+      // "preLaunchTask": "ui:dev"
     },
     {
       "name": "[Core] Jest Test Debugger, Current Open File",

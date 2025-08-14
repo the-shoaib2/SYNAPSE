@@ -12,13 +12,13 @@ services:
       - /app/core/node_modules
       - /app/extensions/vscode/node_modules
       # IntelliJ extension removed
-      - /app/gui/node_modules
+      - /app/ui/node_modules
       - /app/docs/node_modules
       - /app/packages/*/node_modules
       - /app/binary/node_modules
       - /app/scripts/node_modules
     ports:
-      - "3000:3000" # GUI
+      - "3000:3000" # UI
       - "3001:3001" # Core dev server
       - "3002:3002" # Docs
     environment:

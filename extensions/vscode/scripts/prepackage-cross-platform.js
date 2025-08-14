@@ -17,7 +17,7 @@ const {
 const { generateAndCopyConfigYamlSchema } = require("./generate-copy-config");
 const { npmInstall } = require("./npm-install");
 const {
-  buildGui,
+  buildUi,
   copyOnnxRuntimeFromNodeModules,
   copyTreeSitterWasms,
   copyTreeSitterTagQryFiles,
@@ -37,9 +37,9 @@ rimrafSync(path.join(__dirname, "..", "out"));
 fs.mkdirSync(path.join(__dirname, "..", "out", "node_modules"), {
   recursive: true,
 });
-const guiDist = path.join(__dirname, "..", "..", "..", "gui", "dist");
-if (!fs.existsSync(guiDist)) {
-  fs.mkdirSync(guiDist, { recursive: true });
+const uiDist = path.join(__dirname, "..", "..", "..", "ui", "dist");
+if (!fs.existsSync(uiDist)) {
+  fs.mkdirSync(uiDist, { recursive: true });
 }
 
 // Get the target to package for
@@ -83,8 +83,8 @@ async function package(target, os, arch, exe) {
   // Install node_modules
   await npmInstall();
 
-  // Build gui and copy to extensions
-  await buildGui(ghAction());
+  // Build ui and copy to extensions
+await buildUi(ghAction());
 
   // Assets
   // Copy tree-sitter-wasm files
@@ -157,8 +157,8 @@ async function package(target, os, arch, exe) {
     }`,
 
     // Code/styling for the sidebar
-    "gui/assets/index.js",
-    "gui/assets/index.css",
+    "ui/assets/index.js",
+    "ui/assets/index.css",
 
     // Tutorial
     "media/move-chat-panel-right.md",

@@ -1,6 +1,6 @@
 ---
 name: New protocol message
-description: Create a new protocol message from core/gui/ide to core/gui/ide
+description: Create a new protocol message from core/ui/ide to core/ui/ide
 ---
 
 Create a new protocol message by taking the following steps:
@@ -26,7 +26,7 @@ If your message is between webview and core, add it to `core/protocol/passThroug
 Implement the message in the appropriate location:
 
 - **Messages to core**: `core/core.ts`
-- **Messages to GUI**: `useWebviewListener` hook
+- **Messages to UI**: `useWebviewListener` hook
 - **Messages to VS Code IDE**: `VsCodeMessenger.ts`
 - **Messages to JetBrains IDE**: `IdeProtocolClient.kt`
 

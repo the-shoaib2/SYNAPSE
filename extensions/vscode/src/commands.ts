@@ -32,7 +32,7 @@ import { VerticalDiffManager } from "./diff/vertical/manager";
 import EditDecorationManager from "./quickEdit/EditDecorationManager";
 import { QuickEdit, QuickEditShowParams } from "./quickEdit/QuickEditQuickPick";
 import { SynapseConsoleWebviewViewProvider } from "./SynapseConsoleWebviewViewProvider";
-import { SynapseGUIWebviewViewProvider } from "./SynapseGUIWebviewViewProvider";
+import { SynapseUIWebviewViewProvider } from "./SynapseUIWebviewViewProvider";
 import {
   addCodeToContextFromRange,
   addEntireFileToContext,
@@ -48,7 +48,7 @@ let fullScreenPanel: vscode.WebviewPanel | undefined;
 function getFullScreenTab() {
   const tabs = vscode.window.tabGroups.all.flatMap((tabGroup) => tabGroup.tabs);
   return tabs.find((tab) =>
-    (tab.input as any)?.viewType?.endsWith("synapse.synapseGUIView"),
+    (tab.input as any)?.viewType?.endsWith("synapse.synapseUIView"),
   );
 }
 
@@ -64,19 +64,19 @@ function captureCommandTelemetry(
   Telemetry.capture(commandName, { isCommandEvent: true, ...properties });
 }
 
-function focusGUI() {
+function focusUI() {
   const fullScreenTab = getFullScreenTab();
   if (fullScreenTab) {
     // focus fullscreen
     fullScreenPanel?.reveal();
   } else {
     // focus sidebar
-    vscode.commands.executeCommand("synapse.synapseGUIView.focus");
+    vscode.commands.executeCommand("synapse.synapseUIView.focus");
     // vscode.commands.executeCommand("workbench.action.focusAuxiliaryBar");
   }
 }
 
-function hideGUI() {
+function hideUI() {
   const fullScreenTab = getFullScreenTab();
   if (fullScreenTab) {
     // focus fullscreen
@@ -89,7 +89,7 @@ function hideGUI() {
 }
 
 function waitForSidebarReady(
-  sidebar: SynapseGUIWebviewViewProvider,
+  sidebar: SynapseUIWebviewViewProvider,
   timeout: number,
   interval: number,
 ): Promise<boolean> {
@@ -114,7 +114,7 @@ function waitForSidebarReady(
 const getCommandsMap: (
   ide: VsCodeIde,
   extensionContext: vscode.ExtensionContext,
-  sidebar: SynapseGUIWebviewViewProvider,
+  sidebar: SynapseUIWebviewViewProvider,
   consoleView: SynapseConsoleWebviewViewProvider,
   configHandler: ConfigHandler,
   verticalDiffManager: VerticalDiffManager,
@@ -218,7 +218,7 @@ const getCommandsMap: (
 
       addCodeToContextFromRange(range, sidebar.webviewProtocol, prompt);
 
-      vscode.commands.executeCommand("synapse.synapseGUIView.focus");
+      vscode.commands.executeCommand("synapse.synapseUIView.focus");
     },
     // Passthrough for telemetry purposes
     "synapse.defaultQuickAction": async (args: QuickEditShowParams) => {
@@ -233,7 +233,7 @@ const getCommandsMap: (
 
       addCodeToContextFromRange(range, sidebar.webviewProtocol, prompt);
 
-      vscode.commands.executeCommand("synapse.synapseGUIView.focus");
+      vscode.commands.executeCommand("synapse.synapseUIView.focus");
     },
     "synapse.customQuickActionStreamInlineEdit": async (
       prompt: string,
@@ -263,9 +263,9 @@ const getCommandsMap: (
       );
 
       // This is a temporary fix—sidebar.webviewProtocol.request is blocking
-      // when the GUI hasn't yet been setup and we should instead be
+      // when the UI hasn't yet been setup and we should instead be
       // immediately throwing an error, or returning a Result object
-      focusGUI();
+      focusUI();
       if (!sidebar.isReady) {
         const isReady = await waitForSidebarReady(sidebar, 5000, 100);
         if (!isReady) {
@@ -281,7 +281,7 @@ const getCommandsMap: (
 
       if (isContinueInputFocused) {
         if (historyLength === 0) {
-          hideGUI();
+          hideUI();
         } else {
           void sidebar.webviewProtocol?.request(
             "focusContinueInputWithNewSession",
@@ -290,7 +290,7 @@ const getCommandsMap: (
           );
         }
       } else {
-        focusGUI();
+        focusUI();
         sidebar.webviewProtocol?.request(
           "focusContinueInputWithNewSession",
           undefined,
@@ -307,9 +307,9 @@ const getCommandsMap: (
       );
 
       // This is a temporary fix—sidebar.webviewProtocol.request is blocking
-      // when the GUI hasn't yet been setup and we should instead be
+      // when the UI hasn't yet been setup and we should instead be
       // immediately throwing an error, or returning a Result object
-      focusGUI();
+      focusUI();
       if (!sidebar.isReady) {
         const isReady = await waitForSidebarReady(sidebar, 5000, 100);
         if (!isReady) {
@@ -318,9 +318,9 @@ const getCommandsMap: (
       }
 
       if (isContinueInputFocused) {
-        hideGUI();
+        hideUI();
       } else {
-        focusGUI();
+        focusUI();
 
         sidebar.webviewProtocol?.request(
           "focusContinueInputWithoutClear",
@@ -334,7 +334,7 @@ const getCommandsMap: (
     // until we update to new params specific to Edit
     "synapse.focusEdit": async (args?: QuickEditShowParams) => {
       captureCommandTelemetry("focusEdit");
-      focusGUI();
+      focusUI();
       sidebar.webviewProtocol?.request("focusEdit", undefined);
     },
     "synapse.exitEditMode": async () => {
@@ -344,7 +344,7 @@ const getCommandsMap: (
     },
     "synapse.generateRule": async () => {
       captureCommandTelemetry("generateRule");
-      focusGUI();
+      focusUI();
       void sidebar.webviewProtocol?.request("generateRule", undefined);
     },
     "synapse.writeCommentsForCode": async () => {
@@ -394,7 +394,7 @@ const getCommandsMap: (
 
       const terminalContents = await ide.getTerminalContents();
 
-      vscode.commands.executeCommand("synapse.synapseGUIView.focus");
+      vscode.commands.executeCommand("synapse.synapseUIView.focus");
 
       sidebar.webviewProtocol?.request("userInput", {
         input: `I got the following error, can you please help explain how to fix it?\n\n${terminalContents.trim()}`,
@@ -410,7 +410,7 @@ const getCommandsMap: (
     "synapse.addModel": () => {
       captureCommandTelemetry("addModel");
 
-      vscode.commands.executeCommand("synapse.synapseGUIView.focus");
+      vscode.commands.executeCommand("synapse.synapseUIView.focus");
       sidebar.webviewProtocol?.request("addModel", undefined);
     },
     "synapse.newSession": () => {
@@ -433,7 +433,7 @@ const getCommandsMap: (
       void sidebar.webviewProtocol.request("applyCodeFromChat", undefined);
     },
     "synapse.toggleFullScreen": async () => {
-      focusGUI();
+      focusUI();
 
       const sessionId = await sidebar.webviewProtocol.request(
         "getCurrentSessionId",
@@ -456,7 +456,7 @@ const getCommandsMap: (
 
       // Create the full screen panel
       let panel = vscode.window.createWebviewPanel(
-        "synapse.synapseGUIView",
+        "synapse.synapseUIView",
         "Synapse",
         vscode.ViewColumn.One,
         {
@@ -511,7 +511,7 @@ const getCommandsMap: (
         throw new Error("No files were selected");
       }
 
-      vscode.commands.executeCommand("synapse.synapseGUIView.focus");
+      vscode.commands.executeCommand("synapse.synapseUIView.focus");
 
       for (const uri of uris) {
         // If it's a folder, add the entire folder contents recursively by using walkDir (to ignore ignored files)
@@ -701,7 +701,7 @@ const getCommandsMap: (
     },
     "synapse.navigateTo": (path: string, toggle: boolean) => {
       sidebar.webviewProtocol?.request("navigateTo", { path, toggle });
-      focusGUI();
+      focusUI();
     },
     "synapse.startLocalOllama": () => {
       startLocalOllama(ide);
@@ -886,7 +886,7 @@ export function registerAllCommands(
   context: vscode.ExtensionContext,
   ide: VsCodeIde,
   extensionContext: vscode.ExtensionContext,
-  sidebar: SynapseGUIWebviewViewProvider,
+  sidebar: SynapseUIWebviewViewProvider,
   consoleView: SynapseConsoleWebviewViewProvider,
   configHandler: ConfigHandler,
   verticalDiffManager: VerticalDiffManager,

@@ -1,14 +1,14 @@
 ---
-globs: ["gui/**/*", "core/**/*"]
-description: Provides test running instructions for GUI and core folders
+globs: ["ui/**/*", "core/**/*"]
+description: Provides test running instructions for UI and core folders
 alwaysApply: false
 ---
 
 When working with test files, use the following commands to run tests:
 
-GUI folder tests:
+UI folder tests:
 
-- Run all tests: `cd gui && npm test`
+- Run all tests: `cd ui && npm test`
 
 Core folder tests:
 
@@ -17,7 +17,7 @@ Core folder tests:
 
 Test file patterns:
 
-- GUI: _.test.ts or_.test.tsx files use Vitest
+- UI: _.test.ts or_.test.tsx files use Vitest
 - Core: _.test.ts files use Jest,_.vitest.ts files use Vitest
 
 Best practices:

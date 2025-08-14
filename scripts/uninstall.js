@@ -1,10 +1,10 @@
 const fs = require("fs");
 
 const directories = [
-  // gui
-  "./gui/node_modules",
-  "./gui/out",
-  "./gui/dist",
+  // ui
+  "./ui/node_modules",
+  "./ui/out",
+  "./ui/dist",
   // core
   "./core/node_modules",
   "./core/dist",

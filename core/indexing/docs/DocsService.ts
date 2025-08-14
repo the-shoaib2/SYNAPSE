@@ -3,14 +3,14 @@ import { open, type Database } from "sqlite";
 import sqlite3 from "sqlite3";
 
 import {
-    Chunk,
-    ContinueConfig,
-    DocsIndexingDetails,
-    IDE,
-    IdeInfo,
-    ILLM,
-    IndexingStatus,
-    SiteIndexingConfig,
+  Chunk,
+  ContinueConfig,
+  DocsIndexingDetails,
+  IDE,
+  IdeInfo,
+  ILLM,
+  IndexingStatus,
+  SiteIndexingConfig,
 } from "../..";
 import { ConfigHandler } from "../../config/ConfigHandler";
 import { isSupportedLanceDbCpuTargetForLinux } from "../../config/util";
@@ -21,16 +21,16 @@ import { IMessenger } from "../../protocol/messenger";
 import { fetchFavicon } from "../../util/fetchFavicon";
 import { GlobalContext } from "../../util/GlobalContext";
 import {
-    editConfigFile,
-    getDocsSqlitePath,
-    getLanceDbPath,
+  editConfigFile,
+  getDocsSqlitePath,
+  getLanceDbPath,
 } from "../../util/paths";
 import { Telemetry } from "../../util/posthog";
 
 import {
-    ArticleWithChunks,
-    htmlPageToArticleWithChunks,
-    markdownPageToArticleWithChunks,
+  ArticleWithChunks,
+  htmlPageToArticleWithChunks,
+  markdownPageToArticleWithChunks,
 } from "./article";
 import DocsCrawler, { DocsCrawlerType, PageData } from "./crawlers/DocsCrawler";
 import { runLanceMigrations, runSqliteMigrations } from "./migrations";
@@ -246,7 +246,7 @@ export default class DocsService {
     this.messenger?.send("indexing/statusUpdate", update);
   }
 
-  // A way for gui to retrieve initial statuses
+  // A way for ui to retrieve initial statuses
   async initStatuses(): Promise<void> {
     if (!this.config?.docs) {
       return;
@@ -649,7 +649,7 @@ export default class DocsService {
 
           processedPages++;
 
-          // Locks down GUI if no sleeping
+          // Locks down UI if no sleeping
           // Wait proportional to how many docs are indexing
           const toWait = 100 * this.docsIndexingQueue.size + 50;
           await new Promise((resolve) => setTimeout(resolve, toWait));

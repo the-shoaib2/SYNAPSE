@@ -13,7 +13,7 @@ const {
 const { copySqlite, copyEsbuild } = require("./download-copy-sqlite-esbuild");
 const { generateAndCopyConfigYamlSchema } = require("./generate-copy-config");
 const { installAndCopyNodeModules } = require("./install-copy-nodemodule");
-const { npmInstall } = require("./npm-install");
+const { npmInstall } = require("./pnpm-install");
 const { writeBuildTimestamp, synapseDir } = require("./utils");
 
 // Clear folders that will be packaged to ensure clean slate
@@ -22,9 +22,9 @@ rimrafSync(path.join(__dirname, "..", "out"));
 fs.mkdirSync(path.join(__dirname, "..", "out", "node_modules"), {
   recursive: true,
 });
-const guiDist = path.join(__dirname, "..", "..", "..", "gui", "dist");
-if (!fs.existsSync(guiDist)) {
-  fs.mkdirSync(guiDist, { recursive: true });
+const uiDist = path.join(__dirname, "..", "..", "..", "ui", "dist");
+if (!fs.existsSync(uiDist)) {
+  fs.mkdirSync(uiDist, { recursive: true });
 }
 
 const skipInstalls = process.env.SKIP_INSTALLS === "true";
@@ -84,18 +84,18 @@ void (async () => {
     );
   }
 
-  process.chdir(path.join(synapseDir, "gui"));
+  process.chdir(path.join(synapseDir, "ui"));
 
   // JetBrains extension removed - no longer copying dist folder
 
   // Then copy over the dist folder to the VSCode extension //
-  const vscodeGuiPath = path.join("../extensions/vscode/gui");
-  rimrafSync(vscodeGuiPath);
-  fs.mkdirSync(vscodeGuiPath, { recursive: true });
+  const vscodeUiPath = path.join("../extensions/vscode/ui");
+rimrafSync(vscodeUiPath);
+fs.mkdirSync(vscodeUiPath, { recursive: true });
   const vscodeCopyStart = Date.now();
   console.log(`[timer] Starting VSCode copy at ${new Date().toISOString()}`);
   await new Promise((resolve, reject) => {
-    ncp("dist", vscodeGuiPath, (error) => {
+    ncp("dist", vscodeUiPath, (error) => {
       if (error) {
         console.log(
           "Error copying React app build to VSCode extension: ",
@@ -103,7 +103,7 @@ void (async () => {
         );
         reject(error);
       } else {
-        console.log("Copied gui build to VSCode extension");
+        console.log("Copied ui build to VSCode extension");
         resolve();
       }
     });
@@ -113,10 +113,10 @@ void (async () => {
   );
 
   if (!fs.existsSync(path.join("dist", "assets", "index.js"))) {
-    throw new Error("gui build did not produce index.js");
+    throw new Error("ui build did not produce index.js");
   }
   if (!fs.existsSync(path.join("dist", "assets", "index.css"))) {
-    throw new Error("gui build did not produce index.css");
+    throw new Error("ui build did not produce index.css");
   }
 
   // Copy over native / wasm modules //
@@ -237,7 +237,7 @@ void (async () => {
   await new Promise((resolve, reject) => {
     ncp(
       path.join(__dirname, "../textmate-syntaxes"),
-      path.join(__dirname, "../gui/textmate-syntaxes"),
+      path.join(__dirname, "../ui/textmate-syntaxes"),
       (error) => {
         if (error) {
           console.warn("[error] Error copying textmate-syntaxes", error);
@@ -373,8 +373,8 @@ void (async () => {
     }`,
 
     // Code/styling for the sidebar
-    "gui/assets/index.js",
-    "gui/assets/index.css",
+    "ui/assets/index.js",
+    "ui/assets/index.css",
 
     // Tutorial
     "media/move-chat-panel-right.md",

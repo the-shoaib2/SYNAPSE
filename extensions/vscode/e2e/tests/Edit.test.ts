@@ -8,9 +8,9 @@ import {
 
 import { EditActions } from "../actions/Edit.actions";
 import { GlobalActions } from "../actions/Global.actions";
-import { GUIActions } from "../actions/GUI.actions";
+import { UIActions } from "../actions/UI.actions";
 import { DEFAULT_TIMEOUT } from "../constants";
-import { GUISelectors } from "../selectors/GUI.selectors";
+import { UISelectors } from "../selectors/UI.selectors";
 import { TestUtils } from "../TestUtils";
 
 describe("Edit Test", () => {
@@ -21,7 +21,7 @@ describe("Edit Test", () => {
 
   before(async function () {
     this.timeout(DEFAULT_TIMEOUT.XL);
-    await GUIActions.moveContinueToSidebar(VSBrowser.instance.driver);
+    await UIActions.moveContinueToSidebar(VSBrowser.instance.driver);
     await GlobalActions.openTestWorkspace();
     ({ editor } = await GlobalActions.createAndOpenNewTextFile());
   });
@@ -29,16 +29,16 @@ describe("Edit Test", () => {
   beforeEach(async function () {
     this.timeout(DEFAULT_TIMEOUT.XL);
 
-    await GUIActions.toggleGui();
+    await UIActions.toggleUi();
 
     await editor.typeTextAt(1, 1, originalEditorText);
     await editor.selectText(originalEditorText);
 
     await EditActions.invokeEditShortcut(editor);
 
-    ({ view } = await GUIActions.switchToReactIframe());
+    ({ view } = await UIActions.switchToReactIframe());
 
-    await GUIActions.sendMessage({
+    await UIActions.sendMessage({
       view,
       message: userMessage,
       inputFieldIndex: 0,
@@ -57,9 +57,9 @@ describe("Edit Test", () => {
 
     await editor.clearText();
 
-    ({ view } = await GUIActions.switchToReactIframe());
+    ({ view } = await UIActions.switchToReactIframe());
 
-    const tipTapEditor = await GUISelectors.getMessageInputFieldAtIndex(
+    const tipTapEditor = await UISelectors.getMessageInputFieldAtIndex(
       view,
       0,
     );
@@ -75,10 +75,10 @@ describe("Edit Test", () => {
     return codeLens;
   }
 
-  it.only("Accepts an Edit in the GUI", async () => {
-    ({ view } = await GUIActions.switchToReactIframe());
+  it.only("Accepts an Edit in the UI", async () => {
+    ({ view } = await UIActions.switchToReactIframe());
 
-    await EditActions.acceptEditInGUI(view);
+    await EditActions.acceptEditInUI(view);
 
     await view.switchBack();
 
@@ -92,10 +92,10 @@ describe("Edit Test", () => {
     }, DEFAULT_TIMEOUT.SM);
   }).timeout(DEFAULT_TIMEOUT.XL);
 
-  it("Rejects an Edit in the GUI", async () => {
-    ({ view } = await GUIActions.switchToReactIframe());
+  it("Rejects an Edit in the UI", async () => {
+    ({ view } = await UIActions.switchToReactIframe());
 
-    await EditActions.rejectEditInGUI(view);
+    await EditActions.rejectEditInUI(view);
 
     await view.switchBack();
 

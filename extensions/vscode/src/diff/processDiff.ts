@@ -1,13 +1,13 @@
 import { Core } from "core/core";
 import { DataLogger } from "core/data/log";
 import { editOutcomeTracker } from "../extension/EditOutcomeTracker";
-import { SynapseGUIWebviewViewProvider } from "../SynapseGUIWebviewViewProvider";
+import { SynapseUIWebviewViewProvider } from "../SynapseUIWebviewViewProvider";
 import { VsCodeIde } from "../VsCodeIde";
 import { VerticalDiffManager } from "./vertical/manager";
 
 export async function processDiff(
   action: "accept" | "reject",
-  sidebar: SynapseGUIWebviewViewProvider,
+  sidebar: SynapseUIWebviewViewProvider,
   ide: VsCodeIde,
   core: Core,
   verticalDiffManager: VerticalDiffManager,

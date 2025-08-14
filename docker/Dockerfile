@@ -19,7 +19,7 @@ COPY package.json pnpm-workspace.yaml ./
 COPY core/package.json ./core/
 COPY extensions/vscode/package.json ./extensions/vscode/
 # IntelliJ extension removed
-COPY gui/package.json ./gui/
+COPY ui/package.json ./ui/
 COPY docs/package.json ./docs/
 COPY packages/*/package.json ./packages/
 COPY binary/package.json ./binary/
@@ -51,7 +51,7 @@ COPY --from=builder /app/pnpm-workspace.yaml ./
 COPY --from=builder /app/core/package.json ./core/
 COPY --from=builder /app/core/dist ./core/dist
 COPY --from=builder /app/extensions/vscode/out ./extensions/vscode/out
-COPY --from=builder /app/gui/dist ./gui/dist
+COPY --from=builder /app/ui/dist ./ui/dist
 COPY --from=builder /app/docs/build ./docs/build
 
 # Install only production dependencies

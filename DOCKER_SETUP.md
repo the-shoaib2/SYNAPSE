@@ -23,7 +23,7 @@ docker-compose -f docker/docker-compose.dev.yml up --build
 
 ### 2. Access Services
 
-- **GUI**: http://localhost:3000
+- **UI**: http://localhost:3000
 - **Core API**: http://localhost:3001
 - **Documentation**: http://localhost:3002
 
@@ -74,7 +74,7 @@ pnpm install
 pnpm dev
 
 # Start specific service
-pnpm dev:gui      # GUI only
+pnpm dev:ui      # UI only
 pnpm dev:core     # Core only
 pnpm dev:vscode   # VSCode extension
 pnpm dev:docs     # Documentation
@@ -134,7 +134,7 @@ synapse/
 ├── extensions/           # IDE extensions
 │   ├── vscode/          # VS Code extension
 │   └── # IntelliJ plugin removed
-├── gui/                  # Web GUI
+├── ui/                  # Web UI
 ├── docs/                 # Documentation
 ├── packages/             # Shared packages
 ├── binary/               # Binary builds

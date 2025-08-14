@@ -160,12 +160,12 @@ export class SynapseConsoleWebviewViewProvider
     if (!inDevelopmentMode) {
       scriptUri = panel.webview
         .asWebviewUri(
-          vscode.Uri.joinPath(extensionUri, "gui/assets/indexConsole.js"),
+          vscode.Uri.joinPath(extensionUri, "ui/assets/indexConsole.js"),
         )
         .toString();
       styleMainUri = panel.webview
         .asWebviewUri(
-          vscode.Uri.joinPath(extensionUri, "gui/assets/indexConsole.css"),
+          vscode.Uri.joinPath(extensionUri, "ui/assets/indexConsole.css"),
         )
         .toString();
     } else {
@@ -176,7 +176,7 @@ export class SynapseConsoleWebviewViewProvider
     panel.webview.options = {
       enableScripts: true,
       localResourceRoots: [
-        vscode.Uri.joinPath(extensionUri, "gui"),
+        vscode.Uri.joinPath(extensionUri, "ui"),
         vscode.Uri.joinPath(extensionUri, "assets"),
       ],
       enableCommandUris: true,

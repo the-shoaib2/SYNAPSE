@@ -6,7 +6,7 @@ export interface SearchAndReplaceInFileArgs {
   diffs: string[];
 }
 
-// Currently unsupported and filtered out in `gui/src/redux/slices/sessionSlice.ts`
+// Currently unsupported and filtered out in `ui/src/redux/slices/sessionSlice.ts`
 export const NO_PARALLEL_TOOL_CALLING_INSRUCTION =
   "Note this tool CANNOT be called in parallel.";
 

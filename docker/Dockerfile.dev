@@ -20,7 +20,7 @@ COPY package.json pnpm-workspace.yaml ./
 COPY core/package.json ./core/
 COPY extensions/vscode/package.json ./extensions/vscode/
 # IntelliJ extension removed
-COPY gui/package.json ./gui/
+COPY ui/package.json ./ui/
 COPY docs/package.json ./docs/
 COPY packages/*/package.json ./packages/
 COPY binary/package.json ./binary/

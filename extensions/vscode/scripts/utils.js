@@ -22,10 +22,10 @@ function copyTokenizers() {
   console.log("[info] Copied llamaTokenizer");
 }
 
-async function buildGui(isGhAction) {
+async function buildUi(isGhAction) {
   // Make sure we are in the right directory
-  if (!process.cwd().endsWith("gui")) {
-    process.chdir(path.join(continueDir, "gui"));
+  if (!process.cwd().endsWith("ui")) {
+    process.chdir(path.join(continueDir, "ui"));
   }
   if (isGhAction) {
     execCmdSync("pnpm run build");
@@ -34,10 +34,10 @@ async function buildGui(isGhAction) {
   // JetBrains extension removed - no longer copying dist folder
 
   // Then copy over the dist folder to the VSCode extension //
-  const vscodeGuiPath = path.join("../extensions/vscode/gui");
-  fs.mkdirSync(vscodeGuiPath, { recursive: true });
+  const vscodeUiPath = path.join("../extensions/vscode/ui");
+  fs.mkdirSync(vscodeUiPath, { recursive: true });
   await new Promise((resolve, reject) => {
-    ncp("dist", vscodeGuiPath, (error) => {
+    ncp("dist", vscodeUiPath, (error) => {
       if (error) {
         console.log(
           "Error copying React app build to VSCode extension: ",
@@ -45,17 +45,17 @@ async function buildGui(isGhAction) {
         );
         reject(error);
       } else {
-        console.log("Copied gui build to VSCode extension");
+        console.log("Copied ui build to VSCode extension");
         resolve();
       }
     });
   });
 
   if (!fs.existsSync(path.join("dist", "assets", "index.js"))) {
-    throw new Error("gui build did not produce index.js");
+    throw new Error("ui build did not produce index.js");
   }
   if (!fs.existsSync(path.join("dist", "assets", "index.css"))) {
-    throw new Error("gui build did not produce index.css");
+    throw new Error("ui build did not produce index.css");
   }
 }
 
@@ -437,7 +437,7 @@ function writeBuildTimestamp() {
 module.exports = {
   continueDir,
   synapseDir: continueDir, // Alias for backward compatibility
-  buildGui,
+  buildUi,
   copyOnnxRuntimeFromNodeModules,
   copyTreeSitterWasms,
   copyTreeSitterTagQryFiles,

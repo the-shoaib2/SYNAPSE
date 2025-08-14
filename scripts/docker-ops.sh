@@ -28,7 +28,7 @@ start_dev() {
     echo "⏳ Waiting for services to be ready..."
     sleep 10
     echo "✅ Development environment is ready!"
-    echo "🌐 GUI: http://localhost:3000"
+    echo "🌐 UI: http://localhost:3000"
     echo "🔧 Core: http://localhost:3001"
     echo "📚 Docs: http://localhost:3002"
 }
@@ -45,7 +45,7 @@ run_prod() {
     echo "🏃 Running production container..."
     docker run -d --name synapse-prod -p 3000:3000 -p 3001:3001 -p 3002:3002 synapse
     echo "✅ Production container started!"
-    echo "🌐 GUI: http://localhost:3000"
+    echo "🌐 UI: http://localhost:3000"
     echo "🔧 Core: http://localhost:3001"
     echo "📚 Docs: http://localhost:3002"
 }
@@ -96,7 +96,7 @@ show_status() {
     docker images | grep synapse
     echo ""
     echo "🌐 Port Usage:"
-    echo "Port 3000 (GUI): $(lsof -i :3000 2>/dev/null | wc -l) processes"
+    echo "Port 3000 (UI): $(lsof -i :3000 2>/dev/null | wc -l) processes"
     echo "Port 3001 (Core): $(lsof -i :3001 2>/dev/null | wc -l) processes"
     echo "Port 3002 (Docs): $(lsof -i :3002 2>/dev/null | wc -l) processes"
 }

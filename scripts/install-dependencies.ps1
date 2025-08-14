@@ -85,14 +85,14 @@ npm install
 npm link @synapse/core
 Pop-Location
 
-Write-Output "`nInstalling GUI extension dependencies..." -ForegroundColor White
-Push-Location gui
+Write-Output "`nInstalling UI extension dependencies..." -ForegroundColor White
+Push-Location ui
 npm install
 npm link @synapse/core
 npm run build
 Pop-Location
 
-# VSCode Extension (will also package GUI)
+# VSCode Extension (will also package UI)
 Write-Output "`nInstalling VSCode extension dependencies..." -ForegroundColor White
 Push-Location extensions/vscode
 

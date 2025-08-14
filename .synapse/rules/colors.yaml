@@ -1,4 +1,4 @@
-name: GUI
+name: UI
 version: 0.0.1
 schema: v1
 rules:
@@ -19,7 +19,7 @@ rules:
           - Code Editor: editor, editor-foreground
 
       Any of these colors can be used in tailwind e.g. bg-primary, text-success, border-error, hover:bg-list-hover, etc.
-    globs: "gui/**/*.tsx"
+    globs: "ui/**/*.tsx"
 # Excluding the following less-used colors:
 # Command (only used by tip-tap): command, command-foreground, command-border, command-border-focus
 # Find widget colors: find-match, find-match-selected

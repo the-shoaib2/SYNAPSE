@@ -74,7 +74,7 @@ The IntelliJ extension has been temporarily removed from the Synapse project to 
 
 - VS Code extension (fully functional)
 - Core library and protocols
-- GUI components
+- UI components
 - Model providers and LLM integration
 
 ### **Documentation References**

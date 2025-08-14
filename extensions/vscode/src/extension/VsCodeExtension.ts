@@ -33,7 +33,7 @@ import {
   WorkOsAuthProvider,
 } from "../stubs/WorkOsAuthProvider";
 import { SynapseConsoleWebviewViewProvider } from "../SynapseConsoleWebviewViewProvider";
-import { SynapseGUIWebviewViewProvider } from "../SynapseGUIWebviewViewProvider";
+import { SynapseUIWebviewViewProvider } from "../SynapseUIWebviewViewProvider";
 import { Battery } from "../util/battery";
 import { FileSearch } from "../util/FileSearch";
 import { VsCodeIdeUtils } from "../util/ideUtils";
@@ -69,7 +69,7 @@ export class VsCodeExtension {
   private ide: VsCodeIde;
   private ideUtils: VsCodeIdeUtils;
   private consoleView: SynapseConsoleWebviewViewProvider;
-  private sidebar: SynapseGUIWebviewViewProvider;
+  private sidebar: SynapseUIWebviewViewProvider;
   private windowId: string;
   private editDecorationManager: EditDecorationManager;
   private verticalDiffManager: VerticalDiffManager;
@@ -137,7 +137,7 @@ export class VsCodeExtension {
     const configHandlerPromise = new Promise<ConfigHandler>((resolve) => {
       resolveConfigHandler = resolve;
     });
-    this.sidebar = new SynapseGUIWebviewViewProvider(
+    this.sidebar = new SynapseUIWebviewViewProvider(
       this.windowId,
       this.extensionContext,
     );
@@ -145,7 +145,7 @@ export class VsCodeExtension {
     // Sidebar
     context.subscriptions.push(
       vscode.window.registerWebviewViewProvider(
-        "synapse.synapseGUIView",
+        "synapse.synapseUIView",
         this.sidebar,
         {
           webviewOptions: { retainContextWhenHidden: true },

@@ -139,8 +139,8 @@ describe("deterministicApplyLazyEdit(", () => {
     await expectDiff("top-level-same.js");
   });
 
-  test.skip("gui add toggle", async () => {
-    await expectDiff("gui.js");
+  test.skip("ui add toggle", async () => {
+    await expectDiff("ui.js");
   });
 
   test("rust calculator", async () => {

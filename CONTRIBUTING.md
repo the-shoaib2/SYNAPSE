@@ -159,9 +159,9 @@ npm i -g vite
 ##### Debugging
 
 **Breakpoints** can be used in both the `core` and `extensions/vscode` folders while debugging, but are not currently
-supported inside of `gui` code.
+supported inside of `ui` code.
 
-**Hot-reloading** is enabled with Vite, so if you make any changes to the `gui`, they should be automatically reflected
+**Hot-reloading** is enabled with Vite, so if you make any changes to the `ui`, they should be automatically reflected
 without rebuilding. In some cases, you may need to refresh the _Host VS Code_ window to see the changes.
 
 Similarly, any changes to `core` or `extensions/vscode` will be automatically included by just reloading the _Host VS
@@ -200,7 +200,7 @@ JavaScript/TypeScript. Please install the Prettier extension in VS Code and enab
 
 ### Theme Colors
 
-Synapse has a set of named theme colors that we map to extension colors and tailwind classes, which can be found in [gui/src/styles/theme.ts](gui/src/styles/theme.ts)
+Synapse has a set of named theme colors that we map to extension colors and tailwind classes, which can be found in [ui/src/styles/theme.ts](ui/src/styles/theme.ts)
 
 Guidelines for using theme colors:
 
@@ -209,7 +209,7 @@ Guidelines for using theme colors:
 
 Guidelines for adding/updating theme colors:
 
-- Choose sensible VS Code variables to add/update in [gui/src/styles/theme.ts](gui/src/styles/theme.ts) (see [here](https://code.visualstudio.com/api/references/theme-color) and [here](https://www.notion.so/1fa1d55165f78097b551e3bc296fcf76?pvs=25) for inspiration)
+- Choose sensible VS Code variables to add/update in [ui/src/styles/theme.ts](ui/src/styles/theme.ts) (see [here](https://code.visualstudio.com/api/references/theme-color) and [here](https://www.notion.so/1fa1d55165f78097b551e3bc296fcf76?pvs=25) for inspiration)
 - Choose sensible JetBrains named colors to add/update in `GetTheme.kt` (flagship LLMs can give you good suggestions to try)
 - Update `tailwind.config.js` if needed
 - Use the Theme Test Page to check colors. This can be accessed by going to `Settings` -> `Help` -> `Theme Test Page` in dev/debug mode.
@@ -259,12 +259,13 @@ While any model that works with a supported provider can be used with Synapse, w
 that can be automatically configured from the UI or `config.json`. The following files should be updated when adding a
 model:
 
-- [AddNewModel page](./gui/src/pages/AddNewModel/configs/) - This directory defines which model options are shown in the
+- [AddNewModel page](./ui/src/pages/AddNewModel/configs/) - This directory defines which model options are shown in the
   side bar model selection UI. To add a new model:
-  1. Add a `ModelPackage` entry for the model into [configs/models.ts](./gui/src/pages/AddNewModel/configs/models.ts),
-     following the lead of the many examples near the top of the file
-  2. Add the model within its provider's array
-     to [configs/providers.ts](./gui/src/pages/AddNewModel/configs/providers.ts) (add provider if needed)
+
+1. Add a `ModelPackage` entry for the model into [configs/models.ts](./ui/src/pages/AddNewModel/configs/models.ts),
+   following the lead of the many examples near the top of the file 2. Add the model within its provider's array
+   to [configs/providers.ts](./ui/src/pages/AddNewModel/configs/providers.ts) (add provider if needed)
+
 - LLM Providers: Since many providers use their own custom strings to identify models, you'll have to add the
   translation from Synapse's model name (the one you added to `index.d.ts`) and the model string for each of these
   providers: [Ollama](./core/llm/llms/Ollama.ts), [Together](./core/llm/llms/Together.ts),

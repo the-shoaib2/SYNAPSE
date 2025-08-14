@@ -14,7 +14,7 @@ Depending on what code you update, you can use a faster loop to test your change
 
 - If you update the e2e test code and/or config.yaml/json, you can run `npm run e2e:quick`
 - If you update the extension code, you can run `npm run e2e:recompile`
-- If you update the gui code, you can run `npm run e2e:rebuild-gui`
+- If you update the ui code, you can run `npm run e2e:rebuild-ui`
 
 ## Writing tests
 

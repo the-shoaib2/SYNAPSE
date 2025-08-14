@@ -41,14 +41,14 @@ npm install
 npm link @synapse/core
 popd
 
-echo "Installing GUI extension dependencies..."
-pushd gui
+echo "Installing UI extension dependencies..."
+pushd ui
 npm install
 npm link @synapse/core
 npm run build
 popd
 
-# VSCode Extension (will also package GUI)
+# VSCode Extension (will also package UI)
 echo "Installing VSCode extension dependencies..."
 pushd extensions/vscode
 # This does way too many things inline but is the common denominator between many of the scripts

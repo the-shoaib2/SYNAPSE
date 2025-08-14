@@ -14,14 +14,14 @@ export class EditActions {
       .perform();
   }
 
-  static async acceptEditInGUI(view: WebView): Promise<void> {
+  static async acceptEditInUI(view: WebView): Promise<void> {
     await TestUtils.waitForSuccess(async () =>
       (await EditSelectors.getEditAcceptButton(view)).click(),
     );
     await view.switchBack();
   }
 
-  static async rejectEditInGUI(view: WebView): Promise<void> {
+  static async rejectEditInUI(view: WebView): Promise<void> {
     await TestUtils.waitForSuccess(async () =>
       (await EditSelectors.getEditRejectButton(view)).click(),
     );

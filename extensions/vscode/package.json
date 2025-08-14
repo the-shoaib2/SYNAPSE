@@ -53,7 +53,7 @@
   "activationEvents": [
     "onUri",
     "onStartupFinished",
-    "onView:synapseGUIView"
+    "onView:synapseUIView"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -568,22 +568,22 @@
         {
           "command": "synapse.newSession",
           "group": "navigation@1",
-          "when": "view == synapse.synapseGUIView"
+          "when": "view == synapse.synapseUIView"
         },
         {
           "command": "synapse.viewHistory",
           "group": "navigation@2",
-          "when": "view == synapse.synapseGUIView"
+          "when": "view == synapse.synapseUIView"
         },
         {
           "command": "synapse.toggleFullScreen",
           "group": "navigation@3",
-          "when": "view == synapse.synapseGUIView"
+          "when": "view == synapse.synapseUIView"
         },
         {
           "command": "synapse.openConfigPage",
           "group": "navigation@4",
-          "when": "view == synapse.synapseGUIView"
+          "when": "view == synapse.synapseUIView"
         },
         {
           "command": "synapse.clearConsole",
@@ -595,12 +595,12 @@
         {
           "command": "synapse.newSession",
           "group": "navigation@1",
-          "when": "activeWebviewPanelId == synapse.synapseGUIView"
+          "when": "activeWebviewPanelId == synapse.synapseUIView"
         },
         {
           "command": "synapse.viewHistory",
           "group": "navigation@2",
-          "when": "activeWebviewPanelId == synapse.synapseGUIView"
+          "when": "activeWebviewPanelId == synapse.synapseUIView"
         }
       ],
       "terminal/context": [
@@ -630,7 +630,7 @@
       "synapse": [
         {
           "type": "webview",
-          "id": "synapse.synapseGUIView",
+          "id": "synapse.synapseUIView",
           "name": "Synapse",
           "icon": "media/sidebar-icon.png",
           "visibility": "visible"
@@ -686,7 +686,7 @@
     "build-debug:rust": "npm run build:rust --",
     "build-release:rust": "npm run build:rust -- --release",
     "e2e:compile": "tsc -p ./tsconfig.e2e.json",
-    "e2e:build": "npm --prefix ../../gui run build && npm run package",
+    "e2e:build": "npm --prefix ../../ui run build && npm run package",
     "e2e:create-storage": "mkdir -p ./e2e/storage",
     "e2e:get-chromedriver": "extest get-chromedriver --storage ./e2e/storage --code_version 1.95.0",
     "e2e:get-vscode": "extest get-vscode --storage ./e2e/storage --code_version 1.95.0",
@@ -699,7 +699,7 @@
     "e2e:all": "npm run e2e:build && npm run e2e:compile && npm run e2e:create-storage && npm run e2e:get-chromedriver && npm run e2e:get-vscode && npm run e2e:sign-vscode && npm run e2e:copy-vsix && npm run e2e:install-vsix && npm run e2e:install-extensions && SYNAPSE_GLOBAL_DIR=e2e/test-synapse npm run e2e:test && npm run e2e:clean",
     "e2e:all-non-mac": "npm run e2e:build && npm run e2e:compile && npm run e2e:create-storage && npm run e2e:get-chromedriver && npm run e2e:get-vscode && npm run e2e:copy-vsix && npm run e2e:install-vsix && npm run e2e:install-extensions && SYNAPSE_GLOBAL_DIR=e2e/test-synapse npm run e2e:test && npm run e2e:clean",
     "e2e:recompile-extension": "npm run package && npm run e2e:compile && npm run e2e:copy-vsix && npm run e2e:install-vsix && npm run e2e:install-extensions && SYNAPSE_GLOBAL_DIR=e2e/test-synapse npm run e2e:test && npm run e2e:clean",
-    "e2e:rebuild-gui": "rm -rf gui && cp -r ../../gui/dist gui && npm run package && npm run e2e:copy-vsix && npm run e2e:install-vsix && npm run e2e:install-extensions && SYNAPSE_GLOBAL_DIR=e2e/test-synapse npm run e2e:test && npm run e2e:clean",
+    "e2e:rebuild-ui": "rm -rf ui && cp -r ../../ui/dist ui && npm run package && npm run e2e:copy-vsix && npm run e2e:install-vsix && npm run e2e:install-extensions && SYNAPSE_GLOBAL_DIR=e2e/test-synapse npm run e2e:test && npm run e2e:clean",
     "e2e:quick": "npm run e2e:compile && SYNAPSE_GLOBAL_DIR=e2e/test-synapse npm run e2e:test && npm run e2e:clean",
     "e2e:ci:download": "npm run e2e:create-storage && npm run e2e:get-chromedriver && npm run e2e:get-vscode",
     "e2e:ci:run": "npm run e2e:compile && npm run e2e:copy-vsix && npm run e2e:install-vsix && npm run e2e:install-extensions && SYNAPSE_GLOBAL_DIR=e2e/test-synapse npm run e2e:test",

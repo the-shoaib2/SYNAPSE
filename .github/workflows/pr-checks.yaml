@@ -68,7 +68,7 @@ jobs:
           AZURE_FOUNDRY_MISTRAL_SMALL_API_KEY: ${{ secrets.AZURE_FOUNDRY_MISTRAL_SMALL_API_KEY }}
           AZURE_OPENAI_GPT41_API_KEY: ${{ secrets.AZURE_OPENAI_GPT41_API_KEY }}
 
-  gui-checks:
+  ui-checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -79,23 +79,23 @@ jobs:
         with:
           component: core
           include-root: true
-      - name: Setup gui component
+      - name: Setup ui component
         uses: ./.github/actions/setup-component
         with:
-          component: gui
+          component: ui
           include-packages: false
         env:
           GITHUB_TOKEN: ${{ secrets.CI_GITHUB_TOKEN }}
 
       - name: Type check and lint
         run: |
-          cd gui
+          cd ui
           npx tsc --noEmit
           npm run lint
 
       - name: Run tests
         run: |
-          cd gui
+          cd ui
           npm test
 
   binary-checks:
@@ -319,7 +319,7 @@ jobs:
     needs:
       - prettier-check
       - core-checks
-      - gui-checks
+      - ui-checks
       - binary-checks
       - vscode-checks
       - get-packages-matrix

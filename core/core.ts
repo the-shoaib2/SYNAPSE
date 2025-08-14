@@ -533,7 +533,7 @@ export class Core {
       return model.compileChatMessages(messages, options);
     });
 
-    // Provide messenger to utils so they can interact with GUI + state
+    // Provide messenger to utils so they can interact with UI + state
     TTS.messenger = this.messenger;
     ChatDescriber.messenger = this.messenger;
 

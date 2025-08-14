@@ -10,12 +10,12 @@ extensions/vscode/.vscode-test
 extensions/vscode/bin
 extensions/vscode/build
 extensions/vscode/out
-extensions/vscode/gui
+extensions/vscode/ui
 extensions/vscode/e2e/.test-extensions
 extensions/vscode/e2e/test-synapse
 extensions/vscode/models
 # extensions/intellij/src/main/resources
-gui/dist
+ui/dist
 **/.synapseignore
 CHANGELOG.md
 **/synapse_tutorial.py

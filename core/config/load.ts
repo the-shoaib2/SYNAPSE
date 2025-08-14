@@ -539,7 +539,7 @@ async function intermediateToFinalConfig({
       rerank: newReranker ? [newReranker] : [],
     },
     selectedModelByRole: {
-      chat: null, // Not implemented (uses GUI defaultModel)
+      chat: null, // Not implemented (uses UI defaultModel)
       edit: null,
       apply: null,
       embed: newEmbedder ?? null,

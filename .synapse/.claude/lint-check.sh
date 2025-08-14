@@ -13,8 +13,8 @@ run_checks() {
 # Run checks based on file location
 if [[ "$FILE_PATH" == *"/core/"* ]]; then
     run_checks core
-elif [[ "$FILE_PATH" == *"/gui/"* ]]; then
-    run_checks gui  
+elif [[ "$FILE_PATH" == *"/ui/"* ]]; then
+  run_checks ui  
 elif [[ "$FILE_PATH" == *"/extensions/vscode/"* ]]; then
     run_checks extensions/vscode
 fi

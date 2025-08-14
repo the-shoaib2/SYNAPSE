@@ -35,7 +35,7 @@ docker build -t synapse -f docker/Dockerfile .
 
 ### Development (`docker-compose.dev.yml`)
 
-- **Ports**: 3000 (GUI), 3001 (Core), 3002 (Docs)
+- **Ports**: 3000 (UI), 3001 (Core), 3002 (Docs)
 - **Volumes**: Source code mounted for hot reloading
 - **Environment**: Development mode with debugging
 

@@ -12,10 +12,10 @@ import {
   until,
 } from "vscode-extension-tester";
 
-import { GUIActions } from "../actions/GUI.actions";
+import { UIActions } from "../actions/UI.actions";
 import { KeyboardShortcutsActions } from "../actions/KeyboardShortcuts.actions";
 import { DEFAULT_TIMEOUT } from "../constants";
-import { GUISelectors } from "../selectors/GUI.selectors";
+import { UISelectors } from "../selectors/UI.selectors";
 import { TestUtils } from "../TestUtils";
 
 describe("Keyboard Shortcuts", () => {
@@ -25,7 +25,7 @@ describe("Keyboard Shortcuts", () => {
 
   before(async function () {
     this.timeout(DEFAULT_TIMEOUT.XL);
-    await GUIActions.moveContinueToSidebar(VSBrowser.instance.driver);
+    await UIActions.moveContinueToSidebar(VSBrowser.instance.driver);
   });
 
   beforeEach(async function () {
@@ -51,10 +51,10 @@ describe("Keyboard Shortcuts", () => {
   });
 
   it("Should correctly undo and redo using keyboard shortcuts when writing a chat message", async () => {
-    await GUIActions.executeFocusContinueInputShortcut(driver);
-    ({ view } = await GUIActions.switchToReactIframe());
+    await UIActions.executeFocusContinueInputShortcut(driver);
+    ({ view } = await UIActions.switchToReactIframe());
     const chatInput = await TestUtils.waitForSuccess(async () => {
-      return GUISelectors.getMessageInputFieldAtIndex(view, 0);
+      return UISelectors.getMessageInputFieldAtIndex(view, 0);
     });
 
     await chatInput.sendKeys("HELLO ");
@@ -108,21 +108,21 @@ describe("Keyboard Shortcuts", () => {
 
     await editor.setText(text);
 
-    await GUIActions.executeFocusContinueInputShortcut(driver);
+    await UIActions.executeFocusContinueInputShortcut(driver);
 
-    ({ view } = await GUIActions.switchToReactIframe());
+    ({ view } = await UIActions.switchToReactIframe());
 
     await TestUtils.expectNoElement(async () => {
-      return GUISelectors.getInputBoxCodeBlockAtIndex(view, 0);
+      return UISelectors.getInputBoxCodeBlockAtIndex(view, 0);
     }, DEFAULT_TIMEOUT.XS);
-    await GUIActions.executeFocusContinueInputShortcut(driver);
+    await UIActions.executeFocusContinueInputShortcut(driver);
   }).timeout(DEFAULT_TIMEOUT.XL);
 
   it("Fresh VS Code window → sidebar closed → cmd+L with no code highlighted → opens sidebar and focuses input → cmd+L closes sidebar", async () => {
-    await GUIActions.executeFocusContinueInputShortcut(driver);
-    ({ view } = await GUIActions.switchToReactIframe());
+    await UIActions.executeFocusContinueInputShortcut(driver);
+    ({ view } = await UIActions.switchToReactIframe());
     const textInput = await TestUtils.waitForSuccess(() =>
-      GUISelectors.getMessageInputFieldAtIndex(view, 0),
+      UISelectors.getMessageInputFieldAtIndex(view, 0),
     );
     const activeElement: WebElement = await driver.switchTo().activeElement();
     const textInputHtml = await textInput.getAttribute("outerHTML");
@@ -130,19 +130,19 @@ describe("Keyboard Shortcuts", () => {
     expect(textInputHtml).to.equal(activeElementHtml);
     expect(await textInput.isDisplayed()).to.equal(true);
 
-    await GUIActions.executeFocusContinueInputShortcut(driver);
+    await UIActions.executeFocusContinueInputShortcut(driver);
 
     await driver.wait(until.elementIsNotVisible(textInput), DEFAULT_TIMEOUT.XS);
     expect(await textInput.isDisplayed()).to.equal(false);
   }).timeout(DEFAULT_TIMEOUT.XL);
 
   it("Send a message → focus code editor (not sidebar) → cmd+L → should focus sidebar and start a new session", async () => {
-    await GUIActions.executeFocusContinueInputShortcut(driver);
-    ({ view } = await GUIActions.switchToReactIframe());
+    await UIActions.executeFocusContinueInputShortcut(driver);
+    ({ view } = await UIActions.switchToReactIframe());
 
     const { userMessage: userMessage0 } = TestUtils.generateTestMessagePair(0);
 
-    await GUIActions.sendMessage({
+    await UIActions.sendMessage({
       view,
       message: userMessage0,
       inputFieldIndex: 0,
@@ -154,21 +154,21 @@ describe("Keyboard Shortcuts", () => {
 
     await TestUtils.waitForTimeout(DEFAULT_TIMEOUT.XS);
 
-    await GUIActions.executeFocusContinueInputShortcut(driver);
+    await UIActions.executeFocusContinueInputShortcut(driver);
 
-    ({ view } = await GUIActions.switchToReactIframe());
+    ({ view } = await UIActions.switchToReactIframe());
 
     await TestUtils.waitForTimeout(DEFAULT_TIMEOUT.XS);
 
     const textInput = await TestUtils.waitForSuccess(() =>
-      GUISelectors.getMessageInputFieldAtIndex(view, 0),
+      UISelectors.getMessageInputFieldAtIndex(view, 0),
     );
     const activeElement: WebElement = await driver.switchTo().activeElement();
     const textInputHtml = await textInput.getAttribute("outerHTML");
     const activeElementHtml = await activeElement.getAttribute("outerHTML");
     expect(textInputHtml).to.equal(activeElementHtml);
 
-    await GUIActions.executeFocusContinueInputShortcut(driver);
+    await UIActions.executeFocusContinueInputShortcut(driver);
 
     await driver.wait(until.elementIsNotVisible(textInput), DEFAULT_TIMEOUT.XS);
     expect(await textInput.isDisplayed()).to.equal(false);
@@ -180,12 +180,12 @@ describe("Keyboard Shortcuts", () => {
     await editor.setText(text);
     await editor.selectText(text);
 
-    await GUIActions.executeFocusContinueInputShortcut(driver);
+    await UIActions.executeFocusContinueInputShortcut(driver);
 
-    ({ view } = await GUIActions.switchToReactIframe());
+    ({ view } = await UIActions.switchToReactIframe());
 
     const codeBlock = await TestUtils.waitForSuccess(() =>
-      GUISelectors.getInputBoxCodeBlockAtIndex(view, 0),
+      UISelectors.getInputBoxCodeBlockAtIndex(view, 0),
     );
     const codeblockContent = await codeBlock.getAttribute(
       "data-codeblockcontent",
@@ -193,6 +193,6 @@ describe("Keyboard Shortcuts", () => {
 
     expect(codeblockContent).to.equal(text);
 
-    await GUIActions.executeFocusContinueInputShortcut(driver);
+    await UIActions.executeFocusContinueInputShortcut(driver);
   }).timeout(DEFAULT_TIMEOUT.XL);
 });

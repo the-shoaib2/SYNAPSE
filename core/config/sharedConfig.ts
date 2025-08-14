@@ -80,7 +80,7 @@ export function salvageSharedConfig(sharedConfig: object): SharedConfigSchema {
 // - SerializedContinueConfig (config.json)
 // - Config ("intermediate") - passed to config.ts
 // - ContinueConfig
-// - BrowserSerializedContinueConfig (final converted to be passed to GUI)
+// - BrowserSerializedContinueConfig (final converted to be passed to UI)
 
 // This modify function is split into two steps
 // - rectifySharedModelsFromSharedConfig - includes boolean flags like allowAnonymousTelemetry which
