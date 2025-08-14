@@ -1,7 +1,7 @@
 **/*.run.xml
 docs/docs/languages
 .changes/
-.idea/
+# .idea/ (IntelliJ removed)
 .vscode/
 .archive/
 **/*.scm

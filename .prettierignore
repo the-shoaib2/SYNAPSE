@@ -14,7 +14,7 @@ extensions/vscode/gui
 extensions/vscode/e2e/.test-extensions
 extensions/vscode/e2e/test-synapse
 extensions/vscode/models
-extensions/intellij/src/main/resources
+# extensions/intellij/src/main/resources
 gui/dist
 **/.synapseignore
 CHANGELOG.md

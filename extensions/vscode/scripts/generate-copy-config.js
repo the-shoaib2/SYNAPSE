@@ -38,29 +38,7 @@ async function copyConfigSchema() {
   };
   fs.writeFileSync("synapse_rc_schema.json", JSON.stringify(schema, null, 2));
 
-  // Copy config schemas to intellij
-  fs.copyFileSync(
-    "config_schema.json",
-    path.join(
-      "..",
-      "intellij",
-      "src",
-      "main",
-      "resources",
-      "config_schema.json",
-    ),
-  );
-  fs.copyFileSync(
-    "synapse_rc_schema.json",
-    path.join(
-      "..",
-      "intellij",
-      "src",
-      "main",
-      "resources",
-      "synapse_rc_schema.json",
-    ),
-  );
+  // IntelliJ extension removed - no longer copying config schemas
 }
 
 process.on("message", (msg) => {
@@ -102,23 +80,7 @@ async function generateAndCopyConfigYamlSchema() {
     });
   });
 
-  // Copy config schemas to intellij
-  const copyConfigSchemaChild = fork(
-    path.join(__dirname, "generate-copy-config.js"),
-    {
-      stdio: "inherit",
-    },
-  );
-  copyConfigSchemaChild.send({ payload: { operation: "copy" } });
-
-  await new Promise((resolve, reject) => {
-    copyConfigSchemaChild.on("message", (msg) => {
-      if (msg.error) {
-        reject();
-      }
-      resolve();
-    });
-  });
+  // IntelliJ extension removed - no longer copying config schemas
 }
 
 module.exports = {

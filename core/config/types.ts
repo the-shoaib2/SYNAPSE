@@ -17,11 +17,7 @@ declare global {
       };
       colorThemeName?: string;
       workspacePaths?: string[];
-      postIntellijMessage?: (
-        messageType: string,
-        data: any,
-        messageIde: string,
-      ) => void;
+      
     }
   }
   

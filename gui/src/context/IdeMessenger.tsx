@@ -81,25 +81,13 @@ export class IdeMessenger implements IIdeMessenger {
     messageId: string = uuidv4(),
   ) {
     if (typeof vscode === "undefined") {
-      if (isJetBrains()) {
-        if (window.postIntellijMessage === undefined) {
-          console.log(
-            "Unable to send message: postIntellijMessage is undefined. ",
-            messageType,
-            data,
-          );
-          throw new Error("postIntellijMessage is undefined");
-        }
-        window.postIntellijMessage?.(messageType, data, messageId);
-        return;
-      } else {
-        console.log(
-          "Unable to send message: vscode is undefined",
-          messageType,
-          data,
-        );
-        return;
-      }
+      // JetBrains support removed - only VS Code supported
+      console.log(
+        "Unable to send message: vscode is undefined",
+        messageType,
+        data,
+      );
+      return;
     }
 
     const msg: Message = {

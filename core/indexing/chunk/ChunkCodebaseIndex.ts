@@ -90,7 +90,7 @@ export class ChunkCodebaseIndex implements CodebaseIndex {
         if (!e.message.includes("UNIQUE constraint")) {
           // Throw any errors other than duplicate tag
           // Possible the changes were already added by another instance of the extension
-          // For example vscode running side by side with intellij
+          // For example vscode running side by side with other IDEs
           throw e;
         }
       }

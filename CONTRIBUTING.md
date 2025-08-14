@@ -292,12 +292,13 @@ a seamless integration with the Synapse platform. It includes:
 
 ### [Synapse JetBrains Extension](#synapse-jetbrains-extension)
 
-The Synapse JetBrains extension provides similar functionality for IntelliJ IDEA, PyCharm, WebStorm, and other JetBrains
-IDEs. It includes:
+The Synapse JetBrains extension has been temporarily removed. It provided similar functionality for IntelliJ IDEA, PyCharm, WebStorm, and other JetBrains IDEs, including:
 
 - **Tool Window**: Integrated tool window for Synapse features
 - **Action System**: IDE action integration
 - **Project Integration**: Deep integration with JetBrains project system
+
+*Note: This extension will be restored in a future release.*
 
 ## Contributor License Agreement (CLA)
 

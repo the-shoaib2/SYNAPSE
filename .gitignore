@@ -168,13 +168,13 @@ extensions/intellij/.idea/**
 **/.idea/php.xml
 
 
-extensions/intellij/bin
+# extensions/intellij/bin
 extensions/.synapse-debug/
 
 *.vsix
 
-# intellij module library files
-*.iml
+# intellij module library files (removed)
+# *.iml
 
 .synapserules
 **/.synapse/assistants/

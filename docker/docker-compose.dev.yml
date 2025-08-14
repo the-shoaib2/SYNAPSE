@@ -11,7 +11,7 @@ services:
       - /app/node_modules
       - /app/core/node_modules
       - /app/extensions/vscode/node_modules
-      - /app/extensions/intellij/node_modules
+      # IntelliJ extension removed
       - /app/gui/node_modules
       - /app/docs/node_modules
       - /app/packages/*/node_modules

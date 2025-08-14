@@ -133,7 +133,7 @@ synapse/
 ├── core/                 # Core library
 ├── extensions/           # IDE extensions
 │   ├── vscode/          # VS Code extension
-│   └── intellij/        # IntelliJ plugin
+│   └── # IntelliJ plugin removed
 ├── gui/                  # Web GUI
 ├── docs/                 # Documentation
 ├── packages/             # Shared packages

@@ -414,7 +414,7 @@
         "promptTemplates": {
           "title": "Prompt Templates",
           "markdownDescription": "A mapping of prompt template name ('edit' is currently the only one used in Continue) to a string giving the prompt template. See [here](https://docs.synapse.dev/model-setup/configuration#customizing-the-edit-prompt) for an example.",
-          "x-intellij-html-description": "A mapping of prompt template name ('edit' is currently the only one used in Continue) to a string giving the prompt template. See <a href='https://docs.synapse.dev/model-setup/configuration#customizing-the-edit-prompt'>here</a> for an example.",
+          ,
           "type": "object",
           "additionalProperties": {
             "type": "string"
@@ -463,7 +463,7 @@
         "apiType": {
           "title": "Api Type",
           "markdownDescription": "OpenAI API type, either `openai` or `azure`",
-          "x-intellij-html-description": "OpenAI API type, either <code>openai</code> or <code>azure</code>",
+          ,
           "enum": [
             "openai",
             "azure"
@@ -794,7 +794,7 @@
                 ]
               },
               "markdownDescription": "Select a pre-defined option, or find an exact model ID from Replicate [here](https://replicate.com/collections/streaming-language-models).",
-              "x-intellij-html-description": "Select a pre-defined option, or find an exact model ID from Replicate <a href='https://replicate.com/collections/streaming-language-models'>here</a>."
+              
             }
           }
         },
@@ -1101,7 +1101,7 @@
                   }
                 ],
                 "markdownDescription": "Select a pre-defined option, or find an exact model string from Together AI [here](https://docs.together.ai/docs/inference-models).",
-                "x-intellij-html-description": "Select a pre-defined option, or find an exact model string from Together AI <a href='https://docs.together.ai/docs/inference-models'>here</a>."
+                
               }
             }
           }
@@ -1145,7 +1145,7 @@
                   }
                 ],
                 "markdownDescription": "Select a pre-defined option, or find an exact model string from Novita AI [here](https://novita.ai/llm-api?utm_source=github_continuedev&utm_medium=github_readme&utm_campaign=github_link).",
-                "x-intellij-html-description": "Select a pre-defined option, or find an exact model string from Novita AI <a href='https://novita.ai/llm-api?utm_source=github_continuedev&utm_medium=github_readme&utm_campaign=github_link'>here</a>."
+                
               }
             }
           }
@@ -1167,7 +1167,7 @@
             "properties": {
               "model": {
                 "markdownDescription": "Find the model name you want to use from DeepInfra [here](https://deepinfra.com/models?type=text-generation).",
-                "x-intellij-html-description": "Find the model name you want to use from DeepInfra <a href='https://deepinfra.com/models?type=text-generation'>here</a>."
+                
               }
             }
           }
@@ -1296,7 +1296,7 @@
                   }
                 ],
                 "markdownDescription": "Select a pre-defined option, or find the exact model tag for an Ollama model [here](https://ollama.ai/library).",
-                "x-intellij-html-description": "Select a pre-defined option, or find the exact model tag for an Ollama model <a href='https://ollama.ai/library'>here</a>."
+                
               }
             }
           }
@@ -1523,7 +1523,7 @@
                   }
                 ],
                 "markdownDescription": "Select a pre-defined option, or find the exact model string from Scaleway [here](https://www.scaleway.com/en/docs/ai-data/generative-apis/reference-content/supported-models/).",
-                "x-intellij-html-description": "Select a pre-defined option, or find the exact model string from Scaleway <a href='https://www.scaleway.com/en/docs/ai-data/generative-apis/reference-content/supported-models/'>here</a>."
+                
               }
             }
           }
@@ -1563,7 +1563,7 @@
                   }
                 ],
                 "markdownDescription": "Select a pre-defined option, or find the exact model string from OVHcloud [AI Endpoints catalog](https://endpoints.ai.cloud.ovh.net/catalog).",
-                "x-intellij-html-description": "Select a pre-defined option, or find the exact model string from OVHcloud <a href='https://endpoints.ai.cloud.ovh.net/catalog'>AI Endpoints catalog</a>."
+                
               }
             }
           }
@@ -2083,7 +2083,7 @@
                   "recap": {
                     "type": "boolean",
                     "markdownDescription": "If recap is set to `true`, Continue will generate a summary of the changes after making the edit.",
-                    "x-intellij-html-description": "If recap is set to <code>true</code>, Continue will generate a summary of the changes after making the edit."
+                    
                   },
                   "tokenLimit": {
                     "type": "integer",
@@ -2111,7 +2111,7 @@
                   "outputDir": {
                     "type": "string",
                     "markdownDescription": "If outputDir is set to `.` or begins with `./` or `.\\`, file will be saved to the current workspace or a subdirectory thereof, respectively. `~` can similarly be used to specify the user's home directory.",
-                    "x-intellij-html-description": "If outputDir is set to <code>.</code> or begins with <code>./</code> or <code>.\\</code>, file will be saved to the current workspace or a subdirectory thereof, respectively. <code>~</code> can similarly be used to specify the user's home directory."
+                    
                   }
                 }
               }
@@ -2135,7 +2135,7 @@
                   "includeUnstaged": {
                     "type": "boolean",
                     "markdownDescription": "If set to `true`, then unstaged changes are also included in the prompt, otherwise only staged changes are included. Default is `false`.",
-                    "x-intellij-html-description": "If set to <code>true</code>, then unstaged changes are also included in the prompt, otherwise only staged changes are included. Default is <code>false</code>."
+                    
                   }
                 }
               }
@@ -2720,7 +2720,7 @@
                   "apiVersion": {
                     "type": "integer",
                     "markdownDescription": "This context provider supports both Jira API version 2 and 3. It will use version 3 by default since that's what the cloud version uses, but if you have the datacenter version of Jira, you'll need to set the API Version to 2 using the `apiVersion` property.",
-                    "x-intellij-html-description": "This context provider supports both Jira API version 2 and 3. It will use version 3 by default since that's what the cloud version uses, but if you have the datacenter version of Jira, you'll need to set the API Version to 2 using the <code>apiVersion</code> property."
+                    
                   },
                   "requestOptions": {
                     "title": "Request Options",
@@ -3053,14 +3053,14 @@
         "allowAnonymousTelemetry": {
           "title": "Allow Anonymous Telemetry",
           "markdownDescription": "If this field is set to `true`, we will collect anonymous telemetry as described in the documentation page on telemetry. If set to `false`, we will not collect any data. Learn more in [the docs](https://docs.synapse.dev/telemetry).",
-          "x-intellij-html-description": "If this field is set to `true`, we will collect anonymous telemetry as described in the documentation page on telemetry. If set to `false`, we will not collect any data. Learn more in <a href='https://docs.synapse.dev/telemetry'>the docs</a>.",
+          ,
           "default": true,
           "type": "boolean"
         },
         "models": {
           "title": "Models",
           "markdownDescription": "Learn about setting up models in [the documentation](https://docs.synapse.dev/model-setup/overview).",
-          "x-intellij-html-description": "Learn about setting up models in <a href='https://docs.synapse.dev/model-setup/overview'>the documentation</a>.",
+          ,
           "default": [
             {
               "title": "Claude 3.7 Sonnet",
@@ -3109,7 +3109,7 @@
         "slashCommands": {
           "title": "Slash Commands",
           "markdownDescription": "An array of slash commands that let you take custom actions from the sidebar. Learn more in the [documentation](https://docs.synapse.dev/customization/slash-commands).",
-          "x-intellij-html-description": "An array of slash commands that let you take custom actions from the sidebar. Learn more in the <a href='https://docs.synapse.dev/customization/slash-commands'>documentation</a>.",
+          ,
           "default": [],
           "type": "array",
           "items": {
@@ -3119,7 +3119,7 @@
         "customCommands": {
           "title": "Custom Commands",
           "markdownDescription": "An array of custom commands that allow you to reuse prompts. Each has name, description, and prompt properties. When you enter `/<name>` in the text input, it will act as a shortcut to the prompt. Learn more in the [documentation](https://docs.synapse.dev/customization/slash-commands#custom-commands-use-natural-language).",
-          "x-intellij-html-description": "An array of custom commands that allow you to reuse prompts. Each has name, description, and prompt properties. When you enter <code>/<name></code> in the text input, it will act as a shortcut to the prompt. Learn more in the <a href='https://docs.synapse.dev/customization/slash-commands#custom-commands-use-natural-language'>documentation</a>.",
+          ,
           "default": [
             {
               "name": "test",
@@ -3135,7 +3135,7 @@
         "contextProviders": {
           "title": "Context Providers",
           "markdownDescription": "A list of ContextProvider objects that can be used to provide context to the LLM by typing '@'. Read more about ContextProviders in [the documentation](https://docs.synapse.dev/customization/context-providers).",
-          "x-intellij-html-description": "A list of ContextProvider objects that can be used to provide context to the LLM by typing '@'. Read more about ContextProviders in <a href='https://docs.synapse.dev/customization/context-providers'>the documentation</a>.",
+          ,
           "default": [],
           "type": "array",
           "items": {
@@ -3150,21 +3150,21 @@
         "disableIndexing": {
           "title": "Disable Indexing",
           "markdownDescription": "If set to `true`, Continue will not index the codebase. This is mainly used for debugging purposes.",
-          "x-intellij-html-description": "If set to <code>true</code>, Continue will not index the codebase. This is mainly used for debugging purposes.",
+          ,
           "default": false,
           "type": "boolean"
         },
         "disableSessionTitles": {
           "title": "Disable Session Titles",
           "markdownDescription": "If set to `true`, Continue will not make extra requests to the LLM to generate a summary title of each session.",
-          "x-intellij-html-description": "If set to <code>true</code>, Continue will not make extra requests to the LLM to generate a summary title of each session.",
+          ,
           "default": false,
           "type": "boolean"
         },
         "embeddingsProvider": {
           "title": "Embeddings Provider",
           "markdownDescription": "The method that will be used to generate codebase embeddings. The default is `transformers.js`, which will run locally in the browser. Learn about the other options [here](https://docs.synapse.dev/features/codebase-embeddings#embeddings-providers).",
-          "x-intellij-html-description": "The method that will be used to generate codebase embeddings. The default is <code>transformers.js</code>, which will run locally in the browser. Learn about the other options <a href='https://docs.synapse.dev/features/codebase-embeddings#embeddings-providers'>here</a>.<br><br><strong>Note</strong>: <code>transformers.js</code> currently cannot be used in JetBrains.",
+          ,
           "type": "object",
           "properties": {
             "provider": {
@@ -3593,7 +3593,7 @@
         "tabAutocompleteModel": {
           "title": "Tab Autocomplete Model",
           "markdownDescription": "The model used for tab autocompletion. If undefined, Continue will default to using qwen2.5-coder:1.5b on a local Ollama instance.\n\n*IMPORTANT*:\n\nIf you use a custom model, ensure that it is one trained for fill-in-the-middle completions. An instruct model is typically not well-suited to autocomplete and you may receive unsatisfactory completions.",
-          "x-intellij-html-description": "The model used for tab autocompletion. If undefined, Continue will default to using qwen2.5-coder:1.5b on a local Ollama instance.<br><br><i>IMPORTANT</i>:<br><br>If you use a custom model, ensure that it is one trained for fill-in-the-middle completions. An instruct model is typically not well-suited to autocomplete and you may receive unsatisfactory completions.",
+          ,
           "default": {
             "title": "Tab Autocomplete Model",
             "provider": "ollama",
@@ -3615,7 +3615,7 @@
           "title": "TabAutocompleteOptions",
           "type": "object",
           "markdownDescription": "These options let you customize your tab-autocomplete experience. Read about all options in [the docs](https://docs.synapse.dev/features/tab-autocomplete#configuration-options).",
-          "x-intellij-html-description": "These options let you customize your tab-autocomplete experience. Read about all options in <a href='https://docs.synapse.dev/features/tab-autocomplete#configuration-options'>the docs</a>.",
+          ,
           "properties": {
             "disable": {
               "type": "boolean",
@@ -3694,7 +3694,7 @@
             "showChatScrollbar": {
               "title": "Show Chat Scrollbar",
               "markdownDescription": "If set to `true`, a scrollbar will be displayed in the chat window to navigate through messages.",
-              "x-intellij-html-description": "If set to <code>true</code>, a scrollbar will be displayed in the chat window to navigate through messages.",
+              ,
               "default": false,
               "type": "boolean"
             },
@@ -3986,7 +3986,7 @@
           "default": "merge",
           "title": "Merge behavior",
           "markdownDescription": "If set to 'merge', .synapserc.json will be applied on top of config.json (arrays and objects are merged). If set to 'overwrite', then every top-level property of .synapserc.json will overwrite that property from config.json.",
-          "x-intellij-html-description": "<p>If set to <code>merge</code>, <code>.synapserc.json</code> will be applied on top of <code>config.json</code> (arrays and objects are merged). If set to <code>overwrite</code>, then every top-level property of <code>.synapserc.json</code> will overwrite that property from <code>config.json</code>.</p>"
+          
         }
       }
     }

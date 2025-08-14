@@ -18,7 +18,7 @@ WORKDIR /app
 COPY package.json pnpm-workspace.yaml ./
 COPY core/package.json ./core/
 COPY extensions/vscode/package.json ./extensions/vscode/
-COPY extensions/intellij/package.json ./extensions/intellij/
+# IntelliJ extension removed
 COPY gui/package.json ./gui/
 COPY docs/package.json ./docs/
 COPY packages/*/package.json ./packages/
