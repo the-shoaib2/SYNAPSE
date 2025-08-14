@@ -60,7 +60,6 @@ Synapse is quickly adding features, and we'd love to hear which are the most imp
 an enhancement are:
 
 - Create an issue
-
   - First, check whether a similar proposal has already been made
   - If not, [create an issue](https://github.com/synapsedev/synapse/issues)
   - Please describe the enhancement in as much detail as you can, and why it would be useful
@@ -146,7 +145,6 @@ npm i -g vite
    `install-all-dependencies`
 
 2. Start debugging:
-
    1. Switch to Run and Debug view
    2. Select `Launch extension` from drop down
    3. Hit play button
@@ -298,7 +296,7 @@ The Synapse JetBrains extension has been temporarily removed. It provided simila
 - **Action System**: IDE action integration
 - **Project Integration**: Deep integration with JetBrains project system
 
-*Note: This extension will be restored in a future release.*
+_Note: This extension will be restored in a future release._
 
 ## Contributor License Agreement (CLA)
 
