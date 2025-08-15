@@ -1,24 +1,24 @@
 import {
-  ArrowsPointingOutIcon,
-  EyeIcon,
-  PencilIcon,
+    ArrowsPointingOutIcon,
+    EyeIcon,
+    PencilIcon,
 } from "@heroicons/react/24/outline";
 import { parseConfigYaml } from "@synapse/config-yaml";
 import { RuleWithSource } from "core";
 import {
-  DEFAULT_AGENT_SYSTEM_MESSAGE,
-  DEFAULT_CHAT_SYSTEM_MESSAGE,
-  DEFAULT_SYSTEM_MESSAGES_URL,
+    DEFAULT_AGENT_SYSTEM_MESSAGE,
+    DEFAULT_CHAT_SYSTEM_MESSAGE,
+    DEFAULT_SYSTEM_MESSAGES_URL,
 } from "core/llm/defaultSystemMessages";
 import { useContext, useMemo } from "react";
 import { useAuth } from "../../../../context/Auth";
 import { IdeMessengerContext } from "../../../../context/IdeMessenger";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import {
-  DEFAULT_RULE_SETTING,
-  setDialogMessage,
-  setShowDialog,
-  toggleRuleSetting,
+    DEFAULT_RULE_SETTING,
+    setDialogMessage,
+    setShowDialog,
+    toggleRuleSetting,
 } from "../../../../redux/slices/uiSlice";
 import HeaderButtonWithToolTip from "../../../ui/HeaderButtonWithToolTip";
 import Switch from "../../../ui/Switch";
