@@ -34,6 +34,7 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
+    "@huggingface/jinja": "^0.5.1",
     "@lancedb/vectordb-darwin-arm64": "^0.21.2"
   }
 }

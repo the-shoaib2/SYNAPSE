@@ -35,14 +35,31 @@ function stripInLineComment(line: string): string {
 }
 
 function parseThemeString(themeString: string | undefined): any {
-  themeString = themeString
-    ?.split("\n")
-    .filter((line) => {
-      return !line.trim().startsWith("//");
-    })
-    .map(stripInLineComment)
-    .join("\n");
-  return JSON.parse(themeString ?? "{}");
+  if (!themeString) {
+    return {};
+  }
+  
+  try {
+    themeString = themeString
+      ?.split("\n")
+      .filter((line) => {
+        return !line.trim().startsWith("//");
+      })
+      .map(stripInLineComment)
+      .join("\n");
+    
+    // Basic validation that this looks like a theme file
+    if (!themeString.includes('"colors"') && !themeString.includes('"tokenColors"')) {
+      console.log("Skipping file that doesn't appear to be a theme file");
+      return {};
+    }
+    
+    return JSON.parse(themeString ?? "{}");
+  } catch (parseError) {
+    console.log("Error parsing theme string:", parseError);
+    console.log("Theme string preview:", themeString?.substring(0, 200));
+    return {};
+  }
 }
 
 export function getThemeString(): string {
@@ -111,48 +128,73 @@ export function getTheme() {
         for (const theme of extension.packageJSON.contributes.themes) {
           if (theme.id === colorTheme || theme.label === colorTheme) {
             const themePath = path.join(extension.extensionPath, theme.path);
-            currentTheme = fs.readFileSync(themePath).toString();
-
-            parsed = parseThemeString(currentTheme);
-
-            // Handle nested includes
-            let currentParsedTheme = parsed;
-            let currentThemePath = themePath;
-            let mergedTheme = currentParsedTheme;
-
-            while (currentParsedTheme.include) {
-              const themeDir = path.dirname(currentThemePath);
-              const includeThemePath = path.join(
-                themeDir,
-                currentParsedTheme.include,
-              );
-
-              if (fs.existsSync(includeThemePath)) {
-                const includeThemeString = fs
-                  .readFileSync(includeThemePath)
-                  .toString();
-
-                const includeTheme = parseThemeString(includeThemeString);
-                // Merge with base theme taking precedence, then overlay current customizations
-                mergedTheme = mergeJson(
-                  mergeJson({}, includeTheme), // Start with base
-                  mergedTheme, // Overlay with customizations
-                );
-
-                // Update for next iteration - only update path and parsed theme for include checking
-                currentThemePath = includeThemePath;
-                currentParsedTheme = includeTheme;
-              } else {
-                console.log(
-                  `include theme not found for ${currentTheme} looked for ${currentParsedTheme.include} in ${themeDir}`,
-                  includeThemePath,
-                );
-                break;
-              }
+            
+            // Only process files that are actually theme files
+            if (!theme.path || !theme.path.endsWith('.json')) {
+              continue;
             }
+            
+            try {
+              currentTheme = fs.readFileSync(themePath).toString();
+              
+              // Validate that this is actually a theme file by checking for required properties
+              if (!currentTheme.includes('"colors"') && !currentTheme.includes('"tokenColors"')) {
+                console.log(`Skipping non-theme file: ${themePath}`);
+                continue;
+              }
 
-            parsed = mergedTheme;
-            break;
+              parsed = parseThemeString(currentTheme);
+
+              // Handle nested includes
+              let currentParsedTheme = parsed;
+              let currentThemePath = themePath;
+              let mergedTheme = currentParsedTheme;
+
+              while (currentParsedTheme.include) {
+                const themeDir = path.dirname(currentThemePath);
+                const includeThemePath = path.join(
+                  themeDir,
+                  currentParsedTheme.include,
+                );
+
+                if (fs.existsSync(includeThemePath)) {
+                  try {
+                    const includeThemeString = fs
+                      .readFileSync(includeThemePath)
+                      .toString();
+
+                    const includeTheme = parseThemeString(includeThemeString);
+                    // Merge with base theme taking precedence, then overlay current customizations
+                    mergedTheme = mergeJson(
+                      mergeJson({}, includeTheme), // Start with base
+                      mergedTheme, // Overlay with customizations
+                    );
+
+                    // Update for next iteration - only update path and parsed theme for include checking
+                    currentThemePath = includeThemePath;
+                    currentParsedTheme = includeTheme;
+                  } catch (includeError) {
+                    console.log(
+                      `Error parsing include theme ${currentParsedTheme.include}:`,
+                      includeError,
+                    );
+                    break;
+                  }
+                } else {
+                  console.log(
+                    `include theme not found for ${currentTheme} looked for ${currentParsedTheme.include} in ${themeDir}`,
+                    includeThemePath,
+                  );
+                  break;
+                }
+              }
+
+              parsed = mergedTheme;
+              break;
+            } catch (themeError) {
+              console.log(`Error reading theme file ${themePath}:`, themeError);
+              continue;
+            }
           }
         }
       }

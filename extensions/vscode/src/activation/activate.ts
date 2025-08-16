@@ -62,15 +62,42 @@ export async function activateExtension(context: vscode.ExtensionContext) {
   ).toString();
 
   try {
-    await yamlConfig.update(
-      "schemas",
-      { [newPath]: [yamlMatcher] },
-      vscode.ConfigurationTarget.Global,
-    );
+    // Check if YAML extension is available
+    const yamlExtension = vscode.extensions.getExtension("redhat.vscode-yaml");
+    if (!yamlExtension) {
+      console.warn(
+        "YAML extension not found. Synapse will work but YAML configuration files won't have schema validation."
+      );
+      
+      // Show a helpful message to the user
+      void vscode.window.showInformationMessage(
+        "Synapse: YAML extension not found. Install 'redhat.vscode-yaml' for better YAML configuration support.",
+        "Install YAML Extension",
+        "Dismiss"
+      ).then((selection) => {
+        if (selection === "Install YAML Extension") {
+          void vscode.commands.executeCommand("workbench.extensions.installExtension", "redhat.vscode-yaml");
+        }
+      });
+    } else {
+      // Only try to register schema if YAML extension is available
+      await yamlConfig.update(
+        "schemas",
+        { [newPath]: [yamlMatcher] },
+        vscode.ConfigurationTarget.Global,
+      );
+      console.log("Successfully registered Synapse config.yaml schema");
+    }
   } catch (error) {
     console.error(
-      "Failed to register Synapse config.yaml schema, most likely, YAML extension is not installed",
+      "Failed to register Synapse config.yaml schema:",
       error,
+    );
+    
+    // Show error to user
+    void vscode.window.showErrorMessage(
+      `Failed to register YAML schema: ${error instanceof Error ? error.message : String(error)}`,
+      "Dismiss"
     );
   }
 

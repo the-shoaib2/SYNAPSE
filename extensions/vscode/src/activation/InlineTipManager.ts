@@ -97,6 +97,21 @@ export class InlineTipManager {
     this.setupSvgTipListeners();
   }
 
+  private getSafeTheme() {
+    try {
+      return getTheme();
+    } catch (error) {
+      console.log("Error getting theme, using fallback:", error);
+      // Return a basic fallback theme
+      return {
+        colors: {
+          "editor.background": "#1e1e1e",
+          "editor.foreground": "#d4d4d4"
+        }
+      };
+    }
+  }
+
   public setupInlineTips(context: vscode.ExtensionContext) {
     context.subscriptions.push(
       vscode.window.onDidChangeTextEditorSelection((e) => {
@@ -153,7 +168,7 @@ export class InlineTipManager {
   private setupSvgTipListeners() {
     vscode.workspace.onDidChangeConfiguration((e) => {
       if (e.affectsConfiguration("workbench.colorTheme")) {
-        this.theme = getTheme();
+        this.theme = this.getSafeTheme();
         this.createSvgTooltip();
       }
     });
@@ -235,9 +250,10 @@ export class InlineTipManager {
   }
 
   private createSvgTooltipDecoration() {
+    const theme = this.getSafeTheme();
     var backgroundColour = 0;
-    if (this.theme) {
-      backgroundColour = this.theme.colors["editor.background"];
+    if (theme) {
+      backgroundColour = theme.colors["editor.background"] || "#1e1e1e";
     }
     return vscode.window.createTextEditorDecorationType({
       after: {
@@ -258,7 +274,8 @@ export class InlineTipManager {
       "font-size": SVG_CONFIG.fontSize,
     };
 
-    if (!this.theme) {
+    const theme = this.getSafeTheme();
+    if (!theme) {
       return;
     }
 
@@ -271,7 +288,7 @@ export class InlineTipManager {
           {
             ...baseTextConfig,
             x: SVG_CONFIG.chatLabelX,
-            fill: this.theme.colors["editor.foreground"],
+            fill: theme.colors["editor.foreground"] || "#d4d4d4",
           },
           SVG_CONFIG.chatLabel,
         )
@@ -288,7 +305,7 @@ export class InlineTipManager {
           {
             ...baseTextConfig,
             x: SVG_CONFIG.editLabelX,
-            fill: this.theme.colors["editor.foreground"],
+            fill: theme.colors["editor.foreground"] || "#d4d4d4",
           },
           SVG_CONFIG.editLabel,
         )

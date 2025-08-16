@@ -737,6 +737,7 @@
   },
   "dependencies": {
     "@electron/rebuild": "^3.2.10",
+    "@lancedb/vectordb-darwin-arm64": "^0.21.2",
     "@reduxjs/toolkit": "^1.9.3",
     "@synapse/config-types": "file:../../packages/config-types",
     "@synapse/config-yaml": "file:../../packages/config-yaml",
