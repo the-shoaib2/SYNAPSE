@@ -1,5 +1,5 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { defaultBorderRadius } from "..";
@@ -45,7 +45,7 @@ const TabBarContainer = styled.div`
   }
 `;
 
-const Tab = styled.div<{ isActive: boolean }>`
+const Tab = styled.div<{ isActive: boolean; isDragging: boolean }>`
   display: flex;
   align-items: center;
   box-sizing: border-box;
@@ -58,7 +58,7 @@ const Tab = styled.div<{ isActive: boolean }>`
     props.isActive ? tabSelectedBackgroundVar : tabBackgroundVar};
   color: ${(props) =>
     props.isActive ? tabSelectedForegroundVar : tabForegroundVar};
-  cursor: pointer;
+  cursor: ${(props) => (props.isDragging ? "grabbing" : "grab")};
   border: 1px solid ${tabBorderVar};
   border-bottom: ${(props) =>
     props.isActive ? "none" : `1px solid ${tabBorderVar}`};
@@ -67,6 +67,10 @@ const Tab = styled.div<{ isActive: boolean }>`
   transition: background-color 0.2s;
   border-top: ${(props) =>
     props.isActive ? `1px solid ${tabAccentVar}` : `1px solid ${tabBorderVar}`};
+  opacity: ${(props) => (props.isDragging ? 0.7 : 1)};
+  transform: ${(props) => (props.isDragging ? "rotate(2deg)" : "none")};
+  z-index: ${(props) => (props.isDragging ? 1000 : 1)};
+  
   &:first-child {
     border-left: none;
   }
@@ -137,6 +141,10 @@ export const TabBar = React.forwardRef<HTMLDivElement>((_, ref) => {
     (state: RootState) => state.session.history.length > 0,
   );
   const tabs = useSelector((state: RootState) => state.tabs.tabs);
+
+  // Drag and drop state
+  const [draggedTabId, setDraggedTabId] = useState<string | null>(null);
+  const [dragOverTabId, setDragOverTabId] = useState<string | null>(null);
 
   // Simple UUID generator for our needs
   const generateId = useCallback(() => {
@@ -225,6 +233,58 @@ export const TabBar = React.forwardRef<HTMLDivElement>((_, ref) => {
     }
   };
 
+  const handleDragStart = useCallback((e: React.DragEvent, tabId: string) => {
+    setDraggedTabId(tabId);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", tabId);
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent, tabId: string) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (draggedTabId && draggedTabId !== tabId) {
+      setDragOverTabId(tabId);
+    }
+  }, [draggedTabId]);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOverTabId(null);
+  }, []);
+
+  const handleDrop = useCallback((e: React.DragEvent, targetTabId: string) => {
+    e.preventDefault();
+    if (!draggedTabId || draggedTabId === targetTabId) {
+      setDraggedTabId(null);
+      setDragOverTabId(null);
+      return;
+    }
+
+    // Reorder tabs
+    const draggedTabIndex = tabs.findIndex(tab => tab.id === draggedTabId);
+    const targetTabIndex = tabs.findIndex(tab => tab.id === targetTabId);
+    
+    if (draggedTabIndex === -1 || targetTabIndex === -1) {
+      setDraggedTabId(null);
+      setDragOverTabId(null);
+      return;
+    }
+
+    const newTabs = [...tabs];
+    const [draggedTab] = newTabs.splice(draggedTabIndex, 1);
+    newTabs.splice(targetTabIndex, 0, draggedTab);
+
+    dispatch(setTabs(newTabs));
+    
+    setDraggedTabId(null);
+    setDragOverTabId(null);
+  }, [draggedTabId, tabs, dispatch]);
+
+  const handleDragEnd = useCallback(() => {
+    setDraggedTabId(null);
+    setDragOverTabId(null);
+  }, []);
+
   return (
     <TabBarContainer
       ref={ref}
@@ -236,6 +296,7 @@ export const TabBar = React.forwardRef<HTMLDivElement>((_, ref) => {
         <Tab
           key={tab.id}
           isActive={tab.isActive}
+          isDragging={draggedTabId === tab.id}
           onClick={() => handleTabClick(tab.id)}
           onAuxClick={(e) => {
             // Middle mouse button
@@ -243,6 +304,15 @@ export const TabBar = React.forwardRef<HTMLDivElement>((_, ref) => {
               e.preventDefault();
               handleTabClose(tab.id);
             }
+          }}
+          draggable
+          onDragStart={(e) => handleDragStart(e, tab.id)}
+          onDragOver={(e) => handleDragOver(e, tab.id)}
+          onDragLeave={handleDragLeave}
+          onDrop={(e) => handleDrop(e, tab.id)}
+          onDragEnd={handleDragEnd}
+          style={{
+            borderLeft: dragOverTabId === tab.id ? `2px solid ${tabAccentVar}` : undefined,
           }}
         >
           <TabTitle>{tab.title}</TabTitle>
