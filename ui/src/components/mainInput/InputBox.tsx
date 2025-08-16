@@ -7,7 +7,6 @@ import { selectSlashCommandComboBoxInputs } from "../../redux/selectors";
 import { cancelStream } from "../../redux/thunks/cancelStream";
 import { ContextItemsPeek } from "./belowMainInput/ContextItemsPeek";
 import { RulesPeek } from "./belowMainInput/RulesPeek";
-import { GradientBorder } from "./GradientBorder";
 import { ToolbarOptions } from "./InputToolbar";
 import { Lump } from "./Lump";
 import { TipTapEditor } from "./TipTapEditor";
@@ -39,7 +38,7 @@ const EDIT_DISALLOWED_CONTEXT_PROVIDERS = [
   "repo-map",
 ];
 
-function SynapseInputBox(props: SynapseInputBoxProps) {
+export default function SynapseInputBox(props: SynapseInputBoxProps) {
   const dispatch = useAppDispatch();
   const isStreaming = useAppSelector((state) => state.session.isStreaming);
   const availableSlashCommands = useAppSelector(
@@ -91,12 +90,14 @@ function SynapseInputBox(props: SynapseInputBoxProps) {
     >
       <div className={`relative flex flex-col px-2`}>
         {props.isMainInput && <Lump />}
-        <GradientBorder
-          loading={isStreaming && props.isLastUserInput ? 1 : 0}
-          borderColor={
-            isStreaming && props.isLastUserInput ? undefined : vscBackground
-          }
-          borderRadius={defaultBorderRadius}
+        
+        <div
+          style={{
+            borderRadius: defaultBorderRadius,
+            background: vscBackground,
+            padding: "1px",
+            width: "100%",
+          }}
         >
           <TipTapEditor
             editorState={props.editorState}
@@ -110,7 +111,8 @@ function SynapseInputBox(props: SynapseInputBoxProps) {
             toolbarOptions={toolbarOptions}
             inputId={props.inputId}
           />
-        </GradientBorder>
+        </div>
+      
       </div>
 
       {(appliedRules.length > 0 || contextItems.length > 0) && (
@@ -126,4 +128,3 @@ function SynapseInputBox(props: SynapseInputBoxProps) {
   );
 }
 
-export default SynapseInputBox;

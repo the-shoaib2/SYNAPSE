@@ -1,10 +1,10 @@
 import { ChatHistoryItem } from "core";
 import { renderChatMessage, stripImages } from "core/util/messageContent";
-import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../redux/hooks";
 import { selectUIConfig } from "../../redux/slices/configSlice";
 import { deleteMessage } from "../../redux/slices/sessionSlice";
+import { BouncingDots, Dot } from "../mainInput/BouncingDots";
 import StyledMarkdownPreview from "../StyledMarkdownPreview";
 import ConversationSummary from "./ConversationSummary";
 import Reasoning from "./Reasoning";
@@ -20,7 +20,6 @@ interface StepContainerProps {
 
 export default function StepContainer(props: StepContainerProps) {
   const dispatch = useDispatch();
-  const [isTruncated, setIsTruncated] = useState(false);
   const isStreaming = useAppSelector((state) => state.session.isStreaming);
   const historyItemAfterThis = useAppSelector(
     (state) => state.session.history[props.index + 1],
@@ -50,26 +49,6 @@ export default function StepContainer(props: StepContainerProps) {
 
     return true;
   };
-
-  useEffect(() => {
-    if (!isStreaming) {
-      const content = renderChatMessage(props.item.message).trim();
-      const endingPunctuation = [".", "?", "!", "```", ":"];
-
-      // If not ending in punctuation or emoji, we assume the response got truncated
-      if (
-        content.trim() !== "" &&
-        !(
-          endingPunctuation.some((p) => content.endsWith(p)) ||
-          /\p{Emoji}/u.test(content.slice(-2))
-        )
-      ) {
-        setIsTruncated(true);
-      } else {
-        setIsTruncated(false);
-      }
-    }
-  }, [props.item.message.content, isStreaming]);
 
   function onDelete() {
     dispatch(deleteMessage(props.index));
@@ -107,6 +86,18 @@ export default function StepContainer(props: StepContainerProps) {
             />
           </>
         )}
+        
+        {/* Show bouncing dots when streaming - single instance, aligned from start */}
+        {isStreaming && props.isLast && !props.item.message.content && (
+          <div className="px-2 py-4">
+            <BouncingDots loading={1}>
+              <Dot delay={0} />
+              <Dot delay={0.16} />
+              <Dot delay={0.32} />
+            </BouncingDots>
+          </div>
+        )}
+        
         {props.isLast && <ThinkingIndicator historyItem={props.item} />}
       </div>
 
@@ -115,7 +106,7 @@ export default function StepContainer(props: StepContainerProps) {
           className={`mt-2 h-7 transition-opacity duration-300 ease-in-out ${isBeforeLatestSummary ? "opacity-35" : ""}`}
         >
           <ResponseActions
-            isTruncated={isTruncated}
+            isTruncated={false} // isTruncated is no longer managed by useEffect
             onDelete={onDelete}
             onContinueGeneration={onContinueGeneration}
             index={props.index}
