@@ -10,6 +10,7 @@ import { selectSelectedChatModel } from "../../../redux/slices/configSlice";
 import InputContextToolbar from "../InputContextToolbar";
 import InputToolbar, { ToolbarOptions } from "../InputToolbar";
 import { ComboBoxItem } from "../types";
+import { useCurrentFileDetection } from "../useCurrentFileDetection";
 import { DragOverlay } from "./components/DragOverlay";
 import { InputBoxDiv } from "./components/StyledComponents";
 import { useMainEditor } from "./MainEditorProvider";
@@ -139,40 +140,16 @@ export function TipTapEditor(props: TipTapEditorProps) {
   const [activeKey, setActiveKey] = useState<string | null>(null);
   const [showContextButton, setShowContextButton] = useState(true);
   const [showFullLayout, setShowFullLayout] = useState(true);
-  const [currentFileName, setCurrentFileName] = useState<string>("");
-  const [showFileBadge, setShowFileBadge] = useState(false);
 
-  // Get current file name when component mounts or editor changes
-  useEffect(() => {
-    const getCurrentFileName = async () => {
-      try {
-        const currentFile = await ideMessenger.request(
-          "getCurrentFile",
-          undefined,
-        );
-        if (currentFile.status === "success" && currentFile.content) {
-          // Extract filename from path
-          const fileName =
-            currentFile.content.path.split("/").pop() ||
-            currentFile.content.path.split("\\").pop() ||
-            "untitled";
-          setCurrentFileName(fileName);
-          setShowFileBadge(true); // Show badge immediately
-        } else {
-          setCurrentFileName("");
-          setShowFileBadge(false);
-        }
-      } catch (error) {
-        console.log("Could not get current file name:", error);
-        setCurrentFileName("");
-        setShowFileBadge(false);
-      }
-    };
-
-    if (ideMessenger && props.isMainInput) {
-      getCurrentFileName();
-    }
-  }, [ideMessenger, props.isMainInput]);
+  // Use the new file detection hook
+  const {
+    currentFileName,
+    showFileBadge,
+    addFileContextSafely,
+    updateFileBadgeVisibility,
+  } = useCurrentFileDetection({
+    isMainInput: props.isMainInput,
+  });
 
   // Control layout visibility based on prompt state
   useEffect(() => {
@@ -180,19 +157,20 @@ export function TipTapEditor(props: TipTapEditorProps) {
       // After prompt sent - hide everything
       setShowFullLayout(false);
       setShowContextButton(false);
-      setShowFileBadge(false);
+      updateFileBadgeVisibility(true, false);
     } else if (editor && editor.getText().trim() !== "") {
       // Has text but not streaming - hide context button and file badge
       setShowContextButton(false);
-      setShowFileBadge(false);
+      updateFileBadgeVisibility(false, true);
       setShowFullLayout(true);
     } else {
       // Default state - show everything
       setShowFullLayout(true);
       setShowContextButton(true);
       // Keep file badge visible when input is empty
+      updateFileBadgeVisibility(false, false);
     }
-  }, [isStreaming, editor]);
+  }, [isStreaming, editor, updateFileBadgeVisibility]);
 
   const insertCharacterWithWhitespace = useCallback(
     (char: string) => {
@@ -214,29 +192,6 @@ export function TipTapEditor(props: TipTapEditorProps) {
     },
     [editor, isStreaming],
   );
-
-  // Function to safely add current file context when user needs it
-  const addFileContextSafely = useCallback(() => {
-    if (
-      editor &&
-      currentFileName &&
-      !editor.getText().includes(`@${currentFileName}`)
-    ) {
-      try {
-        // Use a simple insert operation that's less likely to conflict
-        const currentText = editor.getText();
-        if (currentText.trim() === "") {
-          editor.commands.insertContent(`@${currentFileName}`);
-        } else {
-          editor.commands.insertContent(` @${currentFileName}`);
-        }
-        setShowFileBadge(false); // Hide badge after adding
-        console.log(`✅ Context added: @${currentFileName}`);
-      } catch (error) {
-        console.log("Could not add file context:", error);
-      }
-    }
-  }, [editor, currentFileName]);
 
   const { handleKeyUp, handleKeyDown } = useEditorEventHandlers({
     editor,
@@ -283,67 +238,6 @@ export function TipTapEditor(props: TipTapEditorProps) {
     },
     [isInEdit, blurTimeout],
   );
-
-  // Listen for active text editor changes - multiple event types for reliability
-  useEffect(() => {
-    const handleActiveEditorChange = (event: MessageEvent) => {
-      // Listen to multiple event types for better reliability
-      if (
-        event.data &&
-        (event.data.type === "didChangeActiveTextEditor" ||
-          event.data.type === "onDidChangeActiveTextEditor" ||
-          event.data.type === "onDidOpenTextDocument" ||
-          event.data.type === "onDidChangeVisibleTextEditors") &&
-        event.data.filepath
-      ) {
-        // Extract filename from the new filepath
-        const filepath = event.data.filepath;
-        const fileName =
-          filepath.split("/").pop() || filepath.split("\\").pop() || "untitled";
-
-        // Update filename and show badge immediately
-        setCurrentFileName(fileName);
-        setShowFileBadge(true);
-
-        console.log(`Tab switched to: ${fileName}`);
-      }
-    };
-
-    // Add the listener for multiple event types
-    window.addEventListener("message", handleActiveEditorChange);
-
-    // Also add active polling as fallback for immediate updates
-    const pollInterval = setInterval(async () => {
-      if (ideMessenger && props.isMainInput) {
-        try {
-          const currentFile = await ideMessenger.request(
-            "getCurrentFile",
-            undefined,
-          );
-          if (currentFile.status === "success" && currentFile.content) {
-            const fileName =
-              currentFile.content.path.split("/").pop() ||
-              currentFile.content.path.split("\\").pop() ||
-              "untitled";
-
-            // Only update if filename actually changed
-            if (fileName !== currentFileName) {
-              setCurrentFileName(fileName);
-              setShowFileBadge(true);
-              console.log(`Polling detected: ${fileName}`);
-            }
-          }
-        } catch (error) {
-          // Silent error for polling
-        }
-      }
-    }, 1000); // Poll every 1 second
-
-    return () => {
-      window.removeEventListener("message", handleActiveEditorChange);
-      clearInterval(pollInterval);
-    };
-  }, [ideMessenger, props.isMainInput, currentFileName]); // Include dependencies for polling
 
   return (
     <InputBoxDiv
