@@ -69,17 +69,17 @@ export default function InputContextToolbar(props: InputContextToolbarProps) {
           size="sm"
           onClick={addCurrentFileAsContext}
           title={`Add ${props.currentFileName} as context`}
-          className="flex h-5 items-center justify-center gap-1 hover:text-red-700"
+          className="flex p-0 px-1 items-center justify-center gap-1 hover:text-red-700"
           onMouseEnter={() => setIsFileContextHovered(true)}
           onMouseLeave={() => setIsFileContextHovered(false)}
         >
           {isFileContextHovered ? (
-            <XMarkIcon className="h-3 w-3" />
+            <XMarkIcon className="h-4 w-4" />
           ) : (
             <FileIcon
               filename={props.currentFileName}
-              height="12px"
-              width="12px"
+              height="16px"
+              width="16px"
             />
           )}
           {/* Filename display - truncated if too long */}
