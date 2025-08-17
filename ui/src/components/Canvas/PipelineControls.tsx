@@ -136,4 +136,3 @@ export const PipelineControls: React.FC<PipelineControlsProps> = ({
     </div>
   );
 };
-

@@ -255,7 +255,7 @@ This Canvas component is fully integrated with the Synapse core system and follo
     }
 
     if (type === "visualize" && stageName.includes("Mermaid")) {
-  return (
+      return (
         <div className="mermaid-rendering-visualization">
           <div className="mermaid-rendering-content">
             <h5>Mermaid Flowchart Rendering</h5>
@@ -308,9 +308,9 @@ This Canvas component is fully integrated with the Synapse core system and follo
         <p>Type: {type}</p>
         <p>Engine: {engine}</p>
         <p>Status: Ready for AI Analysis</p>
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
   // Check if content contains Mermaid flowchart
   const isMermaidFlowchart = (prompt: string) => {

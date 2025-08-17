@@ -175,4 +175,3 @@ export const PipelineStageRenderer: React.FC<PipelineStageRendererProps> = ({
     </div>
   );
 };
-

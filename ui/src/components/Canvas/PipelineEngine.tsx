@@ -177,4 +177,3 @@ export const PipelineEngine: React.FC<PipelineEngineProps> = ({
     </div>
   );
 };
-
