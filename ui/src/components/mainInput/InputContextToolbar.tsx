@@ -1,27 +1,35 @@
-import { AtSymbolIcon, DocumentIcon } from "@heroicons/react/24/outline";
+import {
+  AtSymbolIcon,
+  DocumentIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import { useState } from "react";
 import { Button } from "../ui";
 import { ToolTip } from "../ui/Tooltip";
-import { useContext } from "react";
-import { IdeMessengerContext } from "../../context/IdeMessenger";
 
 interface InputContextToolbarProps {
   onAddContextItem?: () => void;
   hideAddContext?: boolean;
   isVisible?: boolean; // Control visibility - hide when prompt sent, show when typing
+  currentFileName?: string; // Current file name to display
 }
 
 export default function InputContextToolbar(props: InputContextToolbarProps) {
-  const ideMessenger = useContext(IdeMessengerContext);
-
-  // Always show the context toolbar at the top
-  // if (props.hideAddContext || !props.isVisible) {
-  //   return null;
-  // }
+  const [showAutoContext, setShowAutoContext] = useState(true);
 
   const addCurrentFileAsContext = () => {
-    // Send message to VS Code to add current file as context
-    ideMessenger.post("context/addCurrentFile", undefined);
+    // Use the existing context system
+    props.onAddContextItem?.();
   };
+
+  const removeAutoContext = () => {
+    setShowAutoContext(false);
+  };
+
+  // Hide when context is disabled, when not visible, or when streaming
+  if (props.hideAddContext || !props.isVisible) {
+    return null;
+  }
 
   return (
     <div className="mb-1 flex justify-start gap-2">
@@ -39,19 +47,46 @@ export default function InputContextToolbar(props: InputContextToolbarProps) {
         Insert @ character
       </ToolTip>
 
-      {/* Auto-add current file button */}
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={addCurrentFileAsContext}
-        title="Add current file as context"
-        className="flex h-5 w-5 items-center justify-center p-0"
-      >
-        <DocumentIcon className="h-3 w-3" />
-      </Button>
-      <ToolTip id="add-current-file-tooltip" place="top">
-        Add current file as context
-      </ToolTip>
+      {/* Auto-add current file button - only show if auto-context is enabled and there's a current file */}
+      {showAutoContext && props.currentFileName && (
+        <div className="flex items-center gap-1">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={addCurrentFileAsContext}
+            title={`Add ${props.currentFileName} as context`}
+            className="flex h-5 w-5 items-center justify-center p-0"
+          >
+            <DocumentIcon className="h-3 w-3" />
+          </Button>
+          <span className="max-w-32 truncate text-xs text-gray-500">
+            {props.currentFileName}
+          </span>
+        </div>
+      )}
+      {showAutoContext && props.currentFileName && (
+        <ToolTip id="add-current-file-tooltip" place="top">
+          Add {props.currentFileName} as context
+        </ToolTip>
+      )}
+
+      {/* Remove auto-context button */}
+      {showAutoContext && (
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={removeAutoContext}
+          title="Remove auto-context"
+          className="flex h-4 w-4 items-center justify-center p-0"
+        >
+          <XMarkIcon className="h-3 w-3" />
+        </Button>
+      )}
+      {showAutoContext && (
+        <ToolTip id="remove-auto-context-tooltip" place="top">
+          Remove auto-context
+        </ToolTip>
+      )}
     </div>
   );
 }

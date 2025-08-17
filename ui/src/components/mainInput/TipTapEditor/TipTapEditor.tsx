@@ -1,4 +1,3 @@
-import { AtSymbolIcon } from "@heroicons/react/24/outline";
 import { Editor, EditorContent, JSONContent } from "@tiptap/react";
 import { ContextProviderDescription, InputModifiers } from "core";
 import { modelSupportsImages } from "core/llm/autodetect";
@@ -8,7 +7,7 @@ import useIsOSREnabled from "../../../hooks/useIsOSREnabled";
 import useUpdatingRef from "../../../hooks/useUpdatingRef";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { selectSelectedChatModel } from "../../../redux/slices/configSlice";
-import { Button } from "../../ui";
+import InputContextToolbar from "../InputContextToolbar";
 import InputToolbar, { ToolbarOptions } from "../InputToolbar";
 import { ComboBoxItem } from "../types";
 import { DragOverlay } from "./components/DragOverlay";
@@ -18,7 +17,6 @@ import "./TipTapEditor.css";
 import { createEditorConfig, getPlaceholderText } from "./utils/editorConfig";
 import { handleImageFile } from "./utils/imageUtils";
 import { useEditorEventHandlers } from "./utils/keyHandlers";
-import InputContextToolbar from "../InputContextToolbar";
 
 export interface TipTapEditorProps {
   availableContextProviders: ContextProviderDescription[];
@@ -88,7 +86,28 @@ export function TipTapEditor(props: TipTapEditorProps) {
     if (props.isMainInput) {
       editor?.commands.clearContent(true);
     }
-  }, [editor, props.isMainInput]);
+  }, [props.isMainInput, editor]);
+
+  // Show @ button again when input is cleared
+  useEffect(() => {
+    if (editor && editor.getText().trim() === "") {
+      setShowContextButton(true);
+    }
+  }, [editor]);
+
+  // Hide @ button when streaming starts (prompt sent)
+  useEffect(() => {
+    if (isStreaming) {
+      setShowContextButton(false);
+    }
+  }, [isStreaming]);
+
+  // Hide @ button when there's text in the input
+  useEffect(() => {
+    if (editor && editor.getText().trim() !== "") {
+      setShowContextButton(false);
+    }
+  }, [editor]);
 
   useEffect(() => {
     if (isInEdit) {
@@ -117,8 +136,63 @@ export function TipTapEditor(props: TipTapEditorProps) {
   }, [props.isMainInput, isStreaming, editor]);
 
   const [showDragOverMsg, setShowDragOverMsg] = useState(false);
-
   const [activeKey, setActiveKey] = useState<string | null>(null);
+  const [showContextButton, setShowContextButton] = useState(true);
+  const [showFullLayout, setShowFullLayout] = useState(true);
+  const [currentFileName, setCurrentFileName] = useState<string>("");
+  const [showFileBadge, setShowFileBadge] = useState(false);
+
+  // Get current file name when component mounts or editor changes
+  useEffect(() => {
+    const getCurrentFileName = async () => {
+      try {
+        const currentFile = await ideMessenger.request(
+          "getCurrentFile",
+          undefined,
+        );
+        if (currentFile.status === "success" && currentFile.content) {
+          // Extract filename from path
+          const fileName =
+            currentFile.content.path.split("/").pop() ||
+            currentFile.content.path.split("\\").pop() ||
+            "untitled";
+          setCurrentFileName(fileName);
+          setShowFileBadge(true); // Show badge immediately
+        } else {
+          setCurrentFileName("");
+          setShowFileBadge(false);
+        }
+      } catch (error) {
+        console.log("Could not get current file name:", error);
+        setCurrentFileName("");
+        setShowFileBadge(false);
+      }
+    };
+
+    if (ideMessenger && props.isMainInput) {
+      getCurrentFileName();
+    }
+  }, [ideMessenger, props.isMainInput]);
+
+  // Control layout visibility based on prompt state
+  useEffect(() => {
+    if (isStreaming) {
+      // After prompt sent - hide everything
+      setShowFullLayout(false);
+      setShowContextButton(false);
+      setShowFileBadge(false);
+    } else if (editor && editor.getText().trim() !== "") {
+      // Has text but not streaming - hide context button and file badge
+      setShowContextButton(false);
+      setShowFileBadge(false);
+      setShowFullLayout(true);
+    } else {
+      // Default state - show everything
+      setShowFullLayout(true);
+      setShowContextButton(true);
+      // Keep file badge visible when input is empty
+    }
+  }, [isStreaming, editor]);
 
   const insertCharacterWithWhitespace = useCallback(
     (char: string) => {
@@ -133,9 +207,36 @@ export function TipTapEditor(props: TipTapEditorProps) {
           editor.commands.insertContent(char);
         }
       }
+      // Hide the @ button after it's clicked, but only when not streaming
+      if (char === "@" && !isStreaming) {
+        setShowContextButton(false);
+      }
     },
-    [editor],
+    [editor, isStreaming],
   );
+
+  // Function to safely add current file context when user needs it
+  const addFileContextSafely = useCallback(() => {
+    if (
+      editor &&
+      currentFileName &&
+      !editor.getText().includes(`@${currentFileName}`)
+    ) {
+      try {
+        // Use a simple insert operation that's less likely to conflict
+        const currentText = editor.getText();
+        if (currentText.trim() === "") {
+          editor.commands.insertContent(`@${currentFileName}`);
+        } else {
+          editor.commands.insertContent(` @${currentFileName}`);
+        }
+        setShowFileBadge(false); // Hide badge after adding
+        console.log(`✅ Context added: @${currentFileName}`);
+      } catch (error) {
+        console.log("Could not add file context:", error);
+      }
+    }
+  }, [editor, currentFileName]);
 
   const { handleKeyUp, handleKeyDown } = useEditorEventHandlers({
     editor,
@@ -151,6 +252,17 @@ export function TipTapEditor(props: TipTapEditorProps) {
       blurTimeout.current = null;
     }
   }, [blurTimeout]);
+
+  const handleFocus = useCallback(() => {
+    cancelBlurTimeout();
+    setShouldHideToolbar(false);
+    // Show full layout when input is focused
+    setShowFullLayout(true);
+    // Only show @ button when input is focused and empty
+    if (editor && editor.getText().trim() === "") {
+      setShowContextButton(true);
+    }
+  }, [cancelBlurTimeout, editor]);
 
   const handleBlur = useCallback(
     (e: React.FocusEvent) => {
@@ -172,10 +284,66 @@ export function TipTapEditor(props: TipTapEditorProps) {
     [isInEdit, blurTimeout],
   );
 
-  const handleFocus = useCallback(() => {
-    cancelBlurTimeout();
-    setShouldHideToolbar(false);
-  }, [cancelBlurTimeout]);
+  // Listen for active text editor changes - multiple event types for reliability
+  useEffect(() => {
+    const handleActiveEditorChange = (event: MessageEvent) => {
+      // Listen to multiple event types for better reliability
+      if (
+        event.data &&
+        (event.data.type === "didChangeActiveTextEditor" ||
+          event.data.type === "onDidChangeActiveTextEditor" ||
+          event.data.type === "onDidOpenTextDocument" ||
+          event.data.type === "onDidChangeVisibleTextEditors") &&
+        event.data.filepath
+      ) {
+        // Extract filename from the new filepath
+        const filepath = event.data.filepath;
+        const fileName =
+          filepath.split("/").pop() || filepath.split("\\").pop() || "untitled";
+
+        // Update filename and show badge immediately
+        setCurrentFileName(fileName);
+        setShowFileBadge(true);
+
+        console.log(`Tab switched to: ${fileName}`);
+      }
+    };
+
+    // Add the listener for multiple event types
+    window.addEventListener("message", handleActiveEditorChange);
+
+    // Also add active polling as fallback for immediate updates
+    const pollInterval = setInterval(async () => {
+      if (ideMessenger && props.isMainInput) {
+        try {
+          const currentFile = await ideMessenger.request(
+            "getCurrentFile",
+            undefined,
+          );
+          if (currentFile.status === "success" && currentFile.content) {
+            const fileName =
+              currentFile.content.path.split("/").pop() ||
+              currentFile.content.path.split("\\").pop() ||
+              "untitled";
+
+            // Only update if filename actually changed
+            if (fileName !== currentFileName) {
+              setCurrentFileName(fileName);
+              setShowFileBadge(true);
+              console.log(`Polling detected: ${fileName}`);
+            }
+          }
+        } catch (error) {
+          // Silent error for polling
+        }
+      }
+    }, 1000); // Poll every 1 second
+
+    return () => {
+      window.removeEventListener("message", handleActiveEditorChange);
+      clearInterval(pollInterval);
+    };
+  }, [ideMessenger, props.isMainInput, currentFileName]); // Include dependencies for polling
 
   return (
     <InputBoxDiv
@@ -190,6 +358,12 @@ export function TipTapEditor(props: TipTapEditorProps) {
       }
       onClick={() => {
         editor?.commands.focus();
+        // Show full layout when clicking in input
+        setShowFullLayout(true);
+        // Only show @ button when clicking in input if it's empty
+        if (editor && editor.getText().trim() === "") {
+          setShowContextButton(true);
+        }
       }}
       onDragOver={(event) => {
         event.preventDefault();
@@ -240,7 +414,8 @@ export function TipTapEditor(props: TipTapEditorProps) {
         <InputContextToolbar
           onAddContextItem={() => insertCharacterWithWhitespace("@")}
           hideAddContext={props.toolbarOptions?.hideAddContext}
-          isVisible={!isStreaming && editor?.isFocused}
+          isVisible={!isStreaming && showContextButton}
+          currentFileName={currentFileName}
         />
         <EditorContent
           className={`scroll-container overflow-y-scroll ${props.isMainInput ? "max-h-[70vh]" : ""}`}
@@ -254,7 +429,7 @@ export function TipTapEditor(props: TipTapEditorProps) {
           isMainInput={props.isMainInput}
           toolbarOptions={props.toolbarOptions}
           activeKey={activeKey}
-          hidden={shouldHideToolbar && !props.isMainInput}
+          hidden={!showFullLayout || (shouldHideToolbar && !props.isMainInput)}
           onAddContextItem={() => insertCharacterWithWhitespace("@")}
           onEnter={onEnterRef.current}
           onStopContinue={props.onStopContinue}
