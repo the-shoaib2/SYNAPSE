@@ -132,8 +132,8 @@ function InputToolbar(props: InputToolbarProps) {
                   </HoverItem>
                 </>
               ))}
-            {/* @ button commented out - Attach Context
-            {props.toolbarOptions?.hideAddContext || (
+            {/* @ button moved to top InputContextToolbar */}
+            {/* {props.toolbarOptions?.hideAddContext || (
               <HoverItem onClick={props.onAddContextItem}>
                 <AtSymbolIcon
                   data-tooltip-id="add-context-item-tooltip"
@@ -144,8 +144,7 @@ function InputToolbar(props: InputToolbarProps) {
                   Attach Context
                 </ToolTip>
               </HoverItem>
-            )}
-            */}
+            )} */}
             {defaultModel?.underlyingProviderName === "anthropic" && (
               <HoverItem
                 onClick={() =>

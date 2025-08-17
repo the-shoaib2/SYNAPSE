@@ -18,6 +18,7 @@ import "./TipTapEditor.css";
 import { createEditorConfig, getPlaceholderText } from "./utils/editorConfig";
 import { handleImageFile } from "./utils/imageUtils";
 import { useEditorEventHandlers } from "./utils/keyHandlers";
+import InputContextToolbar from "../InputContextToolbar";
 
 export interface TipTapEditorProps {
   availableContextProviders: ContextProviderDescription[];
@@ -236,19 +237,11 @@ export function TipTapEditor(props: TipTapEditorProps) {
       }}
     >
       <div className="px-2.5 pb-1 pt-2">
-        {/* @ button in top corner */}
-        <div className="mb-1 flex justify-start">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => insertCharacterWithWhitespace("@")}
-            title="Insert @ character"
-            className="flex h-5 w-5 items-center justify-center p-0"
-          >
-            <AtSymbolIcon className="h-3 w-3" />
-          </Button>
-        </div>
-
+        <InputContextToolbar
+          onAddContextItem={() => insertCharacterWithWhitespace("@")}
+          hideAddContext={props.toolbarOptions?.hideAddContext}
+          isVisible={!isStreaming && editor?.isFocused}
+        />
         <EditorContent
           className={`scroll-container overflow-y-scroll ${props.isMainInput ? "max-h-[70vh]" : ""}`}
           spellCheck={false}
