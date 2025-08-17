@@ -22,7 +22,6 @@ declare global {
     };
     colorThemeName?: string;
     workspacePaths?: string[];
-
   }
 }
 
@@ -456,7 +455,7 @@ export interface PromptLog {
   completion: string;
 }
 
-export type MessageModes = "chat" | "agent" | "plan";
+export type MessageModes = "chat" | "agent" | "plan" | "canvas";
 
 export type ToolStatus =
   | "generating" // Tool call arguments are being streamed from the LLM
@@ -1160,6 +1159,7 @@ export interface ModelDescription {
   completionOptions?: BaseCompletionOptions;
   baseAgentSystemMessage?: string;
   basePlanSystemMessage?: string;
+  baseCanvasSystemMessage?: string;
   baseChatSystemMessage?: string;
   requestOptions?: RequestOptions;
   promptTemplates?: { [key: string]: string };

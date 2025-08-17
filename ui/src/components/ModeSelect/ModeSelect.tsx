@@ -16,9 +16,9 @@ import { selectUseSystemMessageTools } from "../../redux/selectors/selectUseSyst
 import { selectSelectedChatModel } from "../../redux/slices/configSlice";
 import { setMode } from "../../redux/slices/sessionSlice";
 import { getFontSize, getMetaKeyLabel } from "../../util";
-import { ToolTip } from "../ui/Tooltip";
 import { useMainEditor } from "../mainInput/TipTapEditor";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "../ui";
+import { ToolTip } from "../ui/Tooltip";
 import { ModeIcon } from "./ModeIcon";
 
 export function ModeSelect() {
@@ -61,6 +61,8 @@ export function ModeSelect() {
       dispatch(setMode("plan"));
     } else if (mode === "plan") {
       dispatch(setMode("agent"));
+    } else if (mode === "agent") {
+      dispatch(setMode("canvas"));
     } else {
       dispatch(setMode("chat"));
     }
@@ -123,7 +125,13 @@ export function ModeSelect() {
         >
           <ModeIcon mode={mode} />
           <span className="hidden sm:block">
-            {mode === "chat" ? "Chat" : mode === "agent" ? "Agent" : "Plan"}
+            {mode === "chat"
+              ? "Chat"
+              : mode === "plan"
+                ? "Plan"
+                : mode === "agent"
+                  ? "Agent"
+                  : "Canvas"}
           </span>
           <ChevronDownIcon
             className="h-2 w-2 flex-shrink-0"
@@ -206,6 +214,35 @@ export function ModeSelect() {
                 {!isGoodAtAgentMode && notGreatAtAgent}
                 <CheckIcon
                   className={`ml-auto h-3 w-3 ${mode === "agent" ? "" : "opacity-0"}`}
+                />
+              </>
+            ) : (
+              notSupported
+            )}
+          </ListboxOption>
+
+          <ListboxOption value="canvas" className={"gap-1"}>
+            <div className="flex flex-row items-center gap-1.5">
+              <ModeIcon mode="canvas" />
+              <span className="">Canvas</span>
+              <InformationCircleIcon
+                data-tooltip-id="canvas-tip"
+                className="h-2.5 w-2.5 flex-shrink-0"
+              />
+              <ToolTip
+                id="canvas-tip"
+                style={{
+                  zIndex: 200001,
+                }}
+              >
+                Visual workspace with all tools available
+              </ToolTip>
+            </div>
+            {isAgentSupported ? (
+              <>
+                {!isGoodAtAgentMode && notGreatAtAgent}
+                <CheckIcon
+                  className={`ml-auto h-3 w-3 ${mode === "canvas" ? "" : "opacity-0"}`}
                 />
               </>
             ) : (

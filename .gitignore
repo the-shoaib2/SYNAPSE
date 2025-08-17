@@ -157,8 +157,8 @@ Icon?
 notes.md
 *.notes.md
 
-manual-testing-sandbox/.idea/**
-manual-testing-sandbox/.synapse/**
+sandbox/.idea/**
+sandbox/.synapse/**
 extensions/intellij/.idea/**
 
 **/.idea/workspace.xml

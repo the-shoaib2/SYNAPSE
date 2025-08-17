@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
-    ContextItemId,
-    ContextItemWithId,
-    RuleWithSource,
-    UserChatMessage,
+  ContextItemId,
+  ContextItemWithId,
+  RuleWithSource,
+  UserChatMessage,
 } from "../..";
 import { getApplicableRules } from "./getSystemMessageWithRules";
 
@@ -13,7 +13,7 @@ describe("Nested directory rules application", () => {
     name: "Nested Folder Rule",
     rule: "HELLO WORLD THIS IS A RULE",
     source: "rules-block",
-    ruleFile: "manual-testing-sandbox/nested-folder/rules.md",
+    ruleFile: "sandbox/nested-folder/rules.md",
     // No globs specified
   };
 
@@ -31,7 +31,7 @@ describe("Nested directory rules application", () => {
       id: { providerTitle: "file", itemId: "nested1" } as ContextItemId,
       uri: {
         type: "file",
-        value: "manual-testing-sandbox/nested-folder/hellonested.py",
+        value: "sandbox/nested-folder/hellonested.py",
       },
       content: 'print("Hello nested")',
       name: "hellonested.py",
@@ -56,7 +56,7 @@ describe("Nested directory rules application", () => {
     const messageWithNestedFile: UserChatMessage = {
       role: "user",
       content:
-        'Can you explain this file?\n```python manual-testing-sandbox/nested-folder/hellonested.py\nprint("Hello nested")\n```',
+        'Can you explain this file?\n```python sandbox/nested-folder/hellonested.py\nprint("Hello nested")\n```',
     };
 
     // Apply rules with the message containing a nested file reference
@@ -133,13 +133,13 @@ describe("Nested directory rules application", () => {
       description: "Python file in utils",
     };
 
-    // A file in manual-testing-sandbox/
+    // A file in sandbox/
     const manualTestingPythonFileContext: ContextItemWithId = {
       id: { providerTitle: "file", itemId: "python3" } as ContextItemId,
-      uri: { type: "file", value: "manual-testing-sandbox/pythonfile.py" },
+      uri: { type: "file", value: "sandbox/pythonfile.py" },
       content: 'print("Hello")',
       name: "pythonfile.py",
-      description: "Python file in manual-testing-sandbox",
+      description: "Python file in sandbox",
     };
 
     // Apply src rule to src file - should match
@@ -162,7 +162,7 @@ describe("Nested directory rules application", () => {
     expect(applicableRules.map((r) => r.name)).not.toContain("Src Python Rule");
     expect(applicableRules.map((r) => r.name)).toContain("Utils Python Rule");
 
-    // Apply both rules to manual-testing-sandbox file - should not match either
+    // Apply both rules to sandbox file - should not match either
     applicableRules = getApplicableRules(
       undefined,
       [srcPythonRule, utilsPythonRule],

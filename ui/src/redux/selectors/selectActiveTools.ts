@@ -29,6 +29,7 @@ export const selectActiveTools = createSelector(
           (t) => t.group !== BUILT_IN_GROUP_NAME || t.readonly,
         );
       }
+      // Both agent and canvas modes have access to all tools
       return enabledTools;
     }
   },

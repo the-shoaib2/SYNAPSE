@@ -13,3 +13,4 @@ class MyClass:
 
 
 raise Exception("This is an error")
+

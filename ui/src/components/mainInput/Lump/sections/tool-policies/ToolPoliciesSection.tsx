@@ -49,6 +49,8 @@ export const ToolPoliciesSection = () => {
         return "All tools disabled in Chat, switch to Plan or Agent mode to use tools";
       case "plan":
         return "Read-only/MCP tools available in Plan mode";
+      case "canvas":
+        return "All tools available in Canvas mode with visual workspace";
       default:
         return "";
     }
@@ -58,7 +60,7 @@ export const ToolPoliciesSection = () => {
 
   return (
     <>
-      {(mode === "chat" || mode === "plan") && (
+      {(mode === "chat" || mode === "plan" || mode === "canvas") && (
         <div className="bg-background sticky top-0 z-10 my-1 mb-3">
           <Alert type="info" size="sm">
             <span className="text-2xs italic">{message}</span>

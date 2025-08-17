@@ -1,0 +1,1125 @@
+/* Canvas Container */
+.canvas-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 400px;
+  background-color: var(--vscode-editor-background);
+  color: var(--vscode-editor-foreground);
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Canvas Tab Container */
+.canvas-tab-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: var(--vscode-editor-background);
+  color: var(--vscode-editor-foreground);
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+/* Canvas Tab Header */
+.canvas-tab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: var(--vscode-tab-activeBackground);
+  color: var(--vscode-tab-activeForeground);
+  border-bottom: 1px solid var(--vscode-tab-border);
+  min-height: 36px;
+  flex-shrink: 0;
+}
+
+.canvas-tab-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.canvas-tab-icon {
+  font-size: 16px;
+}
+
+.canvas-tab-text {
+  font-size: 13px;
+}
+
+.canvas-tab-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: var(--vscode-tab-activeForeground);
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.1s ease;
+}
+
+.canvas-tab-close:hover {
+  background-color: var(--vscode-toolbar-hoverBackground);
+}
+
+/* Canvas Tab Content */
+.canvas-tab-content {
+  flex: 1;
+  overflow: hidden;
+  background-color: var(--vscode-editor-background);
+  position: relative;
+}
+
+/* Pipeline Engine Styles */
+.pipeline-engine {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pipeline-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pipeline-header h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 8px;
+}
+
+.pipeline-header p {
+  color: var(--vscode-editor-foreground);
+  opacity: 0.8;
+}
+
+.pipeline-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pipeline-stage {
+  transition: all 0.3s ease;
+}
+
+.pipeline-stage:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pipeline-workspace {
+  background-color: var(--vscode-editor-background);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Canvas Empty State */
+.canvas-empty-state {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canvas-header {
+  text-align: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.canvas-header h1 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  margin: 0;
+}
+
+.canvas-content {
+  padding: 20px;
+}
+
+/* AI Content Display */
+.ai-content-display {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.ai-content-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.ai-content-header h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 5px;
+}
+
+.ai-content-header p {
+  color: var(--vscode-editor-foreground);
+  opacity: 0.8;
+}
+
+.ai-content-body {
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.ai-content-text {
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--vscode-editor-foreground);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0;
+}
+
+.ai-content-footer {
+  text-align: center;
+  padding: 15px;
+  background-color: var(--vscode-editor-background);
+  border-radius: 6px;
+  border: 1px solid var(--vscode-panel-border);
+}
+
+/* User Prompt Display */
+.user-prompt-display {
+  max-width: 1000px;
+  margin: 0 auto 20px auto;
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.user-prompt-header {
+  background-color: var(--vscode-editor-background);
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.user-prompt-header h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 5px;
+}
+
+.user-prompt-header p {
+  color: var(--vscode-editor-foreground);
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.user-prompt-body {
+  padding: 20px;
+  background-color: var(--vscode-editor-background);
+}
+
+.user-prompt-text {
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--vscode-editor-foreground);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0;
+  background-color: var(--vscode-editor-background);
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid var(--vscode-panel-border);
+}
+
+/* Analysis Status */
+.analysis-status {
+  text-align: center;
+  padding: 30px 20px;
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.analysis-status h3 {
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 10px;
+}
+
+.analysis-status p {
+  color: var(--vscode-editor-foreground);
+  opacity: 0.7;
+}
+
+/* Visualization Workspace */
+.visualization-workspace {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.visualization-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 8px;
+}
+
+.visualization-header h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 10px;
+}
+
+.visualization-header p {
+  color: var(--vscode-editor-foreground);
+  opacity: 0.8;
+}
+
+.core-integration-info {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.core-integration-info small {
+  color: var(--vscode-editor-foreground);
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.visualization-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.visualization-stage {
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.stage-header {
+  padding: 15px 20px;
+  background-color: var(--vscode-editor-background);
+  border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.stage-header h4 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 5px;
+}
+
+.stage-header p {
+  color: var(--vscode-editor-foreground);
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.stage-visualization {
+  padding: 20px;
+}
+
+/* Explanation Visualization */
+.explanation-visualization {
+  background-color: var(--vscode-editor-background);
+}
+
+.explanation-content h5 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 15px;
+}
+
+.explanation-details p {
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.explanation-details ul {
+  color: var(--vscode-editor-foreground);
+  padding-left: 20px;
+}
+
+.explanation-details li {
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.stage-details {
+  margin-top: 15px;
+  padding: 12px;
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.stage-details strong {
+  color: var(--vscode-editor-foreground);
+  display: inline-block;
+  min-width: 80px;
+}
+
+.system-prompt-info {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.system-prompt-info strong {
+  color: var(--vscode-editor-foreground);
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Simulation Visualization */
+.simulation-visualization {
+  background-color: var(--vscode-editor-background);
+}
+
+.simulation-content h5 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 15px;
+}
+
+.simulation-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 4px;
+}
+
+.timeline-item .time {
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  min-width: 60px;
+}
+
+.timeline-item .event {
+  color: var(--vscode-editor-foreground);
+}
+
+/* Visualization Chart */
+.visualization-chart {
+  background-color: var(--vscode-editor-background);
+}
+
+.chart-content h5 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 15px;
+}
+
+.chart-container {
+  border: 2px dashed var(--vscode-panel-border);
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+}
+
+.chart-placeholder {
+  color: var(--vscode-editor-foreground);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.chart-placeholder small {
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+/* Mermaid Parsing Visualization */
+.mermaid-parsing-visualization {
+  background-color: var(--vscode-editor-background);
+}
+
+.mermaid-content h5 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 15px;
+}
+
+.mermaid-details p {
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.mermaid-syntax-check {
+  background-color: var(--vscode-editor-background);
+  padding: 12px;
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.mermaid-syntax-check strong {
+  color: var(--vscode-editor-foreground);
+  display: inline-block;
+  min-width: 80px;
+}
+
+/* Simulation Visualization */
+.simulation-visualization {
+  background-color: var(--vscode-editor-background);
+}
+
+.simulation-content h5 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 15px;
+}
+
+.simulation-details p {
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.simulation-status {
+  background-color: var(--vscode-editor-background);
+  padding: 12px;
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.simulation-status strong {
+  color: var(--vscode-editor-foreground);
+  display: inline-block;
+  min-width: 80px;
+}
+
+/* Mermaid Rendering Visualization */
+.mermaid-rendering-visualization {
+  background-color: var(--vscode-editor-background);
+}
+
+.mermaid-rendering-content h5 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 15px;
+}
+
+.mermaid-rendering-details p {
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.mermaid-rendering-status {
+  background-color: var(--vscode-editor-background);
+  padding: 12px;
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.mermaid-rendering-status strong {
+  color: var(--vscode-editor-foreground);
+  display: inline-block;
+  min-width: 80px;
+}
+
+.mermaid-actual-renderer {
+  margin-top: 20px;
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Mermaid Container Styles */
+.mermaid-container {
+  background-color: var(--vscode-editor-background);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mermaid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: var(--vscode-editor-background);
+  border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.mermaid-header h5 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+}
+
+.mermaid-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-indicator {
+  font-size: 0.9rem;
+  color: var(--vscode-editor-foreground);
+  opacity: 0.8;
+}
+
+.mermaid-chart-wrapper {
+  padding: 20px;
+  background-color: var(--vscode-editor-background);
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mermaid-chart {
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.mermaid-chart svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.mermaid-info {
+  padding: 10px 20px;
+  text-align: center;
+  background-color: var(--vscode-editor-background);
+  border-top: 1px solid var(--vscode-panel-border);
+}
+
+.mermaid-info small {
+  color: var(--vscode-editor-foreground);
+  opacity: 0.6;
+  font-size: 0.8rem;
+}
+
+/* Mermaid Error Styles */
+.mermaid-error {
+  background-color: var(--vscode-editor-background);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.error-content h5 {
+  color: #ef4444;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.error-content p {
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 15px;
+}
+
+.error-details {
+  background-color: var(--vscode-editor-background);
+  border: 1px solid #ef4444;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.error-details code {
+  color: #ef4444;
+  font-family: monospace;
+}
+
+.chart-definition {
+  margin-top: 15px;
+}
+
+.chart-definition h6 {
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.chart-definition pre {
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 4px;
+  padding: 15px;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  color: var(--vscode-editor-foreground);
+}
+
+/* Direct Mermaid Rendering */
+.direct-mermaid-rendering {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: var(--vscode-editor-background);
+  border: 2px solid var(--vscode-panel-border);
+  border-radius: 8px;
+}
+
+.direct-mermaid-rendering h4 {
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.direct-mermaid-rendering p {
+  color: var(--vscode-editor-foreground);
+  opacity: 0.8;
+  margin-bottom: 20px;
+}
+
+.mermaid-direct-container {
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Debug Info Styles */
+.mermaid-debug-info {
+  margin-top: 20px;
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.mermaid-debug-info details {
+  background-color: var(--vscode-editor-background);
+}
+
+.mermaid-debug-info summary {
+  padding: 10px 15px;
+  background-color: var(--vscode-editor-background);
+  border-bottom: 1px solid var(--vscode-panel-border);
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--vscode-editor-foreground);
+}
+
+.mermaid-debug-info summary:hover {
+  background-color: var(--vscode-editor-background);
+  opacity: 0.8;
+}
+
+.debug-content {
+  padding: 15px;
+  background-color: var(--vscode-editor-background);
+}
+
+.debug-content p {
+  margin-bottom: 10px;
+  color: var(--vscode-editor-foreground);
+}
+
+.debug-content pre {
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 4px;
+  padding: 10px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  color: var(--vscode-editor-foreground);
+  margin-top: 5px;
+}
+
+/* Default Visualization */
+.default-visualization {
+  background-color: var(--vscode-editor-background);
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.default-visualization p {
+  color: var(--vscode-editor-foreground);
+  margin-bottom: 8px;
+}
+
+/* Canvas Mode Button Styles */
+.canvas-mode-button-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  margin: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.canvas-new-window-btn {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.canvas-new-window-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.canvas-new-window-btn:active {
+  transform: translateY(0);
+}
+
+.canvas-title-bar .window-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.canvas-title-bar .window-controls .control {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.canvas-title-bar .window-controls .control.close {
+  background-color: #ff5f56;
+}
+
+.canvas-title-bar .window-controls .control.minimize {
+  background-color: #ffbd2e;
+}
+
+.canvas-title-bar .window-controls .control.maximize {
+  background-color: #27ca3f;
+}
+
+.canvas-title-bar .title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vscode-titleBar-activeForeground);
+}
+
+.canvas-title-bar .close-button {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  transition: background-color 0.2s ease;
+  color: var(--vscode-titleBar-activeForeground);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.canvas-title-bar .close-button:hover {
+  background-color: var(--vscode-toolbar-hoverBackground);
+}
+
+/* Canvas Content */
+.canvas-content {
+  flex: 1;
+  overflow: hidden;
+  background-color: var(--vscode-editor-background);
+}
+
+/* Canvas Layout */
+.canvas-layout {
+  display: flex;
+  height: 100%;
+  background-color: var(--vscode-editor-background);
+}
+
+.canvas-layout.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 8px;
+  padding: 8px;
+}
+
+.canvas-layout.split {
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-layout.split.horizontal {
+  flex-direction: row;
+}
+
+.canvas-layout.split.vertical {
+  flex-direction: column;
+}
+
+.canvas-layout.tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-layout.freeform {
+  /* Mermaid Test Section */
+  .mermaid-test-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--vscode-editor-background);
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 8px;
+  }
+
+  .mermaid-test-section h4 {
+    color: var(--vscode-editor-foreground);
+    margin-bottom: 15px;
+  }
+  position: relative;
+}
+
+/* Canvas Panel */
+.canvas-panel {
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.canvas-panel.active {
+  border-color: var(--vscode-focusBorder);
+  box-shadow: 0 0 0 1px var(--vscode-focusBorder);
+}
+
+.canvas-panel.dragging {
+  opacity: 0.7;
+  transform: scale(0.98);
+}
+
+.canvas-panel.resizing {
+  transition: none;
+}
+
+.canvas-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: var(--vscode-panel-background);
+  border-bottom: 1px solid var(--vscode-panel-border);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--vscode-panel-foreground);
+  user-select: none;
+}
+
+.canvas-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--vscode-panel-foreground);
+}
+
+.canvas-panel-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.canvas-panel-control {
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  transition: background-color 0.2s ease;
+  color: var(--vscode-panel-foreground);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.canvas-panel-control:hover {
+  background-color: var(--vscode-toolbar-hoverBackground);
+}
+
+.canvas-panel-content {
+  padding: 12px;
+  height: calc(100% - 40px);
+  overflow: auto;
+  background-color: var(--vscode-editor-background);
+  color: var(--vscode-editor-foreground);
+}
+
+/* Canvas Toolbar */
+.canvas-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: var(--vscode-toolbar-background);
+  border-bottom: 1px solid var(--vscode-panel-border);
+  gap: 8px;
+}
+
+.canvas-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.canvas-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.canvas-toolbar-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  color: var(--vscode-button-foreground);
+  background-color: var(--vscode-button-background);
+  border: 1px solid var(--vscode-button-border);
+  cursor: pointer;
+}
+
+.canvas-toolbar-button:hover {
+  background-color: var(--vscode-button-hoverBackground);
+}
+
+.canvas-toolbar-button:active {
+  background-color: var(--vscode-button-activeBackground);
+}
+
+.canvas-toolbar-button.secondary {
+  background-color: transparent;
+  color: var(--vscode-button-secondaryForeground);
+  border-color: var(--vscode-button-secondaryBorder);
+}
+
+.canvas-toolbar-button.secondary:hover {
+  background-color: var(--vscode-button-secondaryHoverBackground);
+}
+
+/* Canvas Panel Types */
+.canvas-panel.code-editor {
+  background-color: var(--vscode-editor-background);
+}
+
+.canvas-panel.output-console {
+  background-color: var(--vscode-terminal-background);
+  color: var(--vscode-terminal-foreground);
+}
+
+.canvas-panel.flowchart {
+  background-color: var(--vscode-editor-background);
+}
+
+.canvas-panel.timeline {
+  background-color: var(--vscode-editor-background);
+}
+
+.canvas-panel.table {
+  background-color: var(--vscode-editor-background);
+}
+
+.canvas-panel.chart {
+  background-color: var(--vscode-editor-background);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .canvas-layout.grid {
+    grid-template-columns: 1fr;
+  }
+
+  .canvas-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .canvas-toolbar-left,
+  .canvas-toolbar-right {
+    justify-content: center;
+  }
+}
+
+/* Scrollbars */
+.canvas-panel-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.canvas-panel-content::-webkit-scrollbar-track {
+  background-color: var(--vscode-scrollbarSlider-background);
+  border-radius: 4px;
+}
+
+.canvas-panel-content::-webkit-scrollbar-thumb {
+  background-color: var(--vscode-scrollbarSlider-activeBackground);
+  border-radius: 4px;
+}
+
+.canvas-panel-content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--vscode-scrollbarSlider-hoverBackground);
+}
+
+/* Focus and Selection */
+.canvas-panel:focus-within {
+  border-color: var(--vscode-focusBorder);
+  box-shadow: 0 0 0 1px var(--vscode-focusBorder);
+}
+
+.canvas-panel.selected {
+  border-color: var(--vscode-selection-background);
+  box-shadow: 0 0 0 2px var(--vscode-selection-background);
+}
+
+/* Drag and Drop */
+.canvas-panel.drag-over {
+  border-color: var(--vscode-focusBorder);
+  background-color: var(--vscode-list-hoverBackground);
+}
+
+.canvas-panel.drop-target {
+  border-color: var(--vscode-focusBorder);
+  background-color: var(--vscode-list-activeSelectionBackground);
+}

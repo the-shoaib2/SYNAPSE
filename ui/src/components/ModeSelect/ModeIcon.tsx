@@ -1,6 +1,7 @@
 import {
   ChatBubbleLeftIcon,
   SparklesIcon,
+  Square3Stack3DIcon,
   SwatchIcon,
 } from "@heroicons/react/24/outline";
 import { MessageModes } from "core";
@@ -19,6 +20,8 @@ export function ModeIcon({
       return <SparklesIcon className={className} />;
     case "plan":
       return <SwatchIcon className={className} />;
+    case "canvas":
+      return <Square3Stack3DIcon className={className} />;
     case "chat":
       return <ChatBubbleLeftIcon className={className} />;
   }

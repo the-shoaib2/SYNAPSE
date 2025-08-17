@@ -16,15 +16,17 @@ import {
 import { ErrorBoundary } from "react-error-boundary";
 import styled from "styled-components";
 import { Button, lightGray, vscBackground } from "../../components";
+import { CanvasWindow } from "../../components/Canvas";
 import { useFindWidget } from "../../components/find/FindWidget";
-import TimelineItem from "../../components/ui/TimelineItem";
 import { NewSessionButton } from "../../components/mainInput/belowMainInput/NewSessionButton";
 import ThinkingBlockPeek from "../../components/mainInput/belowMainInput/ThinkingBlockPeek";
 import SynapseInputBox from "../../components/mainInput/InputBox";
 import { useOnboardingCard } from "../../components/OnboardingCard";
 import StepContainer from "../../components/StepContainer";
 import { TabBar } from "../../components/TabBar/TabBar";
+import TimelineItem from "../../components/ui/TimelineItem";
 import { IdeMessengerContext } from "../../context/IdeMessenger";
+import { useCanvasWindow } from "../../hooks/useCanvasWindow";
 import { useWebviewListener } from "../../hooks/useWebviewListener";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
@@ -96,6 +98,7 @@ function fallbackRender({ error, resetErrorBoundary }: any) {
 }
 
 export function Chat() {
+  const [hasCanvasContent, setHasCanvasContent] = useState(false);
   const dispatch = useAppDispatch();
   const ideMessenger = useContext(IdeMessengerContext);
   const onboardingCard = useOnboardingCard();
@@ -151,6 +154,9 @@ export function Chat() {
     tabsRef,
     isStreaming,
   );
+
+  const { openCanvas, isCanvasOpen, canvasPanels, canvasTitle, closeCanvas } =
+    useCanvasWindow();
 
   const pendingToolCalls = useAppSelector(selectPendingToolCalls);
   const pendingApplyStates = useAppSelector(selectDoneApplyStates);
@@ -380,7 +386,15 @@ export function Chat() {
         </div>
       );
     },
-    [sendInput, isLastUserInput, history, stepsOpen],
+    [
+      sendInput,
+      isLastUserInput,
+      history,
+      stepsOpen,
+      mode,
+      isCanvasOpen,
+      openCanvas,
+    ],
   );
 
   const showScrollbar = showChatScrollbar ?? window.innerHeight > 5000;
@@ -415,6 +429,22 @@ export function Chat() {
         ))}
       </StepsDiv>
       <div className={"relative"}>
+        {/* Canvas Mode Button - shown only when in canvas mode AND there's content */}
+        {mode === "canvas" && hasCanvasContent && (
+          <div className="p-4 text-center">
+            <button
+              onClick={() => {
+                // Open canvas with the actual visualizations
+                openCanvas([], "Code Analysis Visualizations");
+              }}
+              className="rounded-lg bg-blue-500 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-600"
+              title="Open Canvas with Visualizations"
+            >
+              🎨 Open Canvas & View Visualizations
+            </button>
+          </div>
+        )}
+
         <SynapseInputBox
           isMainInput
           isLastUserInput={false}
@@ -455,6 +485,20 @@ export function Chat() {
           )}
         </div>
       </div>
+
+      {/* Canvas Window - shown when canvas is open */}
+      {isCanvasOpen && (
+        <CanvasWindow
+          isOpen={isCanvasOpen}
+          onClose={() => {
+            // Close canvas when user closes the window
+            closeCanvas();
+          }}
+          initialPanels={canvasPanels}
+          title={canvasTitle}
+          onContentAvailable={setHasCanvasContent}
+        />
+      )}
     </>
   );
 }
