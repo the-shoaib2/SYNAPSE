@@ -1,6 +1,6 @@
 import { KeyIcon } from "@heroicons/react/24/outline";
 import { OnboardingModes } from "core/protocol/core";
-import SynapseSignet from "../../svg/ContinueSignet";
+import SynapseSignet from "../../svg/SynapseSignet";
 import OllamaLogo from "../../svg/OllamaLogo";
 
 interface OnboardingCardTabsProps {

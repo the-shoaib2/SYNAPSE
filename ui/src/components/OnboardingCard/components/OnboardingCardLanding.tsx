@@ -7,7 +7,7 @@ import { selectCurrentOrg } from "../../../redux/slices/profilesSlice";
 import { selectFirstHubProfile } from "../../../redux/thunks/selectFirstHubProfile";
 import { hasPassedFTL } from "../../../util/freeTrial";
 import { ToolTip } from "../../ui/Tooltip";
-import SynapseLogo from "../../svg/ContinueLogo";
+import SynapseLogo from "../../svg/SynapseLogo";
 import { useOnboardingCard } from "../hooks/useOnboardingCard";
 
 export function OnboardingCardLanding({

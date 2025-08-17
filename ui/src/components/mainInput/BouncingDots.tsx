@@ -5,7 +5,7 @@ const bounce = keyframes`
     transform: translateY(0);
   }
   40% {
-    transform: translateY(-6px);
+    transform: translateY(-3px);
   }
 `;
 
@@ -19,8 +19,8 @@ const BouncingDots = styled.div<{ loading: 0 | 1 }>`
 `;
 
 const Dot = styled.div<{ delay: number }>`
-  width: 4px;
-  height: 4px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
   background-color: currentColor;
   animation: ${bounce} 1.4s ease-in-out infinite both;

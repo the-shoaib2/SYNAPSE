@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Canvas.css";
 import MermaidRenderer from "./MermaidRenderer";
+import { SmartVisualizationEngine } from "./SmartVisualizationEngine";
 import { PipelinePlan } from "./types";
 
 interface CanvasProps {
@@ -16,6 +17,7 @@ export const Canvas: React.FC<CanvasProps> = ({
   const [aiContent, setAiContent] = useState<string>("");
   const [userPrompt, setUserPrompt] = useState<string>("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [showSmartEngine, setShowSmartEngine] = useState(false);
 
   // Canvas System Prompt - integrated with core system
   const CANVAS_SYSTEM_PROMPT = `You are a Canvas AI Assistant specialized in code analysis and visualization, integrated with the Synapse core system.
@@ -815,6 +817,39 @@ This Canvas component is fully integrated with the Synapse core system and follo
                   🧪 Test Mermaid Flowchart
                 </button>
               </div>
+
+              {/* Smart Visualization Engine */}
+              <div className="smart-engine-section">
+                <h4 className="text-md mb-3 font-medium text-gray-600">
+                  Smart Visualization Engine
+                </h4>
+                <button
+                  onClick={() => {
+                    setShowSmartEngine(true);
+                  }}
+                  className="rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-600"
+                >
+                  🧠 Open Smart Engine
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Smart Visualization Engine Overlay */}
+        {showSmartEngine && (
+          <div className="smart-engine-overlay">
+            <div className="smart-engine-header">
+              <h3>🧠 Smart Visualization Engine</h3>
+              <button
+                onClick={() => setShowSmartEngine(false)}
+                className="close-btn"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="smart-engine-content">
+              <SmartVisualizationEngine />
             </div>
           </div>
         )}
