@@ -1,14 +1,11 @@
-import {
-  AtSymbolIcon,
-  DocumentIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { AtSymbolIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useMemo, useState } from "react";
 import { Button } from "../ui";
 import { ToolTip } from "../ui/Tooltip";
+import FileIcon from "../FileIcon";
 
 /**
- * Props interface for InputContextToolbar component
+ * InputContextToolbar component
  * Controls the context-related buttons displayed above the input area
  */
 interface InputContextToolbarProps {
@@ -79,7 +76,11 @@ export default function InputContextToolbar(props: InputContextToolbarProps) {
           {isFileContextHovered ? (
             <XMarkIcon className="h-3 w-3" />
           ) : (
-            <DocumentIcon className="h-3 w-3" />
+            <FileIcon
+              filename={props.currentFileName}
+              height="12px"
+              width="12px"
+            />
           )}
           {/* Filename display - truncated if too long */}
           <span className="max-w-32 truncate text-xs text-gray-500">
