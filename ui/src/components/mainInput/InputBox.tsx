@@ -90,7 +90,7 @@ export default function SynapseInputBox(props: SynapseInputBoxProps) {
     >
       <div className={`relative flex flex-col px-2`}>
         {props.isMainInput && <Lump />}
-        
+
         <div
           style={{
             borderRadius: defaultBorderRadius,
@@ -112,7 +112,6 @@ export default function SynapseInputBox(props: SynapseInputBoxProps) {
             inputId={props.inputId}
           />
         </div>
-      
       </div>
 
       {(appliedRules.length > 0 || contextItems.length > 0) && (
@@ -127,4 +126,3 @@ export default function SynapseInputBox(props: SynapseInputBoxProps) {
     </div>
   );
 }
-

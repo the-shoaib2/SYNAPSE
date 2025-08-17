@@ -473,7 +473,7 @@ export function Chat() {
                   className="flex items-center gap-2"
                 >
                   <ArrowLeftIcon className="h-3 w-3" />
-                  <span className="text-xs">Last Session</span>
+                  <span className="text-xs">Last Tab</span>
                 </NewSessionButton>
               )}
             </div>

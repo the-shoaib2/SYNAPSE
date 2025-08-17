@@ -1,3 +1,4 @@
+import { AtSymbolIcon } from "@heroicons/react/24/outline";
 import { Editor, EditorContent, JSONContent } from "@tiptap/react";
 import { ContextProviderDescription, InputModifiers } from "core";
 import { modelSupportsImages } from "core/llm/autodetect";
@@ -7,6 +8,7 @@ import useIsOSREnabled from "../../../hooks/useIsOSREnabled";
 import useUpdatingRef from "../../../hooks/useUpdatingRef";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { selectSelectedChatModel } from "../../../redux/slices/configSlice";
+import { Button } from "../../ui";
 import InputToolbar, { ToolbarOptions } from "../InputToolbar";
 import { ComboBoxItem } from "../types";
 import { DragOverlay } from "./components/DragOverlay";
@@ -234,6 +236,19 @@ export function TipTapEditor(props: TipTapEditorProps) {
       }}
     >
       <div className="px-2.5 pb-1 pt-2">
+        {/* @ button in top corner */}
+        <div className="mb-1 flex justify-start">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => insertCharacterWithWhitespace("@")}
+            title="Insert @ character"
+            className="flex h-5 w-5 items-center justify-center p-0"
+          >
+            <AtSymbolIcon className="h-3 w-3" />
+          </Button>
+        </div>
+
         <EditorContent
           className={`scroll-container overflow-y-scroll ${props.isMainInput ? "max-h-[70vh]" : ""}`}
           spellCheck={false}
