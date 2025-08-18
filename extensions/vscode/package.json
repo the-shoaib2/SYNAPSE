@@ -1,8 +1,9 @@
 {
   "name": "synapse",
-  "icon": "media/icon.png",
+  "icon": "media/logos/synapse-logo.svg",
+  "_comment": "Available logo files: media/logos/synapse-logo.svg (main), media/logos/SYNAPSE.svg (text logo), media/logos/SYNAPSE.gif (animated)",
   "author": "Synapse Dev, Inc",
-  "version": "1.1.76",
+  "version": "1.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/synapsedev/synapse"
@@ -615,7 +616,7 @@
         {
           "id": "synapse",
           "title": "Synapse",
-          "icon": "media/sidebar-icon.png"
+          "icon": "media/logos/synapse-logo.svg"
         }
       ],
       "panel": [
@@ -632,7 +633,7 @@
           "type": "webview",
           "id": "synapse.synapseUIView",
           "name": "Synapse",
-          "icon": "media/sidebar-icon.png",
+          "icon": "media/logos/synapse-logo.svg",
           "visibility": "visible"
         }
       ],
