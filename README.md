@@ -1,6 +1,6 @@
 <div align="center">
 
-![Synapse logo](media/synapse.gif)
+![Synapse logo](media/SYNAPSE.gif)
 
 </div>
 
