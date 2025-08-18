@@ -126,9 +126,9 @@ cached_embeddings.pkl
 .ruff_cache
 codeql
 
-# pnpm
-pnpm-lock.yaml
-.pnpm-store/
+# npm
+package-lock.json
+.npm
 
 # Docker build artifacts
 docker/build/

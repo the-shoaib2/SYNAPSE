@@ -13,7 +13,7 @@ const {
 const { copySqlite, copyEsbuild } = require("./download-copy-sqlite-esbuild");
 const { generateAndCopyConfigYamlSchema } = require("./generate-copy-config");
 const { installAndCopyNodeModules } = require("./install-copy-nodemodule");
-const { npmInstall } = require("./pnpm-install");
+const { npmInstall } = require("./npm-install");
 const { writeBuildTimestamp, synapseDir } = require("./utils");
 
 // Clear folders that will be packaged to ensure clean slate
@@ -75,12 +75,10 @@ void (async () => {
 
   if (!skipInstalls) {
     const installStart = Date.now();
-    console.log(
-      `[timer] Starting pnpm installs at ${new Date().toISOString()}`,
-    );
+    console.log(`[timer] Starting npm installs at ${new Date().toISOString()}`);
     await Promise.all([generateAndCopyConfigYamlSchema(), npmInstall()]);
     console.log(
-      `[timer] pnpm installs completed in ${Date.now() - installStart}ms`,
+      `[timer] npm installs completed in ${Date.now() - installStart}ms`,
     );
   }
 
@@ -90,8 +88,8 @@ void (async () => {
 
   // Then copy over the dist folder to the VSCode extension //
   const vscodeUiPath = path.join("../extensions/vscode/ui");
-rimrafSync(vscodeUiPath);
-fs.mkdirSync(vscodeUiPath, { recursive: true });
+  rimrafSync(vscodeUiPath);
+  fs.mkdirSync(vscodeUiPath, { recursive: true });
   const vscodeCopyStart = Date.now();
   console.log(`[timer] Starting VSCode copy at ${new Date().toISOString()}`);
   await new Promise((resolve, reject) => {
@@ -131,7 +129,7 @@ fs.mkdirSync(vscodeUiPath, { recursive: true });
   );
   await new Promise((resolve, reject) => {
     ncp(
-      path.join(__dirname, "../../../core/node_modules/onnxruntime-node/bin"),
+      path.join(__dirname, "../../../node_modules/onnxruntime-node/bin"),
       path.join(__dirname, "../bin"),
       {
         dereference: true,
@@ -190,7 +188,7 @@ fs.mkdirSync(vscodeUiPath, { recursive: true });
 
   await new Promise((resolve, reject) => {
     ncp(
-      path.join(__dirname, "../../../core/node_modules/tree-sitter-wasms/out"),
+      path.join(__dirname, "../../../node_modules/tree-sitter-wasms/out"),
       path.join(__dirname, "../out/tree-sitter-wasms"),
       { dereference: true },
       (error) => {
@@ -270,15 +268,17 @@ fs.mkdirSync(vscodeUiPath, { recursive: true });
       ]);
     } else {
       // Download esbuild from npm in tmp and copy over
-      console.log("[info] pnpm installing esbuild binary");
+      console.log("[info] npm installing esbuild binary");
       await installAndCopyNodeModules("esbuild@0.17.19", "@esbuild");
     }
+  } else {
+    console.log("[info] Skipping binary downloads due to SKIP_INSTALLS=true");
   }
 
   console.log("[info] Copying sqlite node binding from core");
   await new Promise((resolve, reject) => {
     ncp(
-      path.join(__dirname, "../../../core/node_modules/sqlite3/build"),
+      path.join(__dirname, "../../../node_modules/sqlite3/build"),
       path.join(__dirname, "../out/build"),
       { dereference: true },
       (error) => {
@@ -295,7 +295,7 @@ fs.mkdirSync(vscodeUiPath, { recursive: true });
   // Copied here as well for the VS Code test suite
   await new Promise((resolve, reject) => {
     ncp(
-      path.join(__dirname, "../../../core/node_modules/sqlite3/build"),
+      path.join(__dirname, "../../../node_modules/sqlite3/build"),
       path.join(__dirname, "../out"),
       { dereference: true },
       (error) => {
@@ -326,7 +326,7 @@ fs.mkdirSync(vscodeUiPath, { recursive: true });
         new Promise((resolve, reject) => {
           fs.mkdirSync(`out/node_modules/${mod}`, { recursive: true });
           ncp(
-            `node_modules/${mod}`,
+            path.join(__dirname, `../../../node_modules/${mod}`),
             `out/node_modules/${mod}`,
             { dereference: true },
             function (error) {
@@ -350,7 +350,10 @@ fs.mkdirSync(vscodeUiPath, { recursive: true });
 
   // Copy over any worker files
   fs.cpSync(
-    "node_modules/jsdom/lib/jsdom/living/xhr/xhr-sync-worker.js",
+    path.join(
+      __dirname,
+      "../../../node_modules/jsdom/lib/jsdom/living/xhr/xhr-sync-worker.js",
+    ),
     "out/xhr-sync-worker.js",
   );
 

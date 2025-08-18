@@ -5,7 +5,7 @@
 const { fork } = require("child_process");
 const path = require("path");
 
-const { execCmdSync } = require("./utils");
+const { execCmdSync } = require("../../../scripts/util/index");
 
 function npmInstall() {
   try {
