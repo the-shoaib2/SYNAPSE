@@ -1,6 +1,6 @@
 <div align="center">
 
-![Synapse logo](media/readme.png)
+![Synapse logo](media/synapse.gif)
 
 </div>
 
@@ -66,7 +66,7 @@ Learn about how to install and use Synapse in the docs [here](https://synapse.de
 
 ## Contributing
 
-Read the [contributing guide](https://github.com/synapsedev/synapse/blob/main/CONTRIBUTING.md), and
+Read the [contributing guide](https://github.com/the-shoaib2/SYNAPSE/blob/main/CONTRIBUTING.md), and
 join [#contribute on Discord](https://discord.gg/vapESyrFmJ).
 
 ## License
