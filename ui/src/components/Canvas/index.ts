@@ -1,28 +1,49 @@
-// Main Canvas component
-export { default as Canvas } from "./Canvas";
+// Main Canvas components
+export { Canvas } from "./Canvas";
+export { CanvasProvider, useCanvas } from "./CanvasContext";
+export { CanvasLayout } from "./CanvasLayout";
+export { CanvasRenderer } from "./CanvasRenderer";
+export { CanvasWindow } from "./CanvasWindow";
 
-// Canvas window component
-export { default as CanvasWindow } from "./CanvasWindow";
+// Enhanced Canvas with System Prompts
+export { default as AutoPromptProcessor } from "./AutoPromptProcessor";
+export { default as EnhancedCanvas } from "./EnhancedCanvas";
 
-// Pipeline Engine components
-export { PipelineControls } from "./PipelineControls";
-export { PipelineEngine } from "./PipelineEngine";
-export { PipelineStageRenderer } from "./PipelineStageRenderer";
+// Visual-Only Canvas (No Text Output)
+export { default as VisualCanvas } from "./VisualCanvas";
 
-// Mermaid rendering component
-export { default as MermaidRenderer } from "./MermaidRenderer";
+// System Prompts and Optimization
+export * from "./SystemPrompts";
+export * from "./VisualSystemPrompts";
 
-// Canvas context and hooks
-export { CanvasProvider, useCanvasContext } from "./CanvasContext";
+// Stage panel components
+export { ASTTreePanel } from "./stages/ASTTreePanel";
+export { EditorPanel } from "./stages/EditorPanel";
+export { ExplanationPanel } from "./stages/ExplanationPanel";
+export { FlowchartPanel } from "./stages/FlowchartPanel";
+export { GraphPanel } from "./stages/GraphPanel";
+export { TimelinePanel } from "./stages/TimelinePanel";
 
-// Canvas types
-export * from "./types";
+// Demo components
+export { ASTDemo } from "./stages/ASTDemo";
+export { FlowchartDemo } from "./stages/FlowchartDemo";
+export { default as SystemPromptDemo } from "./SystemPromptDemo";
+export { default as VisualCanvasDemo } from "./VisualCanvasDemo";
 
-// Canvas utilities
-export { PanelFactory } from "./PanelFactory";
+// Types
+export type {
+  AIAgent,
+  CanvasConfig,
+  CanvasPanel,
+  CanvasPanelType,
+  CanvasState,
+  EdgeData,
+  ExecutionStep,
+  GraphData,
+  NodeData,
+  PipelineStage,
+  VisualType,
+} from "./types";
 
-// Canvas layouts
-export { LayoutFreeform } from "./layouts/LayoutFreeform";
-export { LayoutGrid } from "./layouts/LayoutGrid";
-export { LayoutSplit } from "./layouts/LayoutSplit";
-export { LayoutTabs } from "./layouts/LayoutTabs";
+// Utilities
+export * from "./utils";

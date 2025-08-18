@@ -1,8 +1,8 @@
 import React from "react";
-import { CanvasPanelType } from "../../types";
+import { CanvasPanel } from "../../types";
 
 export interface ExecutionTraceContentProps {
-  panel: CanvasPanelType;
+  panel: CanvasPanel;
   isActive: boolean;
   onDataUpdate: (data: any) => void;
   onStateChange: (state: any) => void;
@@ -96,4 +96,3 @@ export const ExecutionTraceContent: React.FC<ExecutionTraceContentProps> = ({
     </div>
   );
 };
-

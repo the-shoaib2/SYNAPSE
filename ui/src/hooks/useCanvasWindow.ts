@@ -1,29 +1,26 @@
 import { useCallback, useState } from "react";
-import { CanvasPanelType } from "../components/Canvas/types";
+import { CanvasPanel } from "../components/Canvas/types";
 
 export const useCanvasWindow = () => {
   const [isCanvasOpen, setIsCanvasOpen] = useState(false);
-  const [canvasPanels, setCanvasPanels] = useState<CanvasPanelType[]>([]);
+  const [canvasPanels, setCanvasPanels] = useState<CanvasPanel[]>([]);
   const [canvasTitle, setCanvasTitle] = useState("Canvas Workspace");
 
-  const openCanvas = useCallback(
-    (panels?: CanvasPanelType[], title?: string) => {
-      if (panels) {
-        setCanvasPanels(panels);
-      }
-      if (title) {
-        setCanvasTitle(title);
-      }
-      setIsCanvasOpen(true);
-    },
-    [],
-  );
+  const openCanvas = useCallback((panels?: CanvasPanel[], title?: string) => {
+    if (panels) {
+      setCanvasPanels(panels);
+    }
+    if (title) {
+      setCanvasTitle(title);
+    }
+    setIsCanvasOpen(true);
+  }, []);
 
   const closeCanvas = useCallback(() => {
     setIsCanvasOpen(false);
   }, []);
 
-  const addCanvasPanel = useCallback((panel: CanvasPanelType) => {
+  const addCanvasPanel = useCallback((panel: CanvasPanel) => {
     setCanvasPanels((prev) => [...prev, panel]);
   }, []);
 

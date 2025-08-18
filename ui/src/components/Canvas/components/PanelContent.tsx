@@ -1,5 +1,5 @@
 import React from "react";
-import { CanvasPanelType } from "../types";
+import { CanvasPanel } from "../types";
 import { AIAnnotationsContent } from "./content/AIAnnotationsContent";
 import { AlgorithmSimulationContent } from "./content/AlgorithmSimulationContent";
 import { ASTVisualizerContent } from "./content/ASTVisualizerContent";
@@ -15,7 +15,7 @@ import { TimelineContent } from "./content/TimelineContent";
 import { VariableWatchContent } from "./content/VariableWatchContent";
 
 export interface PanelContentProps {
-  panel: CanvasPanelType;
+  panel: CanvasPanel;
   isActive: boolean;
   onDataUpdate: (data: any) => void;
   onStateChange: (state: any) => void;
@@ -42,7 +42,7 @@ export const PanelContent: React.FC<PanelContentProps> = ({
           />
         );
 
-      case "ast-visualizer":
+      case "ast-tree":
         return (
           <ASTVisualizerContent
             panel={panel}
@@ -52,7 +52,7 @@ export const PanelContent: React.FC<PanelContentProps> = ({
           />
         );
 
-      case "cfg-graph":
+      case "ir-graph":
         return (
           <CFGGraphContent
             panel={panel}
@@ -62,7 +62,7 @@ export const PanelContent: React.FC<PanelContentProps> = ({
           />
         );
 
-      case "variable-watch":
+      case "debugger-watch":
         return (
           <VariableWatchContent
             panel={panel}
@@ -72,7 +72,7 @@ export const PanelContent: React.FC<PanelContentProps> = ({
           />
         );
 
-      case "call-stack":
+      case "call-graph":
         return (
           <CallStackContent
             panel={panel}
@@ -82,7 +82,7 @@ export const PanelContent: React.FC<PanelContentProps> = ({
           />
         );
 
-      case "algorithm-simulation":
+      case "simulation":
         return (
           <AlgorithmSimulationContent
             panel={panel}
@@ -112,7 +112,7 @@ export const PanelContent: React.FC<PanelContentProps> = ({
           />
         );
 
-      case "ai-annotations":
+      case "ai-chat":
         return (
           <AIAnnotationsContent
             panel={panel}
@@ -178,4 +178,3 @@ export const PanelContent: React.FC<PanelContentProps> = ({
     </div>
   );
 };
-

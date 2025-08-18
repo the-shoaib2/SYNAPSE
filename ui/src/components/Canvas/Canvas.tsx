@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./Canvas.css";
 import MermaidRenderer from "./MermaidRenderer";
 import { SmartVisualizationEngine } from "./SmartVisualizationEngine";
-import { PipelinePlan } from "./types";
+import { CanvasPanel, PipelinePlan } from "./types";
 
 interface CanvasProps {
-  initialPanels?: any[];
+  initialPanels?: CanvasPanel[];
   onContentAvailable?: (hasContent: boolean) => void;
 }
 
@@ -19,30 +19,38 @@ export const Canvas: React.FC<CanvasProps> = ({
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showSmartEngine, setShowSmartEngine] = useState(false);
 
-  // Canvas System Prompt - integrated with core system
-  const CANVAS_SYSTEM_PROMPT = `You are a Canvas AI Assistant specialized in code analysis and visualization, integrated with the Synapse core system.
+  // Enhanced Canvas System Prompt - COMPREHENSIVE visualization of everything
+  const CANVAS_SYSTEM_PROMPT = `You are a COMPREHENSIVE Canvas AI Assistant that visualizes EVERYTHING, integrated with the Synapse core system.
 
-Your role is to:
-1. Analyze code and provide clear, structured explanations
-2. Generate visual representations (flowcharts, diagrams, timelines)
-3. Explain complex concepts in simple terms
-4. Focus on practical insights and actionable information
+Your mission is to provide COMPLETE visual analysis of any content:
 
-When analyzing code:
-- Break down complex logic into simple steps
-- Identify key patterns and algorithms
-- Suggest improvements when relevant
-- Create visual representations that help understanding
+🎯 **COMPREHENSIVE ANALYSIS REQUIREMENTS:**
+1. **Code Structure**: Analyze classes, functions, methods, and relationships
+2. **Execution Flow**: Create flowcharts showing program logic and data flow
+3. **Timeline Analysis**: Generate step-by-step execution sequences
+4. **Dependency Mapping**: Visualize imports, dependencies, and relationships
+5. **Performance Analysis**: Analyze complexity, efficiency, and optimization opportunities
+6. **Code Quality**: Identify patterns, best practices, and improvement areas
+7. **Interactive Elements**: Provide editable code, diagrams, and explanations
 
-Special capabilities:
-- **Mermaid Flowcharts**: Parse, validate, and render Mermaid syntax
-- **Algorithm Visualization**: Create step-by-step execution traces
-- **Interactive Diagrams**: Generate clickable, animated visualizations
-- **Performance Analysis**: Show complexity and optimization insights
+🔍 **VISUALIZE EVERYTHING:**
+- **AST Trees**: Show code structure and hierarchy
+- **Flowcharts**: Display execution paths and decision points
+- **Timelines**: Illustrate execution sequence and timing
+- **Dependency Graphs**: Map relationships and dependencies
+- **Performance Charts**: Show complexity and efficiency metrics
+- **Code Editors**: Provide interactive editing with syntax highlighting
+- **Explanation Panels**: Break down concepts into digestible sections
 
-Always be helpful, clear, and focused on making code more understandable through visual means.
+🚀 **ALWAYS PROVIDE:**
+- Multiple visualization types for comprehensive understanding
+- Interactive elements for exploration
+- Performance and optimization insights
+- Code improvement suggestions
+- Step-by-step breakdowns
+- Visual representations of ALL aspects
 
-This Canvas component is fully integrated with the Synapse core system and follows the same patterns as other modes (chat, plan, agent).`;
+This Canvas system is designed to visualize EVERYTHING - not just specific parts, but the complete picture of any code or content.`;
 
   // Check for user prompts and AI-generated content
   useEffect(() => {
@@ -188,7 +196,9 @@ This Canvas component is fully integrated with the Synapse core system and follo
 
   // Render stage visualization based on type - integrated with core system
   const renderStageVisualization = (stage: any, index: number) => {
-    const { type, stage: stageName, engine, explanation } = stage;
+    const { type, stage: stageName, engine } = stage;
+    const explanation =
+      stage.explanation || stage.payload?.explain || "No explanation available";
 
     if (type === "parse" && stageName.includes("Mermaid")) {
       return (
@@ -349,7 +359,11 @@ This Canvas component is fully integrated with the Synapse core system and follo
             inputs: [prompt],
             outputs: ["parsed_flowchart"],
             editable: false,
-            explanation: "Parse and validate the Mermaid flowchart syntax",
+            visualType: "flowchart",
+            payload: {
+              visual: "mermaid",
+              explain: "Parse and validate the Mermaid flowchart syntax",
+            },
           },
           {
             id: "flowchart_analysis",
@@ -359,6 +373,11 @@ This Canvas component is fully integrated with the Synapse core system and follo
             inputs: ["parsed_flowchart"],
             outputs: ["algorithm_insights"],
             editable: false,
+            visualType: "explanation",
+            payload: {
+              explain:
+                "Analyze the flowchart to understand the algorithm structure",
+            },
             explanation:
               "Analyze the flowchart to understand the algorithm structure",
           },
@@ -370,6 +389,11 @@ This Canvas component is fully integrated with the Synapse core system and follo
             inputs: ["parsed_flowchart", "algorithm_insights"],
             outputs: ["interactive_flowchart"],
             editable: true,
+            visualType: "flowchart",
+            payload: {
+              explain:
+                "Render the interactive Mermaid flowchart with execution highlighting",
+            },
             explanation:
               "Render the interactive Mermaid flowchart with execution highlighting",
           },
@@ -378,35 +402,161 @@ This Canvas component is fully integrated with the Synapse core system and follo
 
       setPipelinePlan(mermaidPlan);
     } else {
-      // Create standard content analysis plan
-      const analysisPlan: PipelinePlan = {
+      // Create COMPREHENSIVE analysis plan - visualize EVERYTHING
+      const comprehensivePlan: PipelinePlan = {
         pipeline: [
           {
-            id: "content_analysis",
-            stage: "Content Analysis",
-            type: "analysis",
+            id: "content_parsing",
+            stage: "Content Parsing & Analysis",
+            type: "parse",
             engine: "llm:gpt-4",
             inputs: [prompt],
-            outputs: ["analysis"],
+            outputs: ["parsed_content"],
             editable: false,
+            visualType: "explanation",
+            payload: {
+              explain:
+                "Parse and analyze the content structure, language, and patterns",
+            },
             explanation:
-              "Analyze the provided content using Synapse core system patterns",
+              "Parse and analyze the content structure, language, and patterns",
           },
           {
-            id: "visualization_generation",
-            stage: "Visualization Generation",
+            id: "code_structure_analysis",
+            stage: "Code Structure Analysis",
+            type: "analysis",
+            engine: "llm:gpt-4",
+            inputs: ["parsed_content"],
+            outputs: ["structure_insights"],
+            editable: false,
+            visualType: "ast-tree",
+            payload: {
+              explain:
+                "Analyze code structure, classes, functions, and relationships",
+            },
+            explanation:
+              "Analyze code structure, classes, functions, and relationships",
+          },
+          {
+            id: "execution_flow_visualization",
+            stage: "Execution Flow Visualization",
             type: "visualize",
             engine: "tool:canvas-renderer",
-            inputs: ["analysis"],
-            outputs: ["visualization"],
+            inputs: ["structure_insights"],
+            outputs: ["flow_diagram"],
             editable: true,
+            visualType: "flowchart",
+            payload: {
+              explain:
+                "Create execution flow diagrams showing program logic and data flow",
+            },
             explanation:
-              "Generate visual representations based on the analysis",
+              "Create execution flow diagrams showing program logic and data flow",
+          },
+          {
+            id: "timeline_analysis",
+            stage: "Timeline & Sequence Analysis",
+            type: "simulate",
+            engine: "llm:gpt-4",
+            inputs: ["flow_diagram"],
+            outputs: ["execution_timeline"],
+            editable: false,
+            visualType: "timeline",
+            payload: {
+              explain:
+                "Generate step-by-step execution timeline showing program flow",
+            },
+            explanation:
+              "Generate step-by-step execution timeline showing program flow",
+          },
+          {
+            id: "dependency_graph",
+            stage: "Dependency & Relationship Graph",
+            type: "visualize",
+            engine: "tool:canvas-renderer",
+            inputs: ["structure_insights"],
+            outputs: ["dependency_diagram"],
+            editable: true,
+            visualType: "dependency-graph",
+            payload: {
+              explain:
+                "Visualize dependencies, imports, and relationships between components",
+            },
+            explanation:
+              "Visualize dependencies, imports, and relationships between components",
+          },
+          {
+            id: "performance_analysis",
+            stage: "Performance & Complexity Analysis",
+            type: "analysis",
+            engine: "llm:gpt-4",
+            inputs: ["structure_insights"],
+            outputs: ["performance_metrics"],
+            editable: false,
+            visualType: "performance-graph",
+            payload: {
+              explain:
+                "Analyze time complexity, space complexity, and performance characteristics",
+            },
+            explanation:
+              "Analyze time complexity, space complexity, and performance characteristics",
+          },
+          {
+            id: "optimization_suggestions",
+            stage: "Optimization & Improvement Suggestions",
+            type: "optimize",
+            engine: "llm:gpt-4",
+            inputs: ["performance_metrics", "structure_insights"],
+            outputs: ["optimization_recommendations"],
+            editable: true,
+            visualType: "explanation",
+            payload: {
+              explain:
+                "Provide optimization suggestions and code improvement recommendations",
+            },
+            explanation:
+              "Provide optimization suggestions and code improvement recommendations",
+          },
+          {
+            id: "interactive_code_editor",
+            stage: "Interactive Code Editor",
+            type: "edit",
+            engine: "tool:monaco-editor",
+            inputs: ["parsed_content"],
+            outputs: ["editable_code"],
+            editable: true,
+            visualType: "code-editor",
+            payload: {
+              explain:
+                "Provide interactive code editing with syntax highlighting and suggestions",
+            },
+            explanation:
+              "Provide interactive code editing with syntax highlighting and suggestions",
+          },
+          {
+            id: "comprehensive_explanation",
+            stage: "Comprehensive Explanation",
+            type: "explain",
+            engine: "llm:gpt-4",
+            inputs: [
+              "structure_insights",
+              "performance_metrics",
+              "optimization_recommendations",
+            ],
+            outputs: ["complete_explanation"],
+            editable: false,
+            visualType: "explanation",
+            payload: {
+              explain:
+                "Provide comprehensive explanation covering all aspects of the code",
+            },
+            explanation:
+              "Provide comprehensive explanation covering all aspects of the code",
           },
         ],
       };
 
-      setPipelinePlan(analysisPlan);
+      setPipelinePlan(comprehensivePlan);
     }
 
     // Notify parent that content is available
@@ -430,11 +580,11 @@ This Canvas component is fully integrated with the Synapse core system and follo
         results[stage.id] = result;
 
         // Update pipeline execution state
-        setPipelinePlan((prev) => {
+        setPipelinePlan((prev: PipelinePlan | null) => {
           if (!prev) return prev;
           return {
             ...prev,
-            pipeline: prev.pipeline.map((s) =>
+            pipeline: prev.pipeline.map((s: any) =>
               s.id === stage.id ? { ...s, status: "completed", result } : s,
             ),
           };
@@ -766,7 +916,11 @@ This Canvas component is fully integrated with the Synapse core system and follo
                 <div key={stage.id} className="visualization-stage">
                   <div className="stage-header">
                     <h4>{stage.stage}</h4>
-                    <p>{stage.explanation}</p>
+                    <p>
+                      {stage.explanation ||
+                        stage.payload?.explain ||
+                        "No explanation available"}
+                    </p>
                   </div>
                   <div className="stage-visualization">
                     {renderStageVisualization(stage, index)}

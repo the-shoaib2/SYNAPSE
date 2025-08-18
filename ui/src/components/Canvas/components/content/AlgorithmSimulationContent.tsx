@@ -1,8 +1,8 @@
 import React from "react";
-import { CanvasPanelType } from "../../types";
+import { CanvasPanel } from "../../types";
 
 export interface AlgorithmSimulationContentProps {
-  panel: CanvasPanelType;
+  panel: CanvasPanel;
   isActive: boolean;
   onDataUpdate: (data: any) => void;
   onStateChange: (state: any) => void;
@@ -25,4 +25,3 @@ export const AlgorithmSimulationContent: React.FC<
     </div>
   );
 };
-

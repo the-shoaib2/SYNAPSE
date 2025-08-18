@@ -5,192 +5,414 @@ import React, {
   useContext,
   useReducer,
 } from "react";
-import { CanvasLayoutType, CanvasMessage, CanvasPanelData } from "./types";
+import {
+  CanvasConfig,
+  CanvasState,
+  ExecutionStep,
+  PanelState,
+  PipelineStage,
+} from "./types";
 
-// Canvas State Interface
-export interface CanvasState {
-  panels: CanvasPanelData[];
-  layout: CanvasLayoutType;
-  activePanelId: string | null;
-  messages: CanvasMessage[];
-  isConnected: boolean;
-}
-
-// Canvas Actions
-export type CanvasAction =
-  | { type: "ADD_PANEL"; payload: CanvasPanelData }
-  | { type: "REMOVE_PANEL"; payload: string }
+// Action types for the reducer
+type CanvasAction =
+  | { type: "SET_PIPELINE"; payload: PipelineStage[] }
   | {
-      type: "UPDATE_PANEL";
-      payload: { id: string; updates: Partial<CanvasPanelData> };
+      type: "UPDATE_STAGE";
+      payload: { id: string; updates: Partial<PipelineStage> };
     }
-  | { type: "SET_ACTIVE_PANEL"; payload: string | null }
-  | { type: "UPDATE_LAYOUT"; payload: Partial<CanvasLayoutType> }
-  | { type: "ADD_MESSAGE"; payload: CanvasMessage }
-  | { type: "CLEAR_MESSAGES"; payload?: void }
-  | { type: "SET_CONNECTION_STATUS"; payload: boolean };
+  | { type: "SET_ACTIVE_STAGE"; payload: string | null }
+  | {
+      type: "UPDATE_PANEL_STATE";
+      payload: { id: string; updates: Partial<PanelState> };
+    }
+  | {
+      type: "SET_EXPLANATION";
+      payload: { stageId: string; explanation: string };
+    }
+  | { type: "SET_EXECUTING"; payload: boolean }
+  | { type: "ADD_EXECUTION_STEP"; payload: any }
+  | { type: "SET_CONFIG"; payload: Partial<CanvasConfig> }
+  | { type: "RESET_CANVAS" }
+  | { type: "LOAD_PIPELINE_FROM_JSON"; payload: string };
 
-// Initial State
+// Initial state
 const initialState: CanvasState = {
-  panels: [],
-  layout: {
-    type: "grid",
-    columns: 2,
-    rows: 2,
-    panelPositions: {},
-  },
-  activePanelId: null,
-  messages: [],
-  isConnected: false,
+  pipeline: [],
+  activeStage: null,
+  panelStates: {},
+  explanations: {},
+  isExecuting: false,
+  executionHistory: [],
+  aiAgents: [],
 };
 
-// Canvas Reducer
+// Default configuration
+const defaultConfig: CanvasConfig = {
+  layout: "grid",
+  defaultPanelSize: { width: 400, height: 300 },
+  enableAnimations: true,
+  theme: "auto",
+  aiIntegration: {
+    enabled: true,
+    agents: [
+      {
+        id: "planner",
+        type: "planner",
+        model: "gpt-4",
+        capabilities: ["pipeline-generation", "stage-planning"],
+      },
+      {
+        id: "parser",
+        type: "parser",
+        model: "gpt-4",
+        capabilities: ["ast-generation", "ir-generation", "tokenization"],
+      },
+      {
+        id: "visualizer",
+        type: "visualizer",
+        model: "gpt-4",
+        capabilities: [
+          "graph-generation",
+          "timeline-creation",
+          "visual-mapping",
+        ],
+      },
+      {
+        id: "explainer",
+        type: "explainer",
+        model: "gpt-4",
+        capabilities: [
+          "code-explanation",
+          "algorithm-explanation",
+          "stage-explanation",
+        ],
+      },
+    ],
+    autoExplain: true,
+  },
+};
+
+// Reducer function
 function canvasReducer(state: CanvasState, action: CanvasAction): CanvasState {
   switch (action.type) {
-    case "ADD_PANEL":
+    case "SET_PIPELINE":
       return {
         ...state,
-        panels: [...state.panels, action.payload],
-        activePanelId: action.payload.id,
-      };
-
-    case "REMOVE_PANEL":
-      return {
-        ...state,
-        panels: state.panels.filter((panel) => panel.id !== action.payload),
-        activePanelId:
-          state.activePanelId === action.payload ? null : state.activePanelId,
-      };
-
-    case "UPDATE_PANEL":
-      return {
-        ...state,
-        panels: state.panels.map((panel) =>
-          panel.id === action.payload.id
-            ? { ...panel, ...action.payload.updates }
-            : panel,
+        pipeline: action.payload,
+        panelStates: action.payload.reduce(
+          (acc, stage) => {
+            acc[stage.id] = {
+              isVisible: true,
+              isMinimized: false,
+              isMaximized: false,
+              isPinned: false,
+              isResizable: true,
+              isDraggable: true,
+              isClosable: true,
+              isLoading: false,
+              hasError: false,
+              lastUpdated: Date.now(),
+            };
+            return acc;
+          },
+          {} as Record<string, PanelState>,
         ),
       };
 
-    case "SET_ACTIVE_PANEL":
+    case "UPDATE_STAGE":
       return {
         ...state,
-        activePanelId: action.payload,
+        pipeline: state.pipeline.map((stage: PipelineStage) =>
+          stage.id === action.payload.id
+            ? { ...stage, ...action.payload.updates }
+            : stage,
+        ),
       };
 
-    case "UPDATE_LAYOUT":
+    case "SET_ACTIVE_STAGE":
       return {
         ...state,
-        layout: { ...state.layout, ...action.payload },
+        activeStage: action.payload,
       };
 
-    case "ADD_MESSAGE":
+    case "UPDATE_PANEL_STATE":
       return {
         ...state,
-        messages: [...state.messages, action.payload],
+        panelStates: {
+          ...state.panelStates,
+          [action.payload.id]: {
+            ...state.panelStates[action.payload.id],
+            ...action.payload.updates,
+          },
+        },
       };
 
-    case "CLEAR_MESSAGES":
+    case "SET_EXPLANATION":
       return {
         ...state,
-        messages: [],
+        explanations: {
+          ...state.explanations,
+          [action.payload.stageId]: action.payload.explanation,
+        },
       };
 
-    case "SET_CONNECTION_STATUS":
+    case "SET_EXECUTING":
       return {
         ...state,
-        isConnected: action.payload,
+        isExecuting: action.payload,
       };
+
+    case "ADD_EXECUTION_STEP":
+      return {
+        ...state,
+        executionHistory: [...state.executionHistory, action.payload],
+      };
+
+    case "SET_CONFIG":
+      // Config is managed separately in the provider component
+      return state;
+
+    case "RESET_CANVAS":
+      return initialState;
+
+    case "LOAD_PIPELINE_FROM_JSON":
+      try {
+        const pipeline = JSON.parse(action.payload);
+        return {
+          ...state,
+          pipeline,
+          panelStates: pipeline.reduce(
+            (acc: Record<string, PanelState>, stage: PipelineStage) => {
+              acc[stage.id] = {
+                isVisible: true,
+                isMinimized: false,
+                isMaximized: false,
+                isPinned: false,
+                isResizable: true,
+                isDraggable: true,
+                isClosable: true,
+                isLoading: false,
+                hasError: false,
+                lastUpdated: Date.now(),
+              };
+              return acc;
+            },
+            {},
+          ),
+        };
+      } catch (error) {
+        console.error("Failed to parse pipeline JSON:", error);
+        return state;
+      }
 
     default:
       return state;
   }
 }
 
-// Canvas Context Interface
+// Context interface
 interface CanvasContextType {
   state: CanvasState;
-  addPanel: (panel: CanvasPanelData) => void;
-  removePanel: (id: string) => void;
-  updatePanel: (id: string, updates: Partial<CanvasPanelData>) => void;
-  setActivePanelId: (id: string | null) => void;
-  updateLayout: (updates: Partial<CanvasLayoutType>) => void;
-  addMessage: (message: CanvasMessage) => void;
-  clearMessages: () => void;
-  setConnectionStatus: (status: boolean) => void;
+  config: CanvasConfig;
+  dispatch: React.Dispatch<CanvasAction>;
 
-  // Computed values
-  panels: CanvasPanelData[];
-  layout: CanvasLayoutType;
-  activePanelId: string | null;
-  messages: CanvasMessage[];
-  isConnected: boolean;
+  // Convenience methods
+  setPipeline: (pipeline: PipelineStage[]) => void;
+  updateStage: (id: string, updates: Partial<PipelineStage>) => void;
+  setActiveStage: (id: string | null) => void;
+  updatePanelState: (id: string, updates: Partial<PanelState>) => void;
+  setExplanation: (stageId: string, explanation: string) => void;
+  setExecuting: (executing: boolean) => void;
+  addExecutionStep: (step: ExecutionStep) => void;
+  resetCanvas: () => void;
+  loadPipelineFromJSON: (json: string) => void;
+
+  // AI integration methods
+  executeStage: (stageId: string) => Promise<void>;
+  regenerateStage: (stageId: string) => Promise<void>;
+  explainStage: (stageId: string) => Promise<void>;
+
+  // Utility methods
+  getStageById: (id: string) => PipelineStage | undefined;
+  getPanelState: (id: string) => PanelState | undefined;
+  isStageCompleted: (id: string) => boolean;
+  getStageDependencies: (id: string) => PipelineStage[];
 }
 
-// Create Context
+// Create context
 const CanvasContext = createContext<CanvasContextType | undefined>(undefined);
 
-// Canvas Provider Props
+// Provider component
 interface CanvasProviderProps {
   children: ReactNode;
+  initialPipeline?: PipelineStage[];
+  initialConfig?: Partial<CanvasConfig>;
 }
 
-// Canvas Provider Component
-export const CanvasProvider: React.FC<CanvasProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(canvasReducer, initialState);
+export function CanvasProvider({
+  children,
+  initialPipeline = [],
+  initialConfig = {},
+}: CanvasProviderProps) {
+  const [state, dispatch] = useReducer(canvasReducer, {
+    ...initialState,
+    pipeline: initialPipeline,
+  });
 
-  const addPanel = useCallback((panel: CanvasPanelData) => {
-    dispatch({ type: "ADD_PANEL", payload: panel });
+  const [config, setConfig] = React.useState<CanvasConfig>({
+    ...defaultConfig,
+    ...initialConfig,
+  });
+
+  // Convenience methods
+  const setPipeline = useCallback((pipeline: PipelineStage[]) => {
+    dispatch({ type: "SET_PIPELINE", payload: pipeline });
   }, []);
 
-  const removePanel = useCallback((id: string) => {
-    dispatch({ type: "REMOVE_PANEL", payload: id });
-  }, []);
-
-  const updatePanel = useCallback(
-    (id: string, updates: Partial<CanvasPanelData>) => {
-      dispatch({ type: "UPDATE_PANEL", payload: { id, updates } });
+  const updateStage = useCallback(
+    (id: string, updates: Partial<PipelineStage>) => {
+      dispatch({ type: "UPDATE_STAGE", payload: { id, updates } });
     },
     [],
   );
 
-  const setActivePanelId = useCallback((id: string | null) => {
-    dispatch({ type: "SET_ACTIVE_PANEL", payload: id });
+  const setActiveStage = useCallback((id: string | null) => {
+    dispatch({ type: "SET_ACTIVE_STAGE", payload: id });
   }, []);
 
-  const updateLayout = useCallback((updates: Partial<CanvasLayoutType>) => {
-    dispatch({ type: "UPDATE_LAYOUT", payload: updates });
+  const updatePanelState = useCallback(
+    (id: string, updates: Partial<PanelState>) => {
+      dispatch({ type: "UPDATE_PANEL_STATE", payload: { id, updates } });
+    },
+    [],
+  );
+
+  const setExplanation = useCallback((stageId: string, explanation: string) => {
+    dispatch({ type: "SET_EXPLANATION", payload: { stageId, explanation } });
   }, []);
 
-  const addMessage = useCallback((message: CanvasMessage) => {
-    dispatch({ type: "ADD_MESSAGE", payload: message });
+  const setExecuting = useCallback((executing: boolean) => {
+    dispatch({ type: "SET_EXECUTING", payload: executing });
   }, []);
 
-  const clearMessages = useCallback(() => {
-    dispatch({ type: "CLEAR_MESSAGES" });
+  const addExecutionStep = useCallback((step: ExecutionStep) => {
+    dispatch({ type: "ADD_EXECUTION_STEP", payload: step });
   }, []);
 
-  const setConnectionStatus = useCallback((status: boolean) => {
-    dispatch({ type: "SET_CONNECTION_STATUS", payload: status });
+  const resetCanvas = useCallback(() => {
+    dispatch({ type: "RESET_CANVAS" });
   }, []);
+
+  const loadPipelineFromJSON = useCallback((json: string) => {
+    dispatch({ type: "LOAD_PIPELINE_FROM_JSON", payload: json });
+  }, []);
+
+  // AI integration methods
+  const executeStage = useCallback(
+    async (stageId: string) => {
+      const stage = state.pipeline.find((s: PipelineStage) => s.id === stageId);
+      if (!stage) return;
+
+      setExecuting(true);
+      addExecutionStep({
+        stageId,
+        timestamp: Date.now(),
+        status: "started",
+      });
+
+      try {
+        // TODO: Integrate with actual AI execution engine
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        updateStage(stageId, { status: "completed" });
+        addExecutionStep({
+          stageId,
+          timestamp: Date.now(),
+          status: "completed",
+          duration: 1000,
+        });
+      } catch (error) {
+        updateStage(stageId, {
+          status: "error",
+          error: error instanceof Error ? error.message : "Unknown error",
+        });
+        addExecutionStep({
+          stageId,
+          timestamp: Date.now(),
+          status: "failed",
+          error: error instanceof Error ? error.message : "Unknown error",
+        });
+      } finally {
+        setExecuting(false);
+      }
+    },
+    [state.pipeline, setExecuting, addExecutionStep, updateStage],
+  );
+
+  const regenerateStage = useCallback(async (stageId: string) => {
+    // TODO: Implement stage regeneration logic
+    console.log("Regenerating stage:", stageId);
+  }, []);
+
+  const explainStage = useCallback(async (stageId: string) => {
+    // TODO: Implement AI explanation logic
+    console.log("Explaining stage:", stageId);
+  }, []);
+
+  // Utility methods
+  const getStageById = useCallback(
+    (id: string) => {
+      return state.pipeline.find((stage: PipelineStage) => stage.id === id);
+    },
+    [state.pipeline],
+  );
+
+  const getPanelState = useCallback(
+    (id: string) => {
+      return state.panelStates[id];
+    },
+    [state.panelStates],
+  );
+
+  const isStageCompleted = useCallback(
+    (id: string) => {
+      const stage = getStageById(id);
+      return stage?.status === "completed";
+    },
+    [getStageById],
+  );
+
+  const getStageDependencies = useCallback(
+    (id: string) => {
+      const stage = getStageById(id);
+      if (!stage?.dependencies) return [];
+      return stage.dependencies
+        .map((depId: string) => getStageById(depId))
+        .filter(Boolean) as PipelineStage[];
+    },
+    [getStageById],
+  );
 
   const contextValue: CanvasContextType = {
     state,
-    addPanel,
-    removePanel,
-    updatePanel,
-    setActivePanelId,
-    updateLayout,
-    addMessage,
-    clearMessages,
-    setConnectionStatus,
-
-    // Computed values
-    panels: state.panels,
-    layout: state.layout,
-    activePanelId: state.activePanelId,
-    messages: state.messages,
-    isConnected: state.isConnected,
+    config,
+    dispatch,
+    setPipeline,
+    updateStage,
+    setActiveStage,
+    updatePanelState,
+    setExplanation,
+    setExecuting,
+    addExecutionStep,
+    resetCanvas,
+    loadPipelineFromJSON,
+    executeStage,
+    regenerateStage,
+    explainStage,
+    getStageById,
+    getPanelState,
+    isStageCompleted,
+    getStageDependencies,
   };
 
   return (
@@ -198,13 +420,13 @@ export const CanvasProvider: React.FC<CanvasProviderProps> = ({ children }) => {
       {children}
     </CanvasContext.Provider>
   );
-};
+}
 
-// Custom Hook to use Canvas Context
-export const useCanvasContext = (): CanvasContextType => {
+// Hook to use the canvas context
+export function useCanvas() {
   const context = useContext(CanvasContext);
   if (context === undefined) {
-    throw new Error("useCanvasContext must be used within a CanvasProvider");
+    throw new Error("useCanvas must be used within a CanvasProvider");
   }
   return context;
-};
+}

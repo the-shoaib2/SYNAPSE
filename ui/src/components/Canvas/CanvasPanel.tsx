@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useCanvasContext } from "./CanvasContext";
+import { useCanvas } from "./CanvasContext";
 import { PanelContent } from "./components/PanelContent";
 import { PanelDragHandle } from "./components/PanelDragHandle";
 import { PanelHeader } from "./components/PanelHeader";
 import { PanelResizer } from "./components/PanelResizer";
 import { PanelToolbar } from "./components/PanelToolbar";
-import { CanvasPanelType, PanelState } from "./types";
+import { CanvasPanel as CanvasPanelInterface, PanelState } from "./types";
 
 export interface CanvasPanelProps {
-  panel: CanvasPanelType;
+  panel: CanvasPanelInterface;
   isActive: boolean;
   onActivate: () => void;
-  onUpdate: (updates: Partial<CanvasPanelType>) => void;
+  onUpdate: (updates: Partial<CanvasPanelInterface>) => void;
   onRemove: () => void;
   onResize: (dimensions: { width: number; height: number }) => void;
   onMove: (position: { x: number; y: number }) => void;
@@ -28,7 +28,7 @@ export const CanvasPanel: React.FC<CanvasPanelProps> = ({
   onMove,
   className = "",
 }) => {
-  const { updatePanel } = useCanvasContext();
+  const { updatePanelState } = useCanvas();
   const [isDragging, setIsDragging] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [localState, setLocalState] = useState<PanelState>(panel.state);
@@ -52,14 +52,14 @@ export const CanvasPanel: React.FC<CanvasPanelProps> = ({
       setLocalState(updatedState);
 
       // Update the panel in the context
-      updatePanel(panel.id, { state: updatedState });
+      updatePanelState(panel.id, updatedState);
 
       // Call the panel's onStateChange callback if provided
       if (panel.onStateChange) {
         panel.onStateChange(updatedState);
       }
     },
-    [localState, panel.id, panel.onStateChange, updatePanel],
+    [localState, panel.id, panel.onStateChange, updatePanelState],
   );
 
   // Handle panel data updates
@@ -71,27 +71,29 @@ export const CanvasPanel: React.FC<CanvasPanelProps> = ({
         timestamp: Date.now(),
       };
 
-      // Update the panel in the context
-      updatePanel(panel.id, { data: updatedData });
+      // Update the panel data
+      onUpdate({ data: updatedData });
 
       // Call the panel's onDataUpdate callback if provided
       if (panel.onDataUpdate) {
         panel.onDataUpdate(updatedData);
       }
     },
-    [panel.data, panel.id, panel.onDataUpdate, updatePanel],
+    [panel.data, panel.onDataUpdate, onUpdate],
   );
 
   // Handle panel actions
   const handleAction = useCallback(
     (actionId: string) => {
-      const action = panel.actions.find((a) => a.id === actionId);
-      if (action && action.enabled) {
-        action.action();
+      if (panel.actions) {
+        const action = panel.actions.find((a) => a.id === actionId);
+        if (action && action.enabled) {
+          action.action();
 
-        // Call the panel's onAction callback if provided
-        if (panel.onAction) {
-          panel.onAction(actionId);
+          // Call the panel's onAction callback if provided
+          if (panel.onAction) {
+            panel.onAction(actionId);
+          }
         }
       }
     },
@@ -108,89 +110,84 @@ export const CanvasPanel: React.FC<CanvasPanelProps> = ({
 
   // Handle panel resize
   const handleResize = useCallback(
-    (width: number, height: number) => {
-      const newDimensions = {
-        ...panel.dimensions,
-        position: {
-          ...panel.dimensions.position,
-          width,
-          height,
-        },
-      };
-
-      // Update the panel in the context
-      updatePanel(panel.id, { dimensions: newDimensions });
-
-      // Call the onResize callback
-      onResize({ width, height });
+    (newDimensions: { width: number; height: number }) => {
+      // Update the panel dimensions
+      onResize(newDimensions);
 
       // Call the panel's onResize callback if provided
       if (panel.onResize) {
         panel.onResize(newDimensions);
       }
     },
-    [panel.dimensions, panel.id, panel.onResize, onResize, updatePanel],
+    [panel.onResize, onResize],
   );
 
   // Handle panel move
   const handleMove = useCallback(
-    (x: number, y: number) => {
-      const newDimensions = {
-        ...panel.dimensions,
-        position: {
-          ...panel.dimensions.position,
-          x,
-          y,
-        },
-      };
+    (newPosition: { x: number; y: number }) => {
+      const newDimensions = panel.dimensions
+        ? {
+            ...panel.dimensions,
+            position: newPosition,
+          }
+        : undefined;
 
-      // Update the panel in the context
-      updatePanel(panel.id, { dimensions: newDimensions });
-
-      // Call the onMove callback
-      onMove({ x, y });
+      // Update the panel position
+      onMove(newPosition);
 
       // Call the panel's onMove callback if provided
       if (panel.onMove) {
-        panel.onMove(newDimensions.position);
+        panel.onMove(newPosition);
       }
     },
-    [panel.dimensions, panel.id, panel.onMove, onMove, updatePanel],
+    [panel.dimensions, panel.onMove, onMove],
   );
 
   // Handle drag start
   const handleDragStart = useCallback(
     (e: React.MouseEvent) => {
       if (!panel.state.isDraggable) return;
-
+      e.preventDefault();
       setIsDragging(true);
       dragStartRef.current = { x: e.clientX, y: e.clientY };
-
-      // Add global mouse event listeners
-      const handleMouseMove = (e: MouseEvent) => {
-        if (dragStartRef.current) {
-          const deltaX = e.clientX - dragStartRef.current.x;
-          const deltaY = e.clientY - dragStartRef.current.y;
-
-          const newX = panel.dimensions.position.x + deltaX;
-          const newY = panel.dimensions.position.y + deltaY;
-
-          handleMove(newX, newY);
-          dragStartRef.current = { x: e.clientX, y: e.clientY };
-        }
-      };
-
-      const handleMouseUp = () => {
-        setIsDragging(false);
-        dragStartRef.current = null;
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
-      };
-
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
     },
-    [panel.state.isDraggable, panel.dimensions.position, handleMove],
+    [panel.state.isDraggable],
+  );
+
+  // Handle mouse move for dragging
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (isDragging && dragStartRef.current && panel.dimensions?.position) {
+        const deltaX = e.clientX - dragStartRef.current.x;
+        const deltaY = e.clientY - dragStartRef.current.y;
+        const newX = panel.dimensions.position.x + deltaX;
+        const newY = panel.dimensions.position.y + deltaY;
+
+        handleMove({ x: newX, y: newY });
+        dragStartRef.current = { x: e.clientX, y: e.clientY };
+      }
+    },
+    [isDragging, handleMove, panel.dimensions?.position],
+  );
+
+  // Handle mouse up for dragging
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+    dragStartRef.current = null;
+  }, []);
+
+  // Handle mouse move for resizing
+  const handleResizeMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (isResizing && panelRef.current && panel.dimensions) {
+        const rect = panelRef.current.getBoundingClientRect();
+        const newWidth = Math.max(200, e.clientX - rect.left);
+        const newHeight = Math.max(150, e.clientY - rect.top);
+
+        handleResize({ width: newWidth, height: newHeight });
+      }
+    },
+    [isResizing, handleResize, panel.dimensions],
   );
 
   // Handle resize start
@@ -204,19 +201,50 @@ export const CanvasPanel: React.FC<CanvasPanelProps> = ({
     setIsResizing(false);
   }, []);
 
-  // Panel styles
+  // Add event listeners for dragging and resizing
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+      return () => {
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp]);
+
+  useEffect(() => {
+    if (isResizing) {
+      document.addEventListener("mousemove", handleResizeMouseMove);
+      document.addEventListener("mouseup", handleResizeEnd);
+      return () => {
+        document.removeEventListener("mousemove", handleResizeMouseMove);
+        document.removeEventListener("mouseup", handleResizeEnd);
+      };
+    }
+  }, [isResizing, handleResizeMouseMove, handleResizeEnd]);
+
+  // Panel styles - with proper null checks
   const panelStyles = {
     position: "absolute" as const,
-    left: `${panel.dimensions.position.x}px`,
-    top: `${panel.dimensions.position.y}px`,
-    width: `${panel.dimensions.position.width}px`,
-    height: `${panel.dimensions.position.height}px`,
-    minWidth: `${panel.dimensions.minWidth}px`,
-    minHeight: `${panel.dimensions.minHeight}px`,
-    maxWidth: panel.dimensions.maxWidth
+    left: panel.dimensions?.position?.x
+      ? `${panel.dimensions.position.x}px`
+      : "0px",
+    top: panel.dimensions?.position?.y
+      ? `${panel.dimensions.position.y}px`
+      : "0px",
+    width: panel.dimensions?.width ? `${panel.dimensions.width}px` : "300px",
+    height: panel.dimensions?.height ? `${panel.dimensions.height}px` : "200px",
+    minWidth: panel.dimensions?.minWidth
+      ? `${panel.dimensions.minWidth}px`
+      : "200px",
+    minHeight: panel.dimensions?.minHeight
+      ? `${panel.dimensions.minHeight}px`
+      : "150px",
+    maxWidth: panel.dimensions?.maxWidth
       ? `${panel.dimensions.maxWidth}px`
       : undefined,
-    maxHeight: panel.dimensions.maxHeight
+    maxHeight: panel.dimensions?.maxHeight
       ? `${panel.dimensions.maxHeight}px`
       : undefined,
     zIndex: isActive ? 10 : 1,
@@ -253,7 +281,7 @@ export const CanvasPanel: React.FC<CanvasPanelProps> = ({
       />
 
       {/* Panel Toolbar */}
-      {panel.config.showToolbar && (
+      {panel.config?.showToolbar && (
         <PanelToolbar panel={panel} onAction={handleAction} />
       )}
 
@@ -270,11 +298,13 @@ export const CanvasPanel: React.FC<CanvasPanelProps> = ({
         <PanelResizer
           onResizeStart={handleResizeStart}
           onResizeEnd={handleResizeEnd}
-          onResize={handleResize}
-          minWidth={panel.dimensions.minWidth}
-          minHeight={panel.dimensions.minHeight}
-          maxWidth={panel.dimensions.maxWidth}
-          maxHeight={panel.dimensions.maxHeight}
+          onResize={(width: number, height: number) =>
+            handleResize({ width, height })
+          }
+          minWidth={panel.dimensions?.minWidth || 200}
+          minHeight={panel.dimensions?.minHeight || 150}
+          maxWidth={panel.dimensions?.maxWidth}
+          maxHeight={panel.dimensions?.maxHeight}
         />
       )}
 
@@ -287,10 +317,10 @@ export const CanvasPanel: React.FC<CanvasPanelProps> = ({
       )}
 
       {/* Error Display */}
-      {localState.hasError && localState.errorMessage && (
+      {localState.hasError && (
         <div className="panel-error">
           <span className="error-icon">⚠️</span>
-          <span className="error-message">{localState.errorMessage}</span>
+          <span className="error-message">An error occurred</span>
         </div>
       )}
 
@@ -304,4 +334,3 @@ export const CanvasPanel: React.FC<CanvasPanelProps> = ({
     </div>
   );
 };
-

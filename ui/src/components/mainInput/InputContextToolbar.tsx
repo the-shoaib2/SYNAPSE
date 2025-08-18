@@ -1,8 +1,8 @@
 import { AtSymbolIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useMemo, useState } from "react";
+import { useState } from "react";
+import FileIcon from "../FileIcon";
 import { Button } from "../ui";
 import { ToolTip } from "../ui/Tooltip";
-import FileIcon from "../FileIcon";
 
 /**
  * InputContextToolbar component
@@ -69,7 +69,7 @@ export default function InputContextToolbar(props: InputContextToolbarProps) {
           size="sm"
           onClick={addCurrentFileAsContext}
           title={`Add ${props.currentFileName} as context`}
-          className="flex p-0 px-1 items-center justify-center gap-1 hover:text-red-700"
+          className="flex items-center justify-center gap-1 p-0 px-1 hover:text-red-700"
           onMouseEnter={() => setIsFileContextHovered(true)}
           onMouseLeave={() => setIsFileContextHovered(false)}
         >

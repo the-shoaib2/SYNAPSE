@@ -1,8 +1,8 @@
 import React from "react";
-import { CanvasPanelType } from "../types";
+import { CanvasPanel } from "../types";
 
 export interface PanelHeaderProps {
-  panel: CanvasPanelType;
+  panel: CanvasPanel;
   isActive: boolean;
   onClose: () => void;
   onMinimize: () => void;
@@ -30,7 +30,7 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({
           </span>
         )}
         <span className="panel-title" title={panel.description}>
-          {panel.config.title}
+          {panel.config?.title || panel.title || "Untitled Panel"}
         </span>
         {panel.description && (
           <span className="panel-description" title={panel.description}>
@@ -115,4 +115,3 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({
     </div>
   );
 };
-

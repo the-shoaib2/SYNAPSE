@@ -1,11 +1,11 @@
 import React from "react";
 import { Canvas } from "./Canvas";
-import { CanvasPanelType } from "./types";
+import { CanvasPanel } from "./types";
 
 interface CanvasWindowProps {
   isOpen: boolean;
   onClose: () => void;
-  initialPanels?: CanvasPanelType[];
+  initialPanels?: CanvasPanel[];
   title?: string;
   onContentAvailable?: (hasContent: boolean) => void;
 }
