@@ -138,8 +138,8 @@ To add new local models to Synapse:
 
 ### **Community**
 - [Synapse Discord](https://discord.gg/NWtdYexhMs)
-- [GitHub Issues](https://github.com/synapsedev/synapse/issues)
-- [Contributing Guide](https://github.com/synapsedev/synapse/blob/main/CONTRIBUTING.md)
+- [GitHub Issues](https://github.com/the-shoaib2/SYNAPSE/issues)
+- [Contributing Guide](https://github.com/the-shoaib2/SYNAPSE/blob/main/CONTRIBUTING.md)
 
 ## 🤝 Contributing
 

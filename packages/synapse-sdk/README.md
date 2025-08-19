@@ -22,7 +22,7 @@ Each package includes:
 End users should install the published packages directly:
 
 - For TypeScript/JavaScript: `npm install @synapse/sdk`
-- For Python: `pip install synapsedev`
+- For Python: `pip install the-shoaib2`
 - For other languages: Check back for new language support
 
 Each published package includes its own documentation.

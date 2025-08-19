@@ -1,13 +1,13 @@
 import { expect } from "chai";
 import {
-    By,
-    EditorView,
-    Key,
-    VSBrowser,
-    WebDriver,
-    WebElement,
-    WebView,
-    until,
+  By,
+  EditorView,
+  Key,
+  VSBrowser,
+  WebDriver,
+  WebElement,
+  WebView,
+  until,
 } from "vscode-extension-tester";
 
 import { GlobalActions } from "../actions/Global.actions";
@@ -297,7 +297,7 @@ describe("UI Test", () => {
       );
 
       expect(await statusMessage.getText()).contain(
-        "Continue viewed the git diff",
+        "Synapse viewed the git diff",
       );
     }).timeout(DEFAULT_TIMEOUT.MD * 100);
 
@@ -340,7 +340,7 @@ describe("UI Test", () => {
       );
 
       const text = await statusMessage.getText();
-      expect(text).contain("Continue tried to view the git diff");
+      expect(text).contain("Synapse tried to view the git diff");
     }).timeout(DEFAULT_TIMEOUT.XL);
   });
 

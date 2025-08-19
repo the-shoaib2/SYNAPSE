@@ -83,7 +83,7 @@ describe("addToolCallDeltaToState", () => {
     const result = addToolCallDeltaToState(delta, currentState);
     expect(result.toolCall.function.name).toBe("readFil");
 
-    // Continue the streaming
+    // Synapse the streaming
     const nextDelta: ToolCallDelta = {
       function: {
         name: "readFile",
@@ -507,7 +507,7 @@ describe("addToolCallDeltaToState", () => {
     expect(result.toolCall.function.arguments).toBe('{"query":"tes');
     expect(result.parsedArgs).toEqual({ query: "tes" });
 
-    // Continue the streaming
+    // Synapse the streaming
     const nextDelta: ToolCallDelta = {
       function: {
         arguments: '{"query":"test"}',

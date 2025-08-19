@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Continue Hub IDE API
- * API for Continue IDE to fetch assistants and other related information. These endpoints are primarily used by the Continue IDE extensions for VS Code and JetBrains.
+ * Synapse Hub IDE API
+ * API for Synapse IDE to fetch assistants and other related information. These endpoints are primarily used by the Synapse IDE extensions for VS Code and JetBrains.
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -12,50 +12,25 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from "../runtime";
 import type {
   GetAssistant200Response,
-  GetAssistant403Response,
-  GetAssistant404Response,
   GetFreeTrialStatus200Response,
   GetModelsAddOnCheckoutUrl200Response,
-  GetModelsAddOnCheckoutUrl500Response,
   GetPolicy200Response,
-  ListAssistantFullSlugs429Response,
   ListAssistants200ResponseInner,
-  ListAssistants401Response,
-  ListAssistants404Response,
   ListOrganizations200Response,
-  SyncSecretsRequest,
+  SyncSecretsRequest
 } from "../models/index";
 import {
   GetAssistant200ResponseFromJSON,
-  GetAssistant200ResponseToJSON,
-  GetAssistant403ResponseFromJSON,
-  GetAssistant403ResponseToJSON,
-  GetAssistant404ResponseFromJSON,
-  GetAssistant404ResponseToJSON,
   GetFreeTrialStatus200ResponseFromJSON,
-  GetFreeTrialStatus200ResponseToJSON,
   GetModelsAddOnCheckoutUrl200ResponseFromJSON,
-  GetModelsAddOnCheckoutUrl200ResponseToJSON,
-  GetModelsAddOnCheckoutUrl500ResponseFromJSON,
-  GetModelsAddOnCheckoutUrl500ResponseToJSON,
   GetPolicy200ResponseFromJSON,
-  GetPolicy200ResponseToJSON,
-  ListAssistantFullSlugs429ResponseFromJSON,
-  ListAssistantFullSlugs429ResponseToJSON,
   ListAssistants200ResponseInnerFromJSON,
-  ListAssistants200ResponseInnerToJSON,
-  ListAssistants401ResponseFromJSON,
-  ListAssistants401ResponseToJSON,
-  ListAssistants404ResponseFromJSON,
-  ListAssistants404ResponseToJSON,
   ListOrganizations200ResponseFromJSON,
-  ListOrganizations200ResponseToJSON,
-  SyncSecretsRequestFromJSON,
-  SyncSecretsRequestToJSON,
+  SyncSecretsRequestToJSON
 } from "../models/index";
+import * as runtime from "../runtime";
 
 export interface GetAssistantRequest {
   ownerSlug: string;
@@ -90,7 +65,7 @@ export interface DefaultApiInterface {
    * @summary Get a specific assistant by slug
    * @param {string} ownerSlug Slug of the user or organization that owns the assistant
    * @param {string} packageSlug Slug of the assistant package
-   * @param {'true' | 'false'} [alwaysUseProxy] Whether to always use the Continue-managed proxy for model requests
+   * @param {'true' | 'false'} [alwaysUseProxy] Whether to always use the Synapse-managed proxy for model requests
    * @param {string} [organizationId] ID of the organization to scope assistants to. If not provided, personal assistants are returned.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -193,7 +168,7 @@ export interface DefaultApiInterface {
   /**
    * Returns a complete list of assistants available to the user, with their full configurations, icons, and other metadata needed by the IDE to display and use them.  This endpoint performs a full refresh of the list of assistants, including unrolling configurations and resolving secrets.
    * @summary List assistants for IDE
-   * @param {'true' | 'false'} [alwaysUseProxy] Whether to always use the Continue-managed proxy for model requests
+   * @param {'true' | 'false'} [alwaysUseProxy] Whether to always use the Synapse-managed proxy for model requests
    * @param {string} [organizationId] ID of the organization to scope assistants to. If not provided, personal assistants are returned.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}

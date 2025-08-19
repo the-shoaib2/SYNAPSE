@@ -6,11 +6,11 @@ dotenv.config();
 
 /**
  * This test is `.skip`'d for now becasue it requires a real API key
- * and a real assistant to be set up in the Continue Hub.
+ * and a real assistant to be set up in the Synapse Hub.
  *
  * The primary use case for now is to aid in local iteration on the SDK.
  */
-test.skip("should make a real API call to the Continue service", async () => {
+test.skip("should make a real API call to the Synapse service", async () => {
   const apiKey = process.env.CONTINUE_API_KEY;
 
   if (!apiKey) {

@@ -1,8 +1,8 @@
 import { OpenAI } from "openai/index";
 import {
-    ChatCompletionCreateParams,
-    CompletionCreateParamsNonStreaming,
-    CompletionCreateParamsStreaming,
+  ChatCompletionCreateParams,
+  CompletionCreateParamsNonStreaming,
+  CompletionCreateParamsStreaming,
 } from "openai/resources/index";
 import { z } from "zod";
 import { ContinueProxyConfigSchema } from "../types.js";
@@ -79,7 +79,7 @@ export class ContinueProxyApi extends OpenAIApi {
   modifyChatBody<T extends ChatCompletionCreateParams>(body: T): T {
     // First apply OpenAI-specific modifications
     const modifiedBody = super.modifyChatBody(body);
-    // Then add Continue properties
+    // Then add Synapse properties
     return this.modifyBodyWithContinueProperties(modifiedBody);
   }
 

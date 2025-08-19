@@ -12,7 +12,7 @@ export const NodeViewWrapper: React.FC<NodeViewWrapperProps> = ({
   children,
 }) => {
   // Not setting this as a "p" will cause issues with foreign keyboards
-  // See https://github.com/synapsedev/synapse/issues/3199
+  // See https://github.com/the-shoaib2/SYNAPSE/issues/3199
   const nodeViewWrapperTag: TiptapNodeViewWrapperProps["as"] = "p";
 
   return (

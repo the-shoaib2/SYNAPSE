@@ -1,18 +1,18 @@
 import { getControlPlaneEnv } from "../../control-plane/env.js";
 import {
-    ContextItem,
-    ContextProviderDescription,
-    ContextProviderExtras,
-    ContextSubmenuItem,
-    LoadSubmenuItemsArgs,
+  ContextItem,
+  ContextProviderDescription,
+  ContextProviderExtras,
+  ContextSubmenuItem,
+  LoadSubmenuItemsArgs,
 } from "../../index.js";
 import { BaseContextProvider } from "../index.js";
 
 class ContinueProxyContextProvider extends BaseContextProvider {
   static description: ContextProviderDescription = {
     title: "synapse-proxy",
-    displayTitle: "Continue Proxy",
-    description: "Retrieve a context item from a Continue for Teams add-on",
+    displayTitle: "Synapse Proxy",
+    description: "Retrieve a context item from a Synapse for Teams add-on",
     type: "submenu",
   };
 

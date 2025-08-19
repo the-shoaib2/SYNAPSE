@@ -1,23 +1,22 @@
 {
-  "name": "synapse",
-  "icon": "media/logos/synapse-logo.svg",
-  "_comment": "Available logo files: media/logos/synapse-logo.svg (main), media/logos/SYNAPSE.svg (text logo), media/logos/SYNAPSE.gif (animated)",
+  "name": "synapse-dev",
+  "icon": "media/icon.png",
   "author": "Synapse Dev, Inc",
   "version": "1.1.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/synapsedev/synapse"
+    "url": "git+https://github.com/the-shoaib2/SYNAPSE.git"
   },
   "extensionKind": [
     "ui",
     "workspace"
   ],
   "bugs": {
-    "url": "https://github.com/synapsedev/synapse/issues",
+    "url": "https://github.com/the-shoaib2/SYNAPSE/issues",
     "email": "nate@synapse.dev"
   },
   "homepage": "https://synapse.dev",
-  "qna": "https://github.com/synapsedev/synapse/issues/new/choose",
+  "qna": "https://github.com/the-shoaib2/SYNAPSE/issues/new/choose",
   "license": "Apache-2.0",
   "displayName": "Synapse - open-source AI code assistant",
   "pricing": "Free",

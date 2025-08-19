@@ -55,7 +55,7 @@ with openapi_client.ApiClient(configuration) as api_client:
     api_instance = openapi_client.DefaultApi(api_client)
     owner_slug = 'owner_slug_example' # str | Slug of the user or organization that owns the assistant
     package_slug = 'package_slug_example' # str | Slug of the assistant package
-    always_use_proxy = 'always_use_proxy_example' # str | Whether to always use the Continue-managed proxy for model requests (optional)
+    always_use_proxy = 'always_use_proxy_example' # str | Whether to always use the Synapse-managed proxy for model requests (optional)
     organization_id = 'organization_id_example' # str | ID of the organization to scope assistants to. If not provided, personal assistants are returned. (optional)
 
     try:
@@ -73,7 +73,7 @@ with openapi_client.ApiClient(configuration) as api_client:
 | -------------------- | ------- | ------------------------------------------------------------------------------------------------- | ---------- |
 | **owner_slug**       | **str** | Slug of the user or organization that owns the assistant                                          |
 | **package_slug**     | **str** | Slug of the assistant package                                                                     |
-| **always_use_proxy** | **str** | Whether to always use the Continue-managed proxy for model requests                               | [optional] |
+| **always_use_proxy** | **str** | Whether to always use the Synapse-managed proxy for model requests                               | [optional] |
 | **organization_id**  | **str** | ID of the organization to scope assistants to. If not provided, personal assistants are returned. | [optional] |
 
 ### Return type
@@ -445,7 +445,7 @@ configuration = openapi_client.Configuration(
 with openapi_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = openapi_client.DefaultApi(api_client)
-    always_use_proxy = 'always_use_proxy_example' # str | Whether to always use the Continue-managed proxy for model requests (optional)
+    always_use_proxy = 'always_use_proxy_example' # str | Whether to always use the Synapse-managed proxy for model requests (optional)
     organization_id = 'organization_id_example' # str | ID of the organization to scope assistants to. If not provided, personal assistants are returned. (optional)
 
     try:
@@ -461,7 +461,7 @@ with openapi_client.ApiClient(configuration) as api_client:
 
 | Name                 | Type    | Description                                                                                       | Notes      |
 | -------------------- | ------- | ------------------------------------------------------------------------------------------------- | ---------- |
-| **always_use_proxy** | **str** | Whether to always use the Continue-managed proxy for model requests                               | [optional] |
+| **always_use_proxy** | **str** | Whether to always use the Synapse-managed proxy for model requests                               | [optional] |
 | **organization_id**  | **str** | ID of the organization to scope assistants to. If not provided, personal assistants are returned. | [optional] |
 
 ### Return type

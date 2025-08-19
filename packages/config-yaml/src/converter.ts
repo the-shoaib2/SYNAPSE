@@ -108,7 +108,7 @@ function convertContext(configJson: ConfigJson): ContextYaml[] {
         };
       }
       return {
-        uses: `synapsedev/${ctx.name === "open" ? "open-files" : ctx.name}-context`,
+        uses: `the-shoaib2/${ctx.name === "open" ? "open-files" : ctx.name}-context`,
         with: ctx.params,
       };
     }) ?? [];
@@ -185,7 +185,7 @@ export function convertJsonToYamlConfig(configJson: ConfigJson): ConfigYaml {
   const docs = configJson.docs?.map(convertDoc);
 
   const configYaml: ConfigYaml = {
-          name: "Synapse Config",
+    name: "Synapse Config",
     version: "0.0.1",
     models,
     context,

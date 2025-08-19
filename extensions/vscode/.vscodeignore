@@ -25,3 +25,11 @@ e2e
 server/exe/**
 !out/node_modules/**
 !node_modules/@vscode/ripgrep/bin/rg
+
+# Ensure media files are included
+!media/**
+!media/readme.gif
+!media/icon.png
+!media/sidebar-icon.png
+!media/SYNAPSE.svg
+!media/prompt.tmLanguage.json

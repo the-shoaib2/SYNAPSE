@@ -49,7 +49,7 @@ Automatically create local rule blocks: When in Agent mode, you can prompt the a
 For example, you can say "Create a rule for this", and a rule will be created for you in `.synapse/rules` based on your conversation.
 </Info>
 
-Rules can also be added to an Assistant on the Continue Hub.
+Rules can also be added to an Assistant on the Synapse Hub.
 
 Explore available rules [here](https://hub.synapse.dev), or [create your own](https://hub.synapse.dev/new?type=block&blockType=rules) in the Hub.
 
@@ -79,10 +79,10 @@ Rules blocks can be simple text, written in YAML configuration files, or as Mark
   name: Documentation Standards
   globs: docs/**/*.{md,mdx}
   alwaysApply: false
-  description: Standards for writing and maintaining Continue Docs
+  description: Standards for writing and maintaining Synapse Docs
   ---
 
-  # Continue Docs Standards
+  # Synapse Docs Standards
 
   - Follow Mintlify documentation standards
   - Include YAML frontmatter with title, description, and keywords
@@ -166,7 +166,7 @@ Whenever you are writing React code, make sure to
 
 ### Chat System Message
 
-Continue includes a simple default system message for [Agent](../../features/agent/quick-start) and [Chat](../../features/chat/quick-start) requests, to help the model provide reliable codeblock formats in its output.
+Synapse includes a simple default system message for [Agent](../../features/agent/quick-start) and [Chat](../../features/chat/quick-start) requests, to help the model provide reliable codeblock formats in its output.
 
 This can be viewed in the rules section of the toolbar (see above), or in the source code [here](https://github.com/continuedev/synapse/blob/main/core/llm/constructMessages.ts#L4).
 

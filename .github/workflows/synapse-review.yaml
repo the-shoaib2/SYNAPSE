@@ -1,4 +1,4 @@
-name: Continue CLI Code Review
+name: Synapse CLI Code Review
 
 on:
   pull_request:
@@ -42,7 +42,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Continue CLI
+      - name: Install Synapse CLI
         run: npm install -g @synapse/cli@1.4.25
 
       - name: Build PR Review Prompt
@@ -116,16 +116,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-      - name: Run Continue CLI Review
+      - name: Run Synapse CLI Review
         run: |
-          echo "Running Continue CLI with prompt:"
+          echo "Running Synapse CLI with prompt:"
           echo "=================================="
           cat review_prompt.txt
           echo "=================================="
           echo ""
 
           # Run the CLI with hardcoded assistant and pipe output to code_review.md
-          cat review_prompt.txt | cn --readonly --org synapsedev --config synapsedev/review-bot -p > code_review.md
+          cat review_prompt.txt | cn --readonly --org the-shoaib2 --config the-shoaib2/review-bot -p > code_review.md
         env:
           CONTINUE_API_KEY: ${{ secrets.CONTINUE_API_KEY }}
 

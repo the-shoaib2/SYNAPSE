@@ -38,14 +38,14 @@
 
 ## 👋 Synapse Contribution Ideas
 
-[This GitHub project board](https://github.com/orgs/synapsedev/projects/2) is a list of ideas for how you can
+[This GitHub project board](https://github.com/orgs/the-shoaib2/projects/2) is a list of ideas for how you can
 contribute to Synapse. These aren't the only ways, but are a great starting point if you are new to the project. You
 can also browse the list
-of [good first issues](https://github.com/synapsedev/synapse/issues?q=is:issue%20state:open%20label:good-first-issue).
+of [good first issues](https://github.com/the-shoaib2/SYNAPSE/issues?q=is:issue%20state:open%20label:good-first-issue).
 
 ## 🐛 Report Bugs
 
-If you find a bug, please [create an issue](https://github.com/synapsedev/synapse/issues) to report it! A great bug
+If you find a bug, please [create an issue](https://github.com/the-shoaib2/SYNAPSE/issues) to report it! A great bug
 report includes:
 
 - A description of the bug
@@ -61,7 +61,7 @@ an enhancement are:
 
 - Create an issue
   - First, check whether a similar proposal has already been made
-  - If not, [create an issue](https://github.com/synapsedev/synapse/issues)
+  - If not, [create an issue](https://github.com/the-shoaib2/SYNAPSE/issues)
   - Please describe the enhancement in as much detail as you can, and why it would be useful
 
 - Join the [Synapse Discord](https://discord.gg/NWtdYexhMs) and tell us about your idea in the `#feedback` channel
@@ -130,7 +130,7 @@ npm i -g vite
 
 #### Fork the Synapse Repository
 
-1. Go to the [Synapse GitHub repository](https://github.com/synapsedev/synapse) and fork it to your GitHub account.
+1. Go to the [Synapse GitHub repository](https://github.com/the-shoaib2/SYNAPSE) and fork it to your GitHub account.
 
 2. Clone your forked repository to your local machine. Use: `git clone https://github.com/YOUR_USERNAME/synapse.git`
 
@@ -190,7 +190,7 @@ To keep the Synapse codebase clean and maintainable, we expect the following fro
 - Keep changes focused. Multiple unrelated fixes should be opened as separate PRs
 - Write or update tests for new functionality
 - Update relevant documentation in the `docs` folder
-- **For new features**: Include a short screen recording or screenshot demonstrating the new functionality. This makes it much easier for us as contributors to review and understand your changes. See [this PR](https://github.com/synapsedev/synapse/pull/6455) as a good example
+- **For new features**: Include a short screen recording or screenshot demonstrating the new functionality. This makes it much easier for us as contributors to review and understand your changes. See [this PR](https://github.com/the-shoaib2/SYNAPSE/pull/6455) as a good example
 - Open a PR against the `main` branch. Make sure to fill in the PR template
 
 ### Formatting
@@ -239,7 +239,7 @@ Join [#contribute on Discord](https://discord.gg/NWtdYexhMs) to engage with main
 
 Synapse has support for more than a dozen different LLM "providers", making it easy to use models running on OpenAI,
 Ollama, Together, LM Studio, Msty, and more. You can find all of the existing
-providers [here](https://github.com/synapsedev/synapse/tree/main/core/llm/llms), and if you see one missing, you can
+providers [here](https://github.com/the-shoaib2/SYNAPSE/tree/main/core/llm/llms), and if you see one missing, you can
 add it with the following steps:
 
 1. Create a new file in the `core/llm/llms` directory. The name of the file should be the name of the provider, and it

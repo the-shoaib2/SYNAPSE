@@ -200,7 +200,7 @@ export class ConfigHandler {
       } catch (e) {
         errors.push({
           fatal: false,
-          message: `Error loading Continue Hub assistants${e instanceof Error ? ":\n" + e.message : ""}`,
+          message: `Error loading Synapse Hub assistants${e instanceof Error ? ":\n" + e.message : ""}`,
         });
       }
     }

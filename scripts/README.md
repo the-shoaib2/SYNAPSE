@@ -533,9 +533,9 @@ For script-related issues:
 
 ## 📞 **Contact**
 
-- **Project**: [Synapse](https://github.com/synapsedev/synapse)
+- **Project**: [Synapse](https://github.com/the-shoaib2/SYNAPSE)
 - **Discord**: [Join our community](https://discord.gg/NWtdYexhMs)
-- **Issues**: [GitHub Issues](https://github.com/synapsedev/synapse/issues)
+- **Issues**: [GitHub Issues](https://github.com/the-shoaib2/SYNAPSE/issues)
 
 ---
 

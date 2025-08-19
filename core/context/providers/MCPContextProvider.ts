@@ -50,7 +50,7 @@ class MCPContextProvider extends BaseContextProvider {
   }
 
   /**
-   * Continue experimentally supports resource templates (https://modelcontextprotocol.io/docs/concepts/resources#resource-templates)
+   * Synapse experimentally supports resource templates (https://modelcontextprotocol.io/docs/concepts/resources#resource-templates)
    * by allowing specifically just the "query" variable in the template, which we will update with the full input of the user in the input box
    */
   private insertInputToUriTemplate(uri: string, query: string): string {
@@ -83,7 +83,7 @@ class MCPContextProvider extends BaseContextProvider {
         const content = resource.text;
         if (typeof content !== "string") {
           throw new Error(
-            "Continue currently only supports text resources from MCP",
+            "Synapse currently only supports text resources from MCP",
           );
         }
 

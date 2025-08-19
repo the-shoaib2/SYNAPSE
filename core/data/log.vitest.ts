@@ -2,13 +2,13 @@ import { DevDataLogEvent } from "@synapse/config-yaml";
 import fs from "fs";
 import path from "path";
 import {
-    afterAll,
-    beforeAll,
-    beforeEach,
-    describe,
-    expect,
-    it,
-    vi,
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
 } from "vitest";
 import { IdeInfo, IdeSettings } from "..";
 import { Core } from "../core";
@@ -136,7 +136,7 @@ describe("DataLogger", () => {
         eventName: "testEvent",
         timestamp: expect.any(String),
         schema: SCHEMA,
-        userAgent: "VSCode/1.0.0 (Continue/0.1.0)",
+        userAgent: "VSCode/1.0.0 (Synapse/0.1.0)",
         selectedProfileId: "test-profile-id",
         userId: "test-user-token",
       });

@@ -144,7 +144,7 @@ export function getConfigTsPath(): string {
       JSON.stringify({
         name: "synapse-config",
         version: "1.0.0",
-        description: "My Continue Configuration",
+        description: "My Synapse Configuration",
         main: "config.js",
       }),
     );

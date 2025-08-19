@@ -19,7 +19,7 @@ If your message is between webview and core, add it to `core/protocol/passThroug
 
 ## 4. Add to IntelliJ constants (if webview ↔ core)
 
-<!-- If your message is between webview and core, add it to `extensions/intellij/src/main/kotlin/com/github/synapsedev/synapseintellijextension/constants/MessageTypes.kt`. -->
+<!-- If your message is between webview and core, add it to `extensions/intellij/src/main/kotlin/com/github/the-shoaib2/synapseintellijextension/constants/MessageTypes.kt`. -->
 
 ## 5. Implement the message handler
 

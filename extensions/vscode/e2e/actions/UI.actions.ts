@@ -1,10 +1,10 @@
 import {
-    InputBox,
-    Key,
-    WebDriver,
-    WebElement,
-    WebView,
-    Workbench,
+  InputBox,
+  Key,
+  WebDriver,
+  WebElement,
+  WebView,
+  Workbench,
 } from "vscode-extension-tester";
 
 import { DEFAULT_TIMEOUT } from "../constants";
@@ -18,7 +18,7 @@ export class UIActions {
       await new Workbench().executeCommand("View: Move View");
       await (
         await InputBox.create(DEFAULT_TIMEOUT.MD)
-      ).selectQuickPick("Continue");
+      ).selectQuickPick("Synapse");
       await (
         await InputBox.create(DEFAULT_TIMEOUT.MD)
       ).selectQuickPick("New Secondary Side Bar Entry");
@@ -49,7 +49,7 @@ export class UIActions {
     }
 
     if (!continueIFrame) {
-      throw new Error("Could not find Continue iframe");
+      throw new Error("Could not find Synapse iframe");
     }
 
     await driver.switchTo().frame(continueIFrame);

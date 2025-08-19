@@ -17,7 +17,7 @@ First, verify that you have access to the necessary tools:
 - builtin_ls: To explore directory structure
 - builtin_create_new_file: To generate the CONTINUE.md file
 
-If any of these tools are unavailable, inform the user that they need to activate them and enable "Agent Mode" in Continue before proceeding.
+If any of these tools are unavailable, inform the user that they need to activate them and enable "Agent Mode" in Synapse before proceeding.
 
 ## Step 2: Project Analysis
 Analyze the project structure and key files to understand:
@@ -75,7 +75,7 @@ Make sure your analysis is thorough but concise. Focus on information that would
 After creating the .synapse/rules/CONTINUE.md file, provide a summary of what you've created and remind the user to:
 1. Review and edit the file as needed
 2. Commit it to their repository to share with their team
-3. Explain that Continue will automatically load this file into context when working with the project
+3. Explain that Synapse will automatically load this file into context when working with the project
 
 Also inform the user that they can create additional rules.md files in subdirectories for more specific documentation related to those components.`;
 

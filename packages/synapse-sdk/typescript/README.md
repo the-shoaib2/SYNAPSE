@@ -35,7 +35,7 @@ const response = await client.chat.completions.create({
 console.log(response.choices[0].message.content);
 ```
 
-You can also use the SDK without specifying an assistant to just get the Continue API client:
+You can also use the SDK without specifying an assistant to just get the Synapse API client:
 
 ```typescript
 import { Synapse } from "@synapse/sdk";

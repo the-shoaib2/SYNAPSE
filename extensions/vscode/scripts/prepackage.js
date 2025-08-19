@@ -366,12 +366,12 @@ void (async () => {
     "tag-qry/tree-sitter-c_sharp-tags.scm",
 
     // onnx runtime bindings
-    `bin/napi-v3/${os}/${arch}/onnxruntime_binding.node`,
-    `bin/napi-v3/${os}/${arch}/${
+    `bin/napi-v6/${os}/${arch}/onnxruntime_binding.node`,
+    `bin/napi-v6/${os}/${arch}/${
       isMacTarget
-        ? "libonnxruntime.1.14.0.dylib"
+        ? "libonnxruntime.1.22.0.dylib"
         : isLinuxTarget
-          ? "libonnxruntime.so.1.14.0"
+          ? "libonnxruntime.so.1.22.0"
           : "onnxruntime.dll"
     }`,
 
@@ -381,6 +381,11 @@ void (async () => {
 
     // Tutorial
     "media/move-chat-panel-right.md",
+    "media/readme.gif",
+    "media/icon.png",
+    "media/sidebar-icon.png",
+    "media/SYNAPSE.svg",
+    "media/prompt.tmLanguage.json",
     "synapse_tutorial.py",
     "config_schema.json",
 
