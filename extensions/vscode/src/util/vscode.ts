@@ -22,7 +22,7 @@ export function getNonce() {
 }
 
 export function getExtensionUri(): vscode.Uri {
-      return vscode.extensions.getExtension("Synapse.synapse")!.extensionUri;
+    return vscode.extensions.getExtension("Synapse.synapse-dev")!.extensionUri;
 }
 
 export function getViewColumnOfFile(
