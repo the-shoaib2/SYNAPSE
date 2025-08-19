@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { v4 as uuidv4 } from 'uuid';
-import { prisma } from '@/lib/prisma';
 
 // Initialize Resend only if API key is available
 const resendApiKey = process.env.RESEND_API_KEY;
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
         });
       } catch (emailError) {
         console.error('Failed to send reset email:', emailError);
-        // Continue execution even if email fails
+        // Synapse execution even if email fails
       }
     } else {
       console.warn('Resend API key not configured. Email sending is disabled.');

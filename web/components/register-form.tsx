@@ -1,17 +1,14 @@
 "use client"
 
-import { useState, useCallback, useEffect, useMemo } from "react"
-import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Eye, EyeOff, Loader2, RefreshCw, Utensils, Code2 } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { signIn } from "next-auth/react"
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Code2, Loader2 } from "lucide-react"
+import { signIn, useSession } from "next-auth/react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { toast } from "react-hot-toast"
-import { FaGithub, FaApple, FaMicrosoft } from 'react-icons/fa'
-import { useSession } from "next-auth/react"
+import { FaApple, FaGithub, FaMicrosoft } from 'react-icons/fa'
 
 // Form validation types
 type FormErrors = {
@@ -426,12 +423,12 @@ export default function RegisterForm() {
     }
     
     const texts = {
-      1: 'Continue to Password',
-      2: 'Continue to Verification',
+      1: 'Synapse to Password',
+      2: 'Synapse to Verification',
       3: 'Create Account'
     };
     
-    return texts[currentStep as keyof typeof texts] || 'Continue';
+    return texts[currentStep as keyof typeof texts] || 'Synapse';
   }, [currentStep, isLoading]);
 
   const handleProviderSignIn = async (provider: string, setLoading: (v: boolean) => void) => {

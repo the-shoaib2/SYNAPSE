@@ -1,14 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth/auth'
-import { 
-  updateSessionInfo, 
-  getCurrentSessionInfo, 
-  getAllActiveSessions,
-  revokeMultipleSessions
+import {
+    getAllActiveSessions,
+    getCurrentSessionInfo,
+    revokeMultipleSessions,
+    updateSessionInfo
 } from '@/lib/auth/session-manager'
 import { getLocationFromIP } from '@/lib/location-utils'
+import { prisma } from '@/lib/prisma'
+import { getServerSession } from 'next-auth/next'
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
   try {
@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
         
 
       } catch (error) {
-        // Continue with fetching sessions even if update fails
+        // Synapse with fetching sessions even if update fails
       }
     }
 
