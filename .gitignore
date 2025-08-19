@@ -179,3 +179,7 @@ extensions/.synapse-debug/
 .synapserules
 **/.synapse/assistants/
 keys
+
+# Allow the Next.js app lib directory to be committed
+!web/lib/
+!web/lib/**
