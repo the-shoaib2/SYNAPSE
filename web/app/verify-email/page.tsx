@@ -49,7 +49,7 @@ export default async function VerifyEmailPage({ searchParams }: Props) {
               </div>
               <h3 className="mt-3 text-lg font-medium text-gray-900">Email Verified Successfully</h3>
               <p className="mt-2 text-sm text-gray-500">
-                Your email has been verified. You can now use all features of MealSphere.
+                Your email has been verified. You can now use all features of Synapse.
               </p>
               <div className="mt-5">
                 <Button asChild className="w-full">

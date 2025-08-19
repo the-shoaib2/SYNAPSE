@@ -49,11 +49,18 @@ function FloatingPaths({ position }: { position: number }) {
 
 export default function BackgroundPaths({
   title = "Background Paths",
+  subtitle,
+  showGif = false,
+  gifSrc,
 }: {
   title?: string
+  subtitle?: string
+  showGif?: boolean
+  gifSrc?: string
 }) {
-  // Split title and subtitle if a line break is present
-  const [mainTitle, subtitle] = title.split("\n");
+  // Use provided subtitle or split title if a line break is present
+  const mainTitle = title;
+  const finalSubtitle = subtitle || (title.includes("\n") ? title.split("\n")[1] : undefined);
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-background dark:bg-background">
       <div className="absolute inset-0">
@@ -67,7 +74,7 @@ export default function BackgroundPaths({
           transition={{ duration: 2 }}
           className="max-w-4xl mx-auto"
         >
-          <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold mb-4 tracking-tighter text-foreground bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tighter text-foreground bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             {mainTitle.split(" ").map((word, wordIndex) => (
               <span key={wordIndex} className="inline-block mr-4 last:mr-0">
                 {word.split("").map((letter, letterIndex) => (
@@ -89,14 +96,25 @@ export default function BackgroundPaths({
               </span>
             ))}
           </h1>
-          {subtitle && (
+          
+          {showGif && gifSrc && (
+            <div className="mb-6">
+              <img 
+                src={gifSrc} 
+                alt="Synapse Demo" 
+                className="mx-auto max-w-2xl w-full h-auto rounded-lg shadow-lg"
+              />
+            </div>
+          )}
+          
+          {finalSubtitle && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1.5, delay: 0.5 }}
+              transition={{ duration: 1.5, delay: showGif ? 1.5 : 0.5 }}
               className="text-xl sm:text-2xl md:text-3xl font-medium mb-8 text-muted-foreground bg-gradient-to-r from-primary/70 to-secondary/70 bg-clip-text text-transparent"
             >
-              {subtitle}
+              {finalSubtitle}
             </motion.div>
           )}
           <div className="flex justify-center mt-2">

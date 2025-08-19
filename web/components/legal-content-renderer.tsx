@@ -149,9 +149,9 @@ export function LegalContentRenderer({ data, type, isLoading = false }: LegalCon
               <span className="text-primary"> {data?.title.split(' ').slice(-1)[0]}</span>
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-4 px-4">
-              {type === 'terms' && "Please read these terms carefully before using MealSphere. By using our service, you agree to be bound by these terms."}
+              {type === 'terms' && "Please read these terms carefully before using Synapse. By using our service, you agree to be bound by these terms."}
               {type === 'privacy' && "We respect your privacy and are committed to protecting your personal information. This policy explains how we collect, use, and safeguard your data?."}
-              {type === 'cookies' && "Learn how we use cookies and similar technologies to enhance your experience on MealSphere and provide you with personalized content and services."}
+              {type === 'cookies' && "Learn how we use cookies and similar technologies to enhance your experience on Synapse and provide you with personalized content and services."}
             </p>
             <motion.div 
               initial={{ opacity: 0, y: 10 }}

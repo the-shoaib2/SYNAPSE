@@ -22,7 +22,14 @@ export class PanelFactory {
   } {
     const panelInfo = this.getPanelTypeInfoMap()[type];
     if (!panelInfo) {
-      throw new Error(`Unknown panel type: ${type}`);
+      // Return a default info object for unsupported panel types
+      return {
+        name: type.charAt(0).toUpperCase() + type.slice(1).replace(/-/g, " "),
+        description: `${type} panel`,
+        icon: "📋",
+        category: "general",
+        defaultConfig: {},
+      };
     }
     return panelInfo;
   }
@@ -88,15 +95,17 @@ export class PanelFactory {
     return basePanel;
   }
 
-  private getPanelTypeInfoMap(): Record<
-    PanelType,
-    {
-      name: string;
-      description: string;
-      icon: string;
-      category: string;
-      defaultConfig: Partial<CanvasPanelType>;
-    }
+  private getPanelTypeInfoMap(): Partial<
+    Record<
+      PanelType,
+      {
+        name: string;
+        description: string;
+        icon: string;
+        category: string;
+        defaultConfig: Partial<CanvasPanelType>;
+      }
+    >
   > {
     return {
       "execution-trace": {

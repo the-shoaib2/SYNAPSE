@@ -657,7 +657,7 @@ export default function ContactPage() {
           >
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Frequently Asked Questions</h2>
             <p className="text-muted-foreground">
-              Find answers to common questions about MealSphere
+              Find answers to common questions about Synapse
             </p>
           </motion.div>
           <div className="space-y-4 sm:space-y-6">
@@ -723,7 +723,7 @@ export default function ContactPage() {
             variants={itemVariants}
             className="text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto"
           >
-            We're here to help you get the most out of MealSphere. Choose the support option that works best for you.
+            We're here to help you get the most out of Synapse. Choose the support option that works best for you.
           </motion.p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {data?.supportChannels?.map((channel, index) => {
@@ -798,7 +798,7 @@ export default function ContactPage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-lg sm:text-xl mb-6 sm:mb-8 opacity-90"
           >
-            {data?.cta?.subtitle || "Join thousands of roommates who are already using MealSphere to simplify their shared living experience."}
+            {data?.cta?.subtitle || "Join thousands of roommates who are already using Synapse to simplify their shared living experience."}
           </motion.p>
           <motion.div 
             initial={{ opacity: 0, y: 20 }}

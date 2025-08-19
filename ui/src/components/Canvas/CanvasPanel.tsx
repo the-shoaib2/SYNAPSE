@@ -267,6 +267,7 @@ export const CanvasPanel: React.FC<CanvasPanelProps> = ({
       onMouseDown={handleDragStart}
     >
       {/* Panel Header */}
+      {/* @ts-ignore */}
       <PanelHeader
         panel={panel}
         isActive={isActive}

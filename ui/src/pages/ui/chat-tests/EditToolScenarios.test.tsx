@@ -1,11 +1,11 @@
 import { BuiltInToolNames } from "core/tools/builtIn";
+import { generateToolCallButtonTestId } from "../../../components/mainInput/Lump/LumpToolbar/PendingToolCallToolbar";
+import { generateToolCallButtonTestId } from "../../../components/mainInput/Lump/LumpToolbar/PendingToolCallToolbar";
 import {
   addAndSelectMockLlm,
   triggerConfigUpdate,
 } from "../../../util/test/config";
-import { renderWithProviders } from "../../../util/test/render";
-import { Chat } from "../Chat";
-import { generateToolCallButtonTestId } from "../../../components/mainInput/Lump/LumpToolbar/PendingToolCallToolbar";
+import { renderWithProviders 
 
 import { waitFor } from "@testing-library/dom";
 import { act } from "@testing-library/react";
@@ -56,7 +56,6 @@ beforeEach(() => {
 
 test(
   "Edit run with ask first policy and no auto apply",
-  { timeout: 15000 },
   async () => {
     // Setup
     const { ideMessenger, store, user } = await renderWithProviders(<Chat />);
@@ -166,7 +165,7 @@ test(
   },
 );
 
-test("Edit run with no policy and yolo mode", { timeout: 15000 }, async () => {
+test("Edit run with no policy and yolo mode", async () => {
   // Setup
   const { ideMessenger, store, user } = await renderWithProviders(<Chat />);
 

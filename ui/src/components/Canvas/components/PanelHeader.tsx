@@ -1,7 +1,8 @@
-import type { CanvasPanel } from "../types";
+import React from "react";
+import React from "react";lType } from "../types";
 
 export interface PanelHeaderProps {
-  panel: CanvasPanel;
+  panel: CanvasPanelType;
   isActive: boolean;
   onClose: () => void;
   onMinimize: () => void;
@@ -18,7 +19,7 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({
   onMaximize,
   onPin,
   className = "",
-}) => {
+}): JSX.Element => {
   return (
     <div className={`panel-header ${isActive ? "active" : ""} ${className}`}>
       {/* Panel Icon and Title */}
@@ -33,7 +34,7 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({
         </span>
         {panel.description && (
           <span className="panel-description" title={String(panel.description)}>
-            {panel.description}
+            {String(panel.description)}
           </span>
         )}
       </div>

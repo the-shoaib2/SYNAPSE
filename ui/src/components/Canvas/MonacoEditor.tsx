@@ -168,19 +168,21 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
   // Update language when prop changes
   useEffect(() => {
     if (monacoRef.current?.editorInstance && monacoRef.current.editor) {
-      monacoRef.current.editor.setModelLanguage(
-        (
-          monacoRef.current.editorInstance as { getModel: () => unknown }
-        ).getModel(),
-        language,
-      );
+      const editorInstance = monacoRef.current.editorInstance as any;
+      const monaco = monacoRef.current.editor as any;
+      if (editorInstance && monaco.editor) {
+        monaco.editor.setModelLanguage(editorInstance.getModel(), language);
+      }
     }
   }, [language]);
 
   // Update theme when prop changes
   useEffect(() => {
     if (monacoRef.current?.editorInstance && monacoRef.current.editor) {
-      monacoRef.current.editor.setTheme(theme);
+      const monaco = monacoRef.current.editor as any;
+      if (monaco.editor) {
+        monaco.editor.setTheme(theme);
+      }
     }
   }, [theme]);
 

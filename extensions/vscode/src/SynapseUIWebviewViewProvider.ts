@@ -132,7 +132,16 @@ export class SynapseUIWebviewViewProvider
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script>const vscode = acquireVsCodeApi();</script>
+        <script>
+          try {
+            const vscode = acquireVsCodeApi();
+            console.log('VS Code API acquired successfully:', vscode);
+            window.vscode = vscode;
+          } catch (error) {
+            console.error('Failed to acquire VS Code API:', error);
+            window.vscode = null;
+          }
+        </script>
         <link href="${styleMainUri}" rel="stylesheet">
 
         <title>Synapse</title>
