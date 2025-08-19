@@ -1,59 +1,179 @@
 <div align="center">
 
-![Continue logo](media/readme.png)
+![Synapse logo](media/readme.gif)
 
 </div>
 
-<h1 align="center">Continue</h1>
+<h1 align="center">Synapse VS Code Extension</h1>
 
 <div align="center">
 
-**[Synapse](https://docs.synapse.dev) enables developers to create, share, and use custom AI code assistants with our open-source [VS Code extension](https://marketplace.visualstudio.com/items?itemName=Synapse.synapse) and [hub of models, rules, prompts, docs, and other building blocks](https://hub.synapse.dev)**
+**The leading open-source AI code assistant for VS Code. Create, share, and use custom AI assistants with powerful autocomplete, chat, edit, and agent capabilities.**
 
 </div>
 
 <div align="center">
 
+<a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=Synapse.synapse" style="background:none">
+    <img src="https://img.shields.io/visual-studio-marketplace/v/Synapse.synapse.svg?style=flat&colorA=0066CC&colorB=007ACC&label=VS%20Code%20Marketplace" style="height: 22px;" />
+</a>
+<a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=Synapse.synapse" style="background:none">
+    <img src="https://img.shields.io/visual-studio-marketplace/d/Synapse.synapse.svg?style=flat&colorA=0066CC&colorB=007ACC&label=Downloads" style="height: 22px;" />
+</a>
 <a target="_blank" href="https://opensource.org/licenses/Apache-2.0" style="background:none">
     <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" style="height: 22px;" />
 </a>
 <a target="_blank" href="https://docs.synapse.dev" style="background:none">
-    <img src="https://img.shields.io/badge/Continue-docs-%23BE1B55.svg?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNiAyNCIgZmlsbD0id2hpdGUiPgogIDxwYXRoIGQ9Ik0yMC41Mjg2IDMuMjY4MTFMMTkuMTUxMiA1LjY1Njk0TDIyLjYzMjggMTEuNjg0OUMyMi42NTgyIDExLjczMDYgMjIuNjczNSAxMS43ODY2IDIyLjY3MzUgMTEuODM3NEMyMi42NzM1IDExLjg4ODIgMjIuNjU4MiAxMS45NDQxIDIyLjYzMjggMTEuOTg5OUwxOS4xNTEyIDE4LjAyMjlMMjAuNTI4NiAyMC40MTE3TDI1LjQ3OTEgMTEuODM3NEwyMC41Mjg2IDMuMjYzMDNWMy4yNjgxMVpNMTguNjE3NiA1LjM0NjlMMTkuOTk1IDIuOTU4MDdIMTcuMjQwMkwxNS44NjI4IDUuMzQ2OUgxOC42MjI3SDE4LjYxNzZaTTE1Ljg1NzcgNS45NjY5N0wxOS4wNzUgMTEuNTMyNEgyMS44Mjk4TDE4LjYxNzYgNS45NjY5N0gxNS44NTc3Wk0xOC42MTc2IDE3LjcxNzlMMjEuODI5OCAxMi4xNDc0SDE5LjA3NUwxNS44NTc3IDE3LjcxNzlIMTguNjE3NlpNMTUuODU3NyAxOC4zMzhMMTcuMjM1MSAyMC43MTY3SDE5Ljk4OTlMMTguNjEyNSAxOC4zMzhIMTUuODUyNkgxNS44NTc3Wk02LjUyMDk4IDIxLjMwNjNDNi40NjUwNyAyMS4zMDYzIDYuNDE0MjQgMjEuMjkxIDYuMzY4NSAyMS4yNjU2QzYuMzIyNzYgMjEuMjQwMiA2LjI4MjA5IDIxLjE5OTUgNi4yNTY2OCAyMS4xNTM4TDIuNzcwMDIgMTUuMTIwN0gwLjAxNTI0ODJMNC45NjU3IDIzLjY5SDE0Ljg2MTVMMTMuNDg0MSAyMS4zMDYzSDYuNTI2MDZINi41MjA5OFpNMTQuMDE3OCAyMC45OTYyTDE1LjM5NTIgMjMuMzhMMTYuNzcyNiAyMC45OTExTDE1LjM5NTIgMTguNjAyM0wxNC4wMTc4IDIwLjk5MTFWMjAuOTk2MlpNMTQuODYxNSAxOC4yOTc0SDguNDM3MTJMNy4wNTk3MyAyMC42ODYySDEzLjQ4NDFMMTQuODYxNSAxOC4yOTc0Wk03Ljg5ODM2IDE3Ljk5MjRMNC42ODEwOCAxMi40MjE5TDMuMzAzNjkgMTQuODEwN0w2LjUyMDk4IDIwLjM4MTJMNy44OTgzNiAxNy45OTI0Wk0wLjAxMDE2NTQgMTQuNTAwN0gyLjc2NDk0TDQuMTQyMzIgMTIuMTExOEgxLjM5MjYzTDAuMDEwMTY1NCAxNC41MDA3Wk02LjI0MTQzIDIuNTQxM0M2LjI2Njg1IDIuNDk1NTYgNi4zMDc1MSAyLjQ1NDkgNi4zNTMyNSAyLjQyOTQ4QzYuMzk5IDIuNDA0MDcgNi40NTQ5IDIuMzg4ODIgNi41MDU3MyAyLjM4ODgySDEzLjQ3NEwxNC44NTE0IDBINC45NTA0NUwwIDguNTc0MzVIMi43NTQ3N0w2LjIzMTI3IDIuNTQ2MzhMNi4yNDE0MyAyLjU0MTNaTTQuMTQyMzIgMTEuNTc4MkwyLjc2NDk0IDkuMTg5MzRIMC4wMTAxNjU0TDEuMzg3NTUgMTEuNTc4Mkg0LjE0MjMyWk02LjUxMDgxIDMuMzEzODZMMy4yOTg2MSA4Ljg3OTNMNC42NzU5OSAxMS4yNjgxTDcuODg4MiA1LjcwMjY4TDYuNTEwODEgMy4zMTM4NlpNMTMuNDc5MSAzLjAwMzgySDcuMDQ0NDhMOC40MjE4NyA1LjM5MjY0SDE0Ljg1NjRMMTMuNDc5MSAzLjAwMzgyWk0xNS4zOTUyIDUuMDgyNkwxNi43Njc1IDIuNjk4ODZMMTUuMzk1MiAwLjMxMDAzOEwxNC4wMTc4IDIuNjkzNzhMMTUuMzk1MiA1LjA4MjZaIi8+Cjwvc3ZnPg==" style="height: 22px;" />
+    <img src="https://img.shields.io/badge/docs-synapse.dev-blue.svg" style="height: 22px;" />
 </a>
 <a target="_blank" href="https://discord.gg/vapESyrFmJ" style="background:none">
     <img src="https://img.shields.io/badge/discord-join-synapse.svg?labelColor=191937&color=6F6FF7&logo=discord" style="height: 22px;" />
 </a>
 
-<p></p>
-
-## Agent
-
-[Agent](https://synapse.dev/docs/agent/how-to-use-it) enables you to make more substantial changes to your codebase
-
-![agent](docs/images/agent.gif)
-
-## Chat
-
-[Chat](https://synapse.dev/docs/chat/how-to-use-it) makes it easy to ask for help from an LLM without needing to leave
-the IDE
-
-![chat](docs/images/chat.gif)
-
-## Edit
-
-[Edit](https://synapse.dev/docs/edit/how-to-use-it) is a convenient way to modify code without leaving your current
-file
-
-![edit](docs/images/edit.gif)
-
-## Autocomplete
-
-[Autocomplete](https://synapse.dev/docs/autocomplete/how-to-use-it) provides inline code suggestions as you type
-
-![autocomplete](docs/images/autocomplete.gif)
-
 </div>
 
-## License
+## ✨ Features
 
-[Apache 2.0 © 2023-2025 Continue Dev, Inc.](./LICENSE)
+### 🤖 **Agent Mode**
+Make substantial changes to your entire codebase with AI assistance. The agent can understand your project structure and make coordinated changes across multiple files.
+
+**Key Commands:**
+- `Cmd/Ctrl + L` - Add highlighted code to context and clear chat
+- `Cmd/Ctrl + Shift + L` - Add highlighted code to context
+
+### 💬 **AI Chat**
+Get help from LLMs without leaving your IDE. Ask questions, get explanations, and receive coding assistance in real-time.
+
+**Features:**
+- Context-aware conversations
+- File and code selection integration
+- Multiple model support
+- Session management with history
+
+### ✏️ **Inline Edit**
+Modify code directly in your editor using natural language instructions. Perfect for quick fixes and improvements.
+
+**Key Commands:**
+- `Cmd/Ctrl + I` - Edit highlighted code with natural language
+- `Shift + Cmd/Ctrl + Enter` - Accept diff
+- `Shift + Cmd/Ctrl + Backspace` - Reject diff
+- `Escape` - Exit edit mode
+
+### 🔄 **Tab Autocomplete**
+Get intelligent code suggestions as you type, powered by AI models that understand your codebase context.
+
+**Key Commands:**
+- `Cmd/Ctrl + K, Cmd/Ctrl + A` - Toggle autocomplete enabled/disabled
+- `Cmd/Ctrl + Alt + Space` - Force autocomplete
+- `Tab` - Accept suggestion
+- `Escape` - Reject suggestion
+
+### ⚡ **Quick Actions**
+Right-click context menu actions for common coding tasks:
+
+- **Write Comments** - Generate comments for selected code
+- **Write Docstrings** - Create documentation for functions/classes
+- **Fix Code** - Automatically fix bugs and issues
+- **Optimize Code** - Improve performance and readability
+- **Fix Grammar/Spelling** - Correct text in markdown files
+
+### 🛠️ **Advanced Features**
+
+#### **Codebase Indexing**
+- Intelligent codebase understanding and search
+- Automatic indexing with manual re-index options
+- Context-aware suggestions based on your project
+
+#### **Terminal Integration**
+- `Cmd/Ctrl + Shift + R` - Debug terminal with AI assistance
+- Terminal context understanding for better suggestions
+
+#### **Configuration Management**
+- JSON and YAML configuration support with validation
+- Schema-based autocompletion for config files
+- Remote configuration syncing for teams
+
+#### **Custom Prompt Language**
+- `.prompt` file support with syntax highlighting
+- File completion with `@` symbol
+- YAML header support for prompt metadata
+
+#### **Multi-Model Support**
+- Support for various AI models (GPT, Claude, Mistral, etc.)
+- Custom model configuration
+- Enterprise license key support
+
+## 🚀 Getting Started
+
+### Installation
+1. Install from [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Synapse.synapse)
+2. Open VS Code and look for the Synapse icon in the activity bar
+3. Configure your preferred AI model in settings
+
+### Quick Start
+1. **Select code** and press `Cmd/Ctrl + L` to start a chat
+2. **Highlight code** and press `Cmd/Ctrl + I` to edit inline
+3. **Start typing** to get autocomplete suggestions
+4. **Right-click** on code for quick actions
+
+## ⌨️ Keyboard Shortcuts
+
+| Action | Mac | Windows/Linux |
+|--------|-----|---------------|
+| Focus Chat | `Cmd + L` | `Ctrl + L` |
+| Add to Context | `Cmd + Shift + L` | `Ctrl + Shift + L` |
+| Inline Edit | `Cmd + I` | `Ctrl + I` |
+| Accept Diff | `Shift + Cmd + Enter` | `Shift + Ctrl + Enter` |
+| Reject Diff | `Shift + Cmd + Backspace` | `Shift + Ctrl + Backspace` |
+| Toggle Autocomplete | `Cmd + K, Cmd + A` | `Ctrl + K, Ctrl + A` |
+| Force Autocomplete | `Cmd + Alt + Space` | `Ctrl + Alt + Space` |
+| Debug Terminal | `Cmd + Shift + R` | `Ctrl + Shift + R` |
+| Open in New Window | `Cmd + K, Cmd + M` | `Ctrl + K, Ctrl + M` |
+
+## 🔧 Configuration
+
+The extension supports extensive configuration through:
+- **VS Code Settings** - Basic preferences and feature toggles
+- **`.synapserc.json`** - Project-specific configuration
+- **`config.yaml`** - Advanced configuration with YAML support
+- **Remote Config** - Team-wide configuration syncing
+
+### Key Settings
+- `synapse.enableTabAutocomplete` - Enable/disable autocomplete
+- `synapse.enableQuickActions` - Enable experimental quick actions
+- `synapse.telemetryEnabled` - Control telemetry collection
+- `synapse.enableConsole` - Enable debug console
+
+## 🏗️ Development
+
+### Building the Extension
+```bash
+npm install
+npm run esbuild
+```
+
+### Running Tests
+```bash
+npm test
+npm run e2e:all  # End-to-end tests
+```
+
+### Packaging
+```bash
+npm run package
+```
+
+## 📚 Documentation
+
+- [Official Documentation](https://docs.synapse.dev)
+- [Getting Started Guide](https://docs.synapse.dev/getting-started/install)
+- [Feature Walkthroughs](https://docs.synapse.dev/features/)
+- [Configuration Guide](https://docs.synapse.dev/customize/)
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) and join the [#contribute channel on Discord](https://discord.gg/vapESyrFmJ).
+
+## 📄 License
+
+[Apache 2.0 © 2023-2025 Synapse Dev, Inc.](../../LICENSE)

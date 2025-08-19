@@ -1,11 +1,11 @@
 ---
 title: "Build Your Own Context Provider"
-description: "Continue offers several way to provide your custom context to the extension."
+description: "Synapse offers several way to provide your custom context to the extension."
 ---
 
 ## HTTP Context Provider
 
-Continue can retrieve context from a custom HTTP server that you create and serve. Add the `@HTTP` context provider to your configuration like this:
+Synapse can retrieve context from a custom HTTP server that you create and serve. Add the `@HTTP` context provider to your configuration like this:
 
 - YAML
 - JSON
@@ -48,7 +48,7 @@ The `"options"` property can be used to send additional parameters to your endpo
 
 ## Using CustomContextProvider
 
-Custom context providers can be implemented in a `config.ts` placed in your Continue global directory (`~/.synapse` for MacOS, `%USERPROFILE%/.synapse` for Windows). You can implement the `CustomContextProvider` interface in your `config.ts`
+Custom context providers can be implemented in a `config.ts` placed in your Synapse global directory (`~/.synapse` for MacOS, `%USERPROFILE%/.synapse` for Windows). You can implement the `CustomContextProvider` interface in your `config.ts`
 
 ```
 interface CustomContextProvider {  title: string;  displayTitle?: string;  description?: string;  renderInlineAs?: string;  type?: ContextProviderType;  getContextItems(    query: string,    extras: ContextProviderExtras,  ): Promise<ContextItem[]>;  loadSubmenuItems?: (    args: LoadSubmenuItemsArgs,  ) => Promise<ContextSubmenuItem[]>;}
@@ -101,7 +101,7 @@ The flow of information in the above example is as follows:
 
 To include outside Node modules in your config.ts, run `npm install <module_name>` from the `~/.synapse` directory, and then import them in config.ts.
 
-Continue will use [esbuild](https://esbuild.github.io/) to bundle your `config.ts` and any dependencies into a single Javascript file. The exact configuration used can be found [here](https://github.com/continuedev/synapse/blob/5c9874400e223bbc9786a8823614a2e501fbdaf7/extensions/vscode/src/ideProtocol.ts#L45-L52).
+Synapse will use [esbuild](https://esbuild.github.io/) to bundle your `config.ts` and any dependencies into a single Javascript file. The exact configuration used can be found [here](https://github.com/continuedev/synapse/blob/5c9874400e223bbc9786a8823614a2e501fbdaf7/extensions/vscode/src/ideProtocol.ts#L45-L52).
 
 ### `CustomContextProvider` Reference
 
@@ -126,7 +126,7 @@ Continue will use [esbuild](https://esbuild.github.io/) to bundle your `config.t
 
 ## Extension API for VSCode
 
-Continue exposes an API for registering context providers from a 3rd party VSCode extension. This is useful if you have a VSCode extension that provides some additional context that you would like to use in Continue. To use this API, add the following to your `package.json`:
+Synapse exposes an API for registering context providers from a 3rd party VSCode extension. This is useful if you have a VSCode extension that provides some additional context that you would like to use in Synapse. To use this API, add the following to your `package.json`:
 
 package.json
 
@@ -134,13 +134,13 @@ package.json
 { "extensionDependencies": ["synapse.synapse"] }
 ```
 
-Or install the Continue Core module from npm:
+Or install the Synapse Core module from npm:
 
 ```
 npm i @synapse/core
 ```
 
-You can add the Continue core module as a dev dependency in your `package.json`:
+You can add the Synapse core module as a dev dependency in your `package.json`:
 
 package.json
 
@@ -153,9 +153,9 @@ Then, you can use the `registerCustomContextProvider` function to register your 
 myCustomContextProvider.ts
 
 ```
-import * as vscode from "vscode";import {  IContextProvider,  ContextProviderDescription,  ContextProviderExtras,  ContextItem,  LoadSubmenuItemsArgs,  ContextSubmenuItem,} from "@synapse/core";class MyCustomProvider implements IContextProvider {  get description(): ContextProviderDescription {    return {      title: "Custom",      displayTitle: "Custom",      description: "my custom context provider",      type: "normal",    };  }  async getContextItems(    query: string,    extras: ContextProviderExtras,  ): Promise<ContextItem[]> {    return [      {        name: "Custom",        description: "Custom description",        content: "Custom content",      },    ];  }  async loadSubmenuItems(    args: LoadSubmenuItemsArgs,  ): Promise<ContextSubmenuItem[]> {    return [];  }}// create an instance of your custom providerconst customProvider = new MyCustomProvider();// get Continue extension using vscode APIconst continueExt = vscode.extensions.getExtension("Continue.synapse");// get the API from the extensionconst continueApi = continueExt?.exports;// register your custom providercontinueApi?.registerCustomContextProvider(customProvider);
+import * as vscode from "vscode";import {  IContextProvider,  ContextProviderDescription,  ContextProviderExtras,  ContextItem,  LoadSubmenuItemsArgs,  ContextSubmenuItem,} from "@synapse/core";class MyCustomProvider implements IContextProvider {  get description(): ContextProviderDescription {    return {      title: "Custom",      displayTitle: "Custom",      description: "my custom context provider",      type: "normal",    };  }  async getContextItems(    query: string,    extras: ContextProviderExtras,  ): Promise<ContextItem[]> {    return [      {        name: "Custom",        description: "Custom description",        content: "Custom content",      },    ];  }  async loadSubmenuItems(    args: LoadSubmenuItemsArgs,  ): Promise<ContextSubmenuItem[]> {    return [];  }}// create an instance of your custom providerconst customProvider = new MyCustomProvider();// get Synapse extension using vscode APIconst continueExt = vscode.extensions.getExtension("Synapse.synapse");// get the API from the extensionconst continueApi = continueExt?.exports;// register your custom providercontinueApi?.registerCustomContextProvider(customProvider);
 ```
 
-This will register `MyCustomProvider` with Continue!
+This will register `MyCustomProvider` with Synapse!
 
 ![alt text](/images/guides/images/image-8befb5162b7779402f70ff42bb589edb.png)

@@ -28,20 +28,20 @@ To solve many problems, the first step is reading the logs to find the relevant 
 4. Select the `Console` tab
 5. Read the console logs
 
-#### Prompt Logs (Continue Console)
+#### Prompt Logs (Synapse Console)
 
-To view prompt logs/analytics, you can enable the Continue Console.
+To view prompt logs/analytics, you can enable the Synapse Console.
 
 1. Open VS Code settings (`cmd/ctrl` + `,`)
-2. Search for the setting "Continue: Enable Console" and enable it
+2. Search for the setting "Synapse: Enable Console" and enable it
 3. Reload the window
-4. Open the Continue Console by using the command palette (`cmd/ctrl` + `shift` + `P`) and searching for "Continue: Focus on Continue Console View"
+4. Open the Synapse Console by using the command palette (`cmd/ctrl` + `shift` + `P`) and searching for "Synapse: Focus on Synapse Console View"
 
-![Continue Console](/images/images/synapse-console-d387a10c2918c117c6c253a3b5f18c22.png)
+![Synapse Console](/images/images/synapse-console-d387a10c2918c117c6c253a3b5f18c22.png)
 
 ### JetBrains
 
-Open `~/.synapse/logs/core.log` to view the logs for the Continue plugin. The most recent logs are found at the bottom of the file.
+Open `~/.synapse/logs/core.log` to view the logs for the Synapse plugin. The most recent logs are found at the bottom of the file.
 
 Some JetBrains-related logs may also be found by clicking "Help" > "Show Log in Explorer/Finder".
 
@@ -49,7 +49,7 @@ Some JetBrains-related logs may also be found by clicking "Help" > "Show Log in 
 
 ### VS Code
 
-We are constantly making fixes and improvements to Continue, but the latest changes remain in a "pre-release" version for roughly a week so that we can test their stability. If you are experiencing issues, you can try the pre-release by going to the Continue extension page in VS Code and selecting "Switch to Pre-Release" as shown below.
+We are constantly making fixes and improvements to Synapse, but the latest changes remain in a "pre-release" version for roughly a week so that we can test their stability. If you are experiencing issues, you can try the pre-release by going to the Synapse extension page in VS Code and selecting "Switch to Pre-Release" as shown below.
 
 ![Pre-Release](/images/images/prerelease-9bed93e846914165d30a3b227a680d9b.png)
 
@@ -67,13 +67,13 @@ On JetBrains, the "pre-release" happens through their Early Access Program (EAP)
 
 If you've tried everything, reported an error, know that a previous version was working for you, and are waiting to hear back, you can try downloading an older version of the extension.
 
-For VS Code, All versions are hosted on the Open VSX Registry [here](https://open-vsx.org/extension/Continue/synapse). Once you've downloaded the extension, which will be a .vsix file, you can install it manually by following the instructions [here](https://code.visualstudio.com/docs/editor/extension-gallery#_install-from-a-vsix).
+For VS Code, All versions are hosted on the Open VSX Registry [here](https://open-vsx.org/extension/Synapse/synapse). Once you've downloaded the extension, which will be a .vsix file, you can install it manually by following the instructions [here](https://code.visualstudio.com/docs/editor/extension-gallery#_install-from-a-vsix).
 
 You can find older versions of the JetBrains extension on their [marketplace](https://plugins.jetbrains.com/plugin/22707-synapse), which will walk you through installing from disk.
 
 ## Keyboard shortcuts not resolving
 
-If your keyboard shortcuts are not resolving, you may have other commands that are taking precedence over the Continue shortcuts. You can see if this is the case, and change your shortcut mappings, in the configuration of your IDE.
+If your keyboard shortcuts are not resolving, you may have other commands that are taking precedence over the Synapse shortcuts. You can see if this is the case, and change your shortcut mappings, in the configuration of your IDE.
 
 - [VSCode keyboard shortcuts docs](https://code.visualstudio.com/docs/getstarted/keybindings)
 - [IntelliJ keyboard shortcut docs](https://www.jetbrains.com/help/idea/configuring-keyboard-and-mouse-shortcuts.html)
@@ -115,11 +115,11 @@ If you are using VS Code and require requests to be made through a proxy, you ar
 
 #### code-server
 
-Continue can be used in [code-server](https://coder.com/), but if you are running across an error in the logs that includes "This is likely because the editor is not running in a secure context", please see [their documentation on securely exposing code-server](https://coder.com/docs/code-server/latest/guide#expose-code-server).
+Synapse can be used in [code-server](https://coder.com/), but if you are running across an error in the logs that includes "This is likely because the editor is not running in a secure context", please see [their documentation on securely exposing code-server](https://coder.com/docs/code-server/latest/guide#expose-code-server).
 
-### I installed Continue, but don't see the sidebar window
+### I installed Synapse, but don't see the sidebar window
 
-By default the Continue window is on the left side of VS Code, but it can be dragged to right side as well, which we recommend in our tutorial. In the situation where you have previously installed Continue and moved it to the right side, it may still be there. You can reveal Continue either by using cmd/ctrl+L or by clicking the button in the top right of VS Code to open the right sidebar.
+By default the Synapse window is on the left side of VS Code, but it can be dragged to right side as well, which we recommend in our tutorial. In the situation where you have previously installed Synapse and moved it to the right side, it may still be there. You can reveal Synapse either by using cmd/ctrl+L or by clicking the button in the top right of VS Code to open the right sidebar.
 
 ### I'm getting a 404 error from OpenAI
 
@@ -127,25 +127,25 @@ If you have entered a valid API key and model, but are still getting a 404 error
 
 ### I'm getting a 404 error from OpenRouter
 
-If you have entered a valid API key and model, but are still getting a 404 error from OpenRouter, this may be because models that do not support function calling will return an error to Continue when a request is sent. Example error: `HTTP 404 Not Found from https://openrouter.ai/api/v1/chat/completions`
+If you have entered a valid API key and model, but are still getting a 404 error from OpenRouter, this may be because models that do not support function calling will return an error to Synapse when a request is sent. Example error: `HTTP 404 Not Found from https://openrouter.ai/api/v1/chat/completions`
 
 ### Indexing issues
 
 If you are having persistent errors with indexing, our recommendation is to rebuild your index from scratch. Note that for large codebases this may take some time.
 
-This can be accomplished using the following command: `Continue: Rebuild codebase index`.
+This can be accomplished using the following command: `Synapse: Rebuild codebase index`.
 
 ### Agent mode is unavailable or tools aren't working
 
 If Agent mode is grayed out or tools aren't functioning properly, this is likely due to model capability configuration issues.
 
 <Info>
-  Continue uses system message tools as a fallback for models without native tool support, so most models should work with Agent mode automatically.
+  Synapse uses system message tools as a fallback for models without native tool support, so most models should work with Agent mode automatically.
 </Info>
 
 #### Check if your model has tool support
 
-1. Not all models support native tool/function calling, but Continue will automatically use system message tools as a fallback
+1. Not all models support native tool/function calling, but Synapse will automatically use system message tools as a fallback
 2. Try adding `capabilities: ["tool_use"]` to your model config to force tool support
 3. Verify your provider supports function calling or that system message tools are working correctly
 
@@ -167,7 +167,7 @@ If you can't upload images:
 
 #### Add capabilities
 
-If Continue's autodetection isn't working correctly, you can manually add capabilities in your `config.yaml`:
+If Synapse's autodetection isn't working correctly, you can manually add capabilities in your `config.yaml`:
 
 ```yaml
 models:
@@ -185,7 +185,7 @@ Some proxy services (like OpenRouter) or custom deployments may not preserve too
 
 #### Verifying Current Capabilities
 
-To see what capabilities Continue detected for your model:
+To see what capabilities Synapse detected for your model:
 
 1. Check the mode selector tooltips - they indicate if tools are available
 2. Try uploading an image - if disabled, the model lacks `image_input`
@@ -201,13 +201,13 @@ This can be fixed by selecting `Actions > Choose Boot runtime for the IDE` then 
 
 We use LanceDB as our vector database for codebase search features. On x64 Linux systems, LanceDB requires specific CPU features (FMA and AVX2) which may not be available on older processors.
 
-Most Continue features will work normally, including autocomplete and chat. However, commands that rely on codebase indexing, such as `@codebase`, `@files`, and `@folder`, will be disabled.
+Most Synapse features will work normally, including autocomplete and chat. However, commands that rely on codebase indexing, such as `@codebase`, `@files`, and `@folder`, will be disabled.
 
 For more details about this requirement, see the [LanceDB issue #2195](https://github.com/lancedb/lance/issues/2195).
 
 ### How do I reset the state of the extension?
 
-Continue stores it's data in the `~/.synapse` directory (%USERPROFILE%.synapse\` on Windows).
+Synapse stores it's data in the `~/.synapse` directory (%USERPROFILE%.synapse\` on Windows).
 
 If you'd like to perform a clean reset of the extension, including removing all configuration files, indices, etc, you can remove this directory, uninstall, and then reinstall.
 

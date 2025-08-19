@@ -53,7 +53,7 @@ const renderTabButton = (
         onClick={() => onTabClick(tabTitle as OnboardingModes)}
         data-testid={`onboarding-tab-${tabTitle}`}
       >
-        <SynapseSignet width={32} height={32} className="-mb-2.5" />
+        <SynapseSignet size={32} className="-mb-2.5" />
         Upgrade
       </button>
     );

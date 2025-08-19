@@ -12,9 +12,9 @@ const { continueDir } = require("./utils");
 
 async function generateConfigYamlSchema() {
   process.chdir(path.join(continueDir, "packages", "config-yaml"));
-  execCmdSync("pnpm install");
-  execCmdSync("pnpm run build");
-  execCmdSync("pnpm run generate-schema");
+  execCmdSync("npm install");
+  execCmdSync("npm run build");
+  execCmdSync("npm run generate-schema");
   fs.copyFileSync(
     path.join("schema", "config-yaml-schema.json"),
     path.join(continueDir, "extensions", "vscode", "config-yaml-schema.json"),

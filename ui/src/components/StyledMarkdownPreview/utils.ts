@@ -3,7 +3,7 @@ import { RangeInFileWithContents, SymbolWithRange } from "core";
 const terminalLanguages = ["bash", "sh"];
 const commonTerminalCommands = [
   "npm",
-  "pnpm",
+  "npm",
   "yarn",
   "bun",
   "deno",

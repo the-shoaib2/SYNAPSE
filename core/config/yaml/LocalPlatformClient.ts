@@ -1,8 +1,8 @@
 import {
-    FQSN,
-    PlatformClient,
-    SecretResult,
-    SecretType,
+  FQSN,
+  PlatformClient,
+  SecretResult,
+  SecretType,
 } from "@synapse/config-yaml";
 import * as dotenv from "dotenv";
 import { IDE } from "../..";
@@ -79,7 +79,7 @@ export class LocalPlatformClient implements PlatformClient {
           console.warn(
             `Error reading workspace .env file at ${envFilePath}: ${error instanceof Error ? error.message : String(error)}`,
           );
-          // Continue to next workspace folder
+          // Synapse to next workspace folder
         }
       }
 

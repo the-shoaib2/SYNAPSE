@@ -5,7 +5,7 @@ noindex: true
 ---
 
 <Warning>
-  **This page documents deprecated functionality.** For creating slash commands and customizing Continue, please use:
+  **This page documents deprecated functionality.** For creating slash commands and customizing Synapse, please use:
   - [Prompt blocks and prompt files](/customize/deep-dives/slash-commands) for slash commands
   - [config.yaml](/reference) for configuration
 
@@ -348,7 +348,7 @@ config.json
 
 #### `/http`
 
-Write a custom slash command at your own HTTP endpoint. Set 'url' in the params object for the endpoint you have setup. The endpoint should return a sequence of string updates, which will be streamed to the Continue sidebar. See our basic [FastAPI example](https://github.com/continuedev/synapse/blob/74002369a5e435735b83278fb965e004ae38a97d/core/context/providers/context_provider_server.py#L34-L45) for reference.
+Write a custom slash command at your own HTTP endpoint. Set 'url' in the params object for the endpoint you have setup. The endpoint should return a sequence of string updates, which will be streamed to the Synapse sidebar. See our basic [FastAPI example](https://github.com/continuedev/synapse/blob/74002369a5e435735b83278fb965e004ae38a97d/core/context/providers/context_provider_server.py#L34-L45) for reference.
 
 config.json
 
@@ -366,7 +366,7 @@ config.json
 
 #### `/issue`
 
-Describe the issue you'd like to generate, and Continue will turn into a well-formatted title and body, then give you a link to the draft so you can submit. Make sure to set the URL of the repository you want to generate issues for.
+Describe the issue you'd like to generate, and Synapse will turn into a well-formatted title and body, then give you a link to the draft so you can submit. Make sure to set the URL of the repository you want to generate issues for.
 
 config.json
 

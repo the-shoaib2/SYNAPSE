@@ -1,12 +1,12 @@
 import {
-    OAuthClientProvider,
-    auth,
+  OAuthClientProvider,
+  auth,
 } from "@modelcontextprotocol/sdk/client/auth.js";
 import {
-    OAuthClientInformationFull,
-    OAuthClientInformationSchema,
-    OAuthTokens,
-    OAuthTokensSchema,
+  OAuthClientInformationFull,
+  OAuthClientInformationSchema,
+  OAuthTokens,
+  OAuthTokensSchema,
 } from "@modelcontextprotocol/sdk/shared/auth.js";
 import { IDE, MCPServerStatus, SSEOptions } from "../..";
 
@@ -74,7 +74,7 @@ class MCPConnectionOauthProvider implements OAuthClientProvider {
       token_endpoint_auth_method: "none",
       grant_types: ["authorization_code", "refresh_token"],
       response_types: ["code"],
-      client_name: "Continue Dev, Inc", // get this from package.json?
+      client_name: "Synapse Dev, Inc", // get this from package.json?
       client_uri: "https://synapse.dev", // get this from package.json?
     };
   }

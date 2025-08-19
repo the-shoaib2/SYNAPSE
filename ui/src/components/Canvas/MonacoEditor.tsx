@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 interface MonacoEditorProps {
   value: string;
@@ -20,14 +20,20 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
   width = "100%",
 }) => {
   const editorRef = useRef<HTMLDivElement>(null);
-  const monacoRef = useRef<any>(null);
+  const monacoRef = useRef<{
+    editor: unknown;
+    editorInstance: unknown;
+  } | null>(null);
 
   useEffect(() => {
     // Dynamic import of Monaco Editor
     const loadMonaco = async () => {
       try {
         const monaco = await import("monaco-editor");
-        monacoRef.current = monaco;
+        monacoRef.current = {
+          editor: monaco.default,
+          editorInstance: null,
+        };
 
         if (editorRef.current) {
           const editor = monaco.editor.create(editorRef.current, {
@@ -43,7 +49,6 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
             roundedSelection: false,
             selectOnLineNumbers: true,
             cursorStyle: "line",
-            automaticLayout: true,
             wordWrap: "on",
             folding: true,
             foldingStrategy: "indentation",
@@ -99,10 +104,6 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
             lightbulb: {
               enabled: true,
             },
-            codeActionsOnSave: {
-              "source.fixAll": true,
-              "source.organizeImports": true,
-            },
           });
 
           // Handle value changes
@@ -114,7 +115,9 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
           }
 
           // Store editor instance
-          monacoRef.current.editorInstance = editor;
+          if (monacoRef.current) {
+            monacoRef.current.editorInstance = editor;
+          }
         }
       } catch (error) {
         console.error("Failed to load Monaco Editor:", error);
@@ -141,7 +144,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
     return () => {
       // Cleanup Monaco editor
       if (monacoRef.current?.editorInstance) {
-        monacoRef.current.editorInstance.dispose();
+        (monacoRef.current.editorInstance as { dispose: () => void }).dispose();
       }
     };
   }, []);
@@ -149,27 +152,37 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
   // Update editor value when prop changes
   useEffect(() => {
     if (monacoRef.current?.editorInstance) {
-      const currentValue = monacoRef.current.editorInstance.getValue();
+      const currentValue = (
+        monacoRef.current.editorInstance as { getValue: () => string }
+      ).getValue();
       if (currentValue !== value) {
-        monacoRef.current.editorInstance.setValue(value);
+        (
+          monacoRef.current.editorInstance as {
+            setValue: (value: string) => void;
+          }
+        ).setValue(value);
       }
     }
   }, [value]);
 
   // Update language when prop changes
   useEffect(() => {
-    if (monacoRef.current?.editorInstance) {
-      monaco.editor.setModelLanguage(
-        monacoRef.current.editorInstance.getModel(),
-        language,
-      );
+    if (monacoRef.current?.editorInstance && monacoRef.current.editor) {
+      const editorInstance = monacoRef.current.editorInstance as any;
+      const monaco = monacoRef.current.editor as any;
+      if (editorInstance && monaco.editor) {
+        monaco.editor.setModelLanguage(editorInstance.getModel(), language);
+      }
     }
   }, [language]);
 
   // Update theme when prop changes
   useEffect(() => {
-    if (monacoRef.current?.editorInstance) {
-      monaco.editor.setTheme(theme);
+    if (monacoRef.current?.editorInstance && monacoRef.current.editor) {
+      const monaco = monacoRef.current.editor as any;
+      if (monaco.editor) {
+        monaco.editor.setTheme(theme);
+      }
     }
   }, [theme]);
 
@@ -186,6 +199,3 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
     />
   );
 };
-
-
-

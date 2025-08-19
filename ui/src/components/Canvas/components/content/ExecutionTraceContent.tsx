@@ -16,7 +16,7 @@ export const ExecutionTraceContent: React.FC<ExecutionTraceContentProps> = ({
   onStateChange,
   className = "",
 }) => {
-  const content = panel.data.content || [];
+  const content = (panel.data as any)?.content || [];
 
   const handleStepClick = (step: any) => {
     // TODO: Handle step selection

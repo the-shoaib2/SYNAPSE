@@ -1,8 +1,8 @@
 import React from "react";
-import { CanvasPanel } from "../types";
+import React from "react";lType } from "../types";
 
 export interface PanelHeaderProps {
-  panel: CanvasPanel;
+  panel: CanvasPanelType;
   isActive: boolean;
   onClose: () => void;
   onMinimize: () => void;
@@ -19,22 +19,22 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({
   onMaximize,
   onPin,
   className = "",
-}) => {
+}): JSX.Element => {
   return (
     <div className={`panel-header ${isActive ? "active" : ""} ${className}`}>
       {/* Panel Icon and Title */}
       <div className="panel-title-section">
         {panel.icon && (
-          <span className="panel-icon" title={panel.description}>
+          <span className="panel-icon" title={String(panel.description || "")}>
             {panel.icon}
           </span>
         )}
-        <span className="panel-title" title={panel.description}>
-          {panel.config?.title || panel.title || "Untitled Panel"}
+        <span className="panel-title" title={String(panel.description || "")}>
+          {String(panel.config?.title || panel.title || "Untitled Panel")}
         </span>
         {panel.description && (
-          <span className="panel-description" title={panel.description}>
-            {panel.description}
+          <span className="panel-description" title={String(panel.description)}>
+            {String(panel.description)}
           </span>
         )}
       </div>
@@ -44,6 +44,7 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({
         {/* Pin Button */}
         {panel.state.isPinned !== undefined && (
           <button
+            type="button"
             className={`panel-control-button pin-button ${panel.state.isPinned ? "pinned" : ""}`}
             onClick={onPin}
             title={panel.state.isPinned ? "Unpin Panel" : "Pin Panel"}
@@ -56,6 +57,7 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({
         {/* Minimize Button */}
         {panel.state.isMinimized !== undefined && (
           <button
+            type="button"
             className={`panel-control-button minimize-button ${panel.state.isMinimized ? "minimized" : ""}`}
             onClick={onMinimize}
             title={panel.state.isMinimized ? "Restore Panel" : "Minimize Panel"}
@@ -70,6 +72,7 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({
         {/* Maximize Button */}
         {panel.state.isMaximized !== undefined && (
           <button
+            type="button"
             className={`panel-control-button maximize-button ${panel.state.isMaximized ? "maximized" : ""}`}
             onClick={onMaximize}
             title={panel.state.isMaximized ? "Restore Panel" : "Maximize Panel"}
@@ -84,6 +87,7 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({
         {/* Close Button */}
         {panel.state.isClosable && (
           <button
+            type="button"
             className="panel-control-button close-button"
             onClick={onClose}
             title="Close Panel"

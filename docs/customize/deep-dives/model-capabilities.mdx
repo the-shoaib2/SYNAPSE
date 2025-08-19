@@ -4,11 +4,11 @@ description: Understanding and configuring model capabilities for tools and imag
 keywords: [capabilities, tools, function calling, image input, config]
 ---
 
-Continue needs to know what features your models support to provide the best experience. This guide explains how model capabilities work and how to configure them.
+Synapse needs to know what features your models support to provide the best experience. This guide explains how model capabilities work and how to configure them.
 
 ## What are Model Capabilities?
 
-Model capabilities tell Continue what features a model supports:
+Model capabilities tell Synapse what features a model supports:
 
 - **`tool_use`** - Whether the model can use tools and functions
 - **`image_input`** - Whether the model can process images
@@ -19,13 +19,13 @@ Without proper capability configuration, you may encounter issues like:
 - Tools not working at all
 - Image uploads being disabled
 
-## How Continue Detects Capabilities
+## How Synapse Detects Capabilities
 
-Continue uses a two-tier system for determining model capabilities:
+Synapse uses a two-tier system for determining model capabilities:
 
 ### 1. Automatic Detection (Default)
 
-Continue automatically detects capabilities based on your provider and model name. For example:
+Synapse automatically detects capabilities based on your provider and model name. For example:
 
 - **OpenAI**: GPT-4 and GPT-3.5 Turbo models support tools
 - **Anthropic**: Claude 3.5+ models support both tools and images
@@ -41,10 +41,10 @@ For implementation details, see:
 
 ### 2. Manual Configuration
 
-You can add capabilities to models that Continue doesn't automatically detect in your `config.yaml`.
+You can add capabilities to models that Synapse doesn't automatically detect in your `config.yaml`.
 
 <Note>
-You cannot override autodetection - you can only add capabilities. Continue will always use its built-in knowledge about your model in addition to any capabilities you specify.
+You cannot override autodetection - you can only add capabilities. Synapse will always use its built-in knowledge about your model in addition to any capabilities you specify.
 </Note>
 
 ```yaml
@@ -63,7 +63,7 @@ models:
 Add capabilities when:
 
 1. **Using custom deployments** - Your API endpoint serves a model with different capabilities than the standard version
-2. **Using newer models** - Continue doesn't yet recognize a newly released model
+2. **Using newer models** - Synapse doesn't yet recognize a newly released model
 3. **Experiencing issues** - Autodetection isn't working correctly for your setup
 4. **Using proxy services** - Some proxy services modify model capabilities
 
@@ -71,7 +71,7 @@ Add capabilities when:
 
 ### Basic Configuration
 
-Add tool support for a model that Continue doesn't recognize:
+Add tool support for a model that Synapse doesn't recognize:
 
 ```yaml
 models:
@@ -107,7 +107,7 @@ models:
 ```
 
 <Warning>
-  An empty capabilities array does not disable autodetection. Continue will
+  An empty capabilities array does not disable autodetection. Synapse will
   still detect and use the model's actual capabilities. To truly limit a model's
   capabilities, you would need to use a model that doesn't support those
   features.
@@ -156,13 +156,13 @@ For troubleshooting capability-related issues like Agent mode being unavailable 
 
 1. **Start with autodetection** - Only override if you experience issues
 2. **Test after changes** - Verify tools and images work as expected
-3. **Keep Continue updated** - Newer versions improve autodetection
+3. **Keep Synapse updated** - Newer versions improve autodetection
 
-Remember: Setting capabilities only adds to autodetection. Continue will still use its built-in knowledge about your model in addition to your specified capabilities.
+Remember: Setting capabilities only adds to autodetection. Synapse will still use its built-in knowledge about your model in addition to your specified capabilities.
 
 ## Model Capability Support
 
-This matrix shows which models support tool use and image input capabilities. Continue auto-detects these capabilities, but you can override them if needed.
+This matrix shows which models support tool use and image input capabilities. Synapse auto-detects these capabilities, but you can override them if needed.
 
 ### OpenAI
 

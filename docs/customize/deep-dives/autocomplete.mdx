@@ -1,6 +1,6 @@
 ---
 title: "Autocomplete"
-description: "Deep dive into Continue's autocomplete functionality and configuration"
+description: "Deep dive into Synapse's autocomplete functionality and configuration"
 keywords: [autocomplete]
 ---
 
@@ -159,7 +159,7 @@ Perhaps surprisingly, the answer is no. The models that we suggest for autocompl
 
 Follow these steps to ensure that everything is set up correctly:
 
-1. Make sure you have the "Enable Tab Autocomplete" setting checked (in VS Code, you can toggle by clicking the "Continue" button in the status bar, and in JetBrains by going to Settings -> Tools -> Continue).
+1. Make sure you have the "Enable Tab Autocomplete" setting checked (in VS Code, you can toggle by clicking the "Synapse" button in the status bar, and in JetBrains by going to Settings -> Tools -> Synapse).
 2. Make sure you have downloaded Ollama.
 3. Run `ollama run qwen2.5-coder:1.5b` to verify that the model is downloaded.
 4. Make sure that any other completion providers are disabled (e.g. Copilot), as they may interfere.
@@ -196,15 +196,15 @@ This is a built-in feature of VS Code, but it's just a bit hidden. Follow these 
 
 #### VS Code
 
-Click the "Continue" button in the status panel at the bottom right of the screen. The checkmark will become a "cancel" symbol and you will no longer see completions. You can click again to turn it back on.
+Click the "Synapse" button in the status panel at the bottom right of the screen. The checkmark will become a "cancel" symbol and you will no longer see completions. You can click again to turn it back on.
 
-Alternatively, open VS Code settings, search for "Continue" and uncheck the box for "Enable Tab Autocomplete".
+Alternatively, open VS Code settings, search for "Synapse" and uncheck the box for "Enable Tab Autocomplete".
 
 You can also use the default shortcut to disable autocomplete directly using a chord: press and hold <kbd>ctrl/cmd</kbd> + <kbd>K</kbd> (synapse holding <kbd>ctrl/cmd</kbd>) and press <kbd>ctrl/cmd</kbd> + <kbd>A</kbd>. This will turn off autocomplete without navigating through settings.
 
 #### JetBrains
 
-Open Settings -> Tools -> Continue and uncheck the box for "Enable Tab Autocomplete".
+Open Settings -> Tools -> Synapse and uncheck the box for "Enable Tab Autocomplete".
 
 #### Feedback
 

@@ -10,8 +10,6 @@ export class PanelFactory {
       ...defaultPanel,
       ...config,
       id: config?.id || this.generateId(),
-      createdAt: config?.createdAt || Date.now(),
-      updatedAt: Date.now(),
     };
   }
 
@@ -24,7 +22,14 @@ export class PanelFactory {
   } {
     const panelInfo = this.getPanelTypeInfoMap()[type];
     if (!panelInfo) {
-      throw new Error(`Unknown panel type: ${type}`);
+      // Return a default info object for unsupported panel types
+      return {
+        name: type.charAt(0).toUpperCase() + type.slice(1).replace(/-/g, " "),
+        description: `${type} panel`,
+        icon: "📋",
+        category: "general",
+        defaultConfig: {},
+      };
     }
     return panelInfo;
   }
@@ -73,17 +78,15 @@ export class PanelFactory {
         showTooltips: true,
       },
       dimensions: {
-        position: { x: 50, y: 50, width: 400, height: 300 },
+        width: 400,
+        height: 300,
+        position: { x: 50, y: 50 },
         minWidth: 200,
         minHeight: 150,
         maxWidth: 1200,
         maxHeight: 800,
-        defaultWidth: 400,
-        defaultHeight: 300,
       },
       actions: [],
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
       version: "1.0",
       tags: [type],
       category: "general",
@@ -92,15 +95,17 @@ export class PanelFactory {
     return basePanel;
   }
 
-  private getPanelTypeInfoMap(): Record<
-    PanelType,
-    {
-      name: string;
-      description: string;
-      icon: string;
-      category: string;
-      defaultConfig: Partial<CanvasPanelType>;
-    }
+  private getPanelTypeInfoMap(): Partial<
+    Record<
+      PanelType,
+      {
+        name: string;
+        description: string;
+        icon: string;
+        category: string;
+        defaultConfig: Partial<CanvasPanelType>;
+      }
+    >
   > {
     return {
       "execution-trace": {
@@ -202,6 +207,63 @@ export class PanelFactory {
         description: "Custom panel with user-defined content",
         icon: "🔧",
         category: "general",
+        defaultConfig: {},
+      },
+      // Add missing panel types
+      logs: {
+        name: "Logs",
+        description: "System and application logs display",
+        icon: "📋",
+        category: "monitoring",
+        defaultConfig: {},
+      },
+      debugger: {
+        name: "Debugger",
+        description: "Interactive debugging interface",
+        icon: "🐛",
+        category: "development",
+        defaultConfig: {},
+      },
+      coverage: {
+        name: "Coverage",
+        description: "Code coverage analysis and visualization",
+        icon: "📊",
+        category: "testing",
+        defaultConfig: {},
+      },
+      pipeline: {
+        name: "Pipeline",
+        description: "Pipeline execution and management",
+        icon: "🔗",
+        category: "execution",
+        defaultConfig: {},
+      },
+      assembly: {
+        name: "Assembly",
+        description: "Assembly code visualization and analysis",
+        icon: "⚙️",
+        category: "compiler",
+        defaultConfig: {},
+      },
+      flowchart: {
+        name: "Flowchart",
+        description: "Flowchart and process visualization",
+        icon: "📊",
+        category: "visualization",
+        defaultConfig: {},
+      },
+      "ast-tree": {
+        name: "AST Tree",
+        description: "Abstract Syntax Tree visualization",
+        icon: "🌳",
+        category: "compiler",
+        defaultConfig: {},
+      },
+      "token-stream": {
+        name: "Token Stream",
+        description: "Lexical token stream visualization",
+        icon: "🔤",
+        category: "compiler",
         defaultConfig: {},
       },
     };

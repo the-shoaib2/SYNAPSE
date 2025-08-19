@@ -2,8 +2,8 @@ import { NextEditProvider } from "core/nextEdit/NextEditProvider";
 import { NextEditOutcome } from "core/nextEdit/types";
 import * as vscode from "vscode";
 import {
-    HandlerPriority,
-    SelectionChangeManager,
+  HandlerPriority,
+  SelectionChangeManager,
 } from "./SelectionChangeManager";
 
 export interface CompletionDataForAfterJump {
@@ -106,7 +106,7 @@ export class JumpManager {
           }
         } catch (error) {
           console.error("Error checking content at jump location:", error);
-          // Continue with jump even if there's an error checking content.
+          // Synapse with jump even if there's an error checking content.
         }
       }
     }

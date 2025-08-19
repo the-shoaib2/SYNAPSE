@@ -1,22 +1,25 @@
 # Dependencies
 node_modules
-**/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
 
 # Build outputs
 dist
 build
 out
-**/dist
-**/build
-**/out
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # IDE files
-.idea
 .vscode
+.idea
 *.swp
 *.swo
 
@@ -27,11 +30,6 @@ Thumbs.db
 # Git
 .git
 .gitignore
-
-# Docker
-Dockerfile*
-docker-compose*
-.dockerignore
 
 # Logs
 logs
@@ -74,11 +72,6 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-.env.test
-.env.production
-
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
@@ -107,15 +100,7 @@ temp/
 *.sln
 *.sw?
 
-# Test files
-**/*.test.js
-**/*.test.ts
-**/*.spec.js
-**/*.spec.ts
-test/
-tests/
-__tests__/
-
-# Documentation build
-docs/_build/
-docs/.docusaurus
+# Synapse specific
+.synapse/
+*.vsix
+extensions/intellij/

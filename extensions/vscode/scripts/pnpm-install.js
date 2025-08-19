@@ -5,75 +5,25 @@
 const { fork } = require("child_process");
 const path = require("path");
 
-const { execCmdSync } = require("../../../scripts/util");
+const { execCmdSync } = require("./utils");
 
-const { continueDir } = require("./utils");
+function npmInstall() {
+  try {
+    // Install UI dependencies
+    console.log("[info] Installing UI dependencies with npm...");
+    execCmdSync("npm install");
+    console.log("[info] npm install in ui completed");
 
-async function installNodeModulesInUi() {
-  process.chdir(path.join(continueDir, "ui"));
-  execCmdSync("pnpm install");
-  console.log("[info] pnpm install in ui completed");
-}
+    // Install VS Code extension dependencies
+    console.log("[info] Installing VS Code extension dependencies with npm...");
+    execCmdSync("npm install");
+    console.log("[info] npm install in extensions/vscode completed");
 
-async function installNodeModulesInVscode() {
-  process.chdir(path.join(continueDir, "extensions", "vscode"));
-  execCmdSync("pnpm install");
-  console.log("[info] pnpm install in extensions/vscode completed");
-}
-
-process.on("message", (msg) => {
-  const { targetDir } = msg.payload;
-  if (targetDir === "ui") {
-    installNodeModulesInUi()
-      .then(() => process.send({ done: true }))
-      .catch((error) => {
-        console.error(error); // show the error in the parent process
-        process.send({ error: true });
-      });
-  } else if (targetDir === "vscode") {
-    installNodeModulesInVscode()
-      .then(() => process.send({ done: true }))
-      .catch((error) => {
-        console.error(error); // show the error in the parent process
-        process.send({ error: true });
-      });
+    console.log("[info] All npm installs completed successfully");
+  } catch (error) {
+    console.error("[error] npm install failed:", error.message);
+    throw error;
   }
-});
-
-async function npmInstall() {
-  const installVscodeChild = fork(__filename, {
-    stdio: "inherit",
-  });
-  installVscodeChild.send({ payload: { targetDir: "vscode" } });
-
-  const installUiChild = fork(__filename, {
-    stdio: "inherit",
-  });
-  installUiChild.send({ payload: { targetDir: "ui" } });
-
-  await Promise.all([
-    new Promise((resolve, reject) => {
-      installVscodeChild.on("message", (msg) => {
-        if (msg.error) {
-          reject();
-        }
-        resolve();
-      });
-    }),
-    new Promise((resolve, reject) => {
-      installUiChild.on("message", (msg) => {
-        if (msg.error) {
-          reject();
-        }
-        resolve();
-      });
-    }),
-  ]).catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
 }
 
-module.exports = {
-  npmInstall,
-};
+module.exports = { npmInstall };

@@ -1,6 +1,6 @@
-import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react';
-import { PipelineStage } from '../types';
-import { useCanvas } from '../CanvasContext';
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCanvas } from "../CanvasContext";
+import type { PipelineStage } from "../types";
 
 interface TimelinePanelProps {
   stage: PipelineStage;
@@ -15,12 +15,17 @@ interface TimelineStep {
   description: string;
   timestamp: number;
   duration: number;
-  status: 'pending' | 'running' | 'completed' | 'error';
-  data?: any;
-  metadata?: Record<string, any>;
+  status: "pending" | "running" | "completed" | "error";
+  data?: unknown;
+  metadata?: Record<string, unknown>;
 }
 
-export function TimelinePanel({ stage, onUpdate, onSelect, isActive }: TimelinePanelProps) {
+export function TimelinePanel({
+  stage,
+  onUpdate,
+  onSelect,
+  isActive,
+}: TimelinePanelProps) {
   const { explanations } = useCanvas();
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -32,30 +37,32 @@ export function TimelinePanel({ stage, onUpdate, onSelect, isActive }: TimelineP
   const timelineData = useMemo(() => {
     try {
       if (stage.payload?.visual) {
-        const data = typeof stage.payload.visual === 'string' 
-          ? JSON.parse(stage.payload.visual) 
-          : stage.payload.visual;
-        
+        const data =
+          typeof stage.payload.visual === "string"
+            ? JSON.parse(stage.payload.visual)
+            : stage.payload.visual;
+
         // Convert to timeline steps
         if (Array.isArray(data)) {
           return data.map((item, index) => ({
             id: item.id || `step-${index}`,
             label: item.label || item.name || `Step ${index + 1}`,
-            description: item.description || item.desc || '',
+            description: item.description || item.desc || "",
             timestamp: item.timestamp || index * 1000,
             duration: item.duration || 500,
-            status: item.status || 'pending',
+            status: item.status || "pending",
             data: item.data || item,
             metadata: item.metadata || {},
           }));
-        } else if (data.steps) {
-          return data.steps.map((step: any, index: number) => ({
+        }
+        if (data.steps) {
+          return data.steps.map((step: TimelineStep, index: number) => ({
             id: step.id || `step-${index}`,
-            label: step.label || step.name || `Step ${index + 1}`,
-            description: step.description || step.desc || '',
+            label: step.label || `Step ${index + 1}`,
+            description: step.description || "",
             timestamp: step.timestamp || index * 1000,
             duration: step.duration || 500,
-            status: step.status || 'pending',
+            status: step.status || "pending",
             data: step.data || step,
             metadata: step.metadata || {},
           }));
@@ -63,7 +70,7 @@ export function TimelinePanel({ stage, onUpdate, onSelect, isActive }: TimelineP
       }
       return [];
     } catch (error) {
-      console.error('Failed to parse timeline data:', error);
+      console.error("Failed to parse timeline data:", error);
       return [];
     }
   }, [stage.payload?.visual]);
@@ -72,7 +79,7 @@ export function TimelinePanel({ stage, onUpdate, onSelect, isActive }: TimelineP
   useEffect(() => {
     if (autoPlay && isPlaying && timelineData.length > 0) {
       playIntervalRef.current = setInterval(() => {
-        setCurrentStep(prev => {
+        setCurrentStep((prev) => {
           if (prev >= timelineData.length - 1) {
             setIsPlaying(false);
             return prev;
@@ -112,11 +119,11 @@ export function TimelinePanel({ stage, onUpdate, onSelect, isActive }: TimelineP
 
   // Handle next/previous
   const handleNext = useCallback(() => {
-    setCurrentStep(prev => Math.min(prev + 1, timelineData.length - 1));
+    setCurrentStep((prev) => Math.min(prev + 1, timelineData.length - 1));
   }, [timelineData.length]);
 
   const handlePrevious = useCallback(() => {
-    setCurrentStep(prev => Math.max(prev - 1, 0));
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
   }, []);
 
   // Handle reset
@@ -132,9 +139,16 @@ export function TimelinePanel({ stage, onUpdate, onSelect, isActive }: TimelineP
   const timelineStats = useMemo(() => {
     if (timelineData.length === 0) return null;
 
-    const totalDuration = timelineData.reduce((sum, step) => sum + step.duration, 0);
-    const completedSteps = timelineData.filter(step => step.status === 'completed').length;
-    const errorSteps = timelineData.filter(step => step.status === 'error').length;
+    const totalDuration = timelineData.reduce(
+      (sum: number, step: TimelineStep) => sum + step.duration,
+      0,
+    );
+    const completedSteps = timelineData.filter(
+      (step: TimelineStep) => step.status === "completed",
+    ).length;
+    const errorSteps = timelineData.filter(
+      (step: TimelineStep) => step.status === "error",
+    ).length;
 
     return {
       totalSteps: timelineData.length,
@@ -146,106 +160,113 @@ export function TimelinePanel({ stage, onUpdate, onSelect, isActive }: TimelineP
   }, [timelineData]);
 
   // Render timeline step
-  const renderTimelineStep = useCallback((step: TimelineStep, index: number) => {
-    const isCurrent = index === currentStep;
-    const isCompleted = index < currentStep;
-    const isActive = isCurrent && isPlaying;
+  const renderTimelineStep = useCallback(
+    (step: TimelineStep, index: number) => {
+      const isCurrent = index === currentStep;
+      const isCompleted = index < currentStep;
+      const isActive = isCurrent && isPlaying;
 
-    return (
-      <div
-        key={step.id}
-        className={`
-          relative flex items-start space-x-4 p-4 rounded-lg border transition-all duration-300 cursor-pointer
-          ${isCurrent 
-            ? 'border-blue-500 bg-blue-50 shadow-md' 
-            : isCompleted 
-              ? 'border-green-300 bg-green-50' 
-              : 'border-gray-200 bg-white hover:border-gray-300'
-          }
-          ${isActive ? 'animate-pulse' : ''}
-        `}
-        onClick={() => handleStepClick(index)}
-      >
-        {/* Step Number */}
-        <div className={`
-          flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium
-          ${isCurrent 
-            ? 'bg-blue-500 text-white' 
-            : isCompleted 
-              ? 'bg-green-500 text-white' 
-              : 'bg-gray-300 text-gray-600'
-          }
-        `}>
-          {index + 1}
-        </div>
-
-        {/* Step Content */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between mb-2">
-            <h4 className="text-sm font-medium text-gray-900">{step.label}</h4>
-            <div className="flex items-center space-x-2">
-              {/* Status Badge */}
-              <span className={`
-                text-xs px-2 py-1 rounded-full
-                ${step.status === 'completed' ? 'bg-green-100 text-green-800' : ''}
-                ${step.status === 'running' ? 'bg-blue-100 text-blue-800' : ''}
-                ${step.status === 'error' ? 'bg-red-100 text-red-800' : ''}
-                ${step.status === 'pending' ? 'bg-gray-100 text-gray-800' : ''}
-              `}>
-                {step.status}
-              </span>
-              
-              {/* Duration */}
-              <span className="text-xs text-gray-500">
-                {step.duration}ms
-              </span>
-            </div>
+      return (
+        <div
+          key={step.id}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              handleStepClick(index);
+            }
+          }}
+          className={`relative flex cursor-pointer items-start space-x-4 rounded-lg border p-4 transition-all duration-300 ${
+            isCurrent
+              ? "border-blue-500 bg-blue-50 shadow-md"
+              : isCompleted
+                ? "border-green-300 bg-green-50"
+                : "border-gray-200 bg-white hover:border-gray-300"
+          } ${isActive ? "animate-pulse" : ""} `}
+          onClick={() => handleStepClick(index)}
+        >
+          {/* Step Number */}
+          <div
+            className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-medium ${
+              isCurrent
+                ? "bg-blue-500 text-white"
+                : isCompleted
+                  ? "bg-green-500 text-white"
+                  : "bg-gray-300 text-gray-600"
+            } `}
+          >
+            {index + 1}
           </div>
-          
-          <p className="text-sm text-gray-600 mb-2">{step.description}</p>
-          
-          {/* Step Metadata */}
-          {step.metadata && Object.keys(step.metadata).length > 0 && (
-            <div className="text-xs text-gray-500">
-              {Object.entries(step.metadata).map(([key, value]) => (
-                <span key={key} className="mr-3">
-                  {key}: {String(value)}
+
+          {/* Step Content */}
+          <div className="min-w-0 flex-1">
+            <div className="mb-2 flex items-center justify-between">
+              <h4 className="text-sm font-medium text-gray-900">
+                {step.label}
+              </h4>
+              <div className="flex items-center space-x-2">
+                {/* Status Badge */}
+                <span
+                  className={`rounded-full px-2 py-1 text-xs ${step.status === "completed" ? "bg-green-100 text-green-800" : ""} ${step.status === "running" ? "bg-blue-100 text-blue-800" : ""} ${step.status === "error" ? "bg-red-100 text-red-800" : ""} ${step.status === "pending" ? "bg-gray-100 text-gray-800" : ""} `}
+                >
+                  {step.status}
                 </span>
-              ))}
+
+                {/* Duration */}
+                <span className="text-xs text-gray-500">{step.duration}ms</span>
+              </div>
             </div>
+
+            <p className="mb-2 text-sm text-gray-600">{step.description}</p>
+
+            {/* Step Metadata */}
+            {step.metadata && Object.keys(step.metadata).length > 0 && (
+              <div className="text-xs text-gray-500">
+                {Object.entries(step.metadata).map(([key, value]) => (
+                  <span key={key} className="mr-3">
+                    {key}: {String(value)}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Timeline Line */}
+          {index < timelineData.length - 1 && (
+            <div
+              className={`absolute left-4 top-12 h-8 w-0.5 ${isCompleted ? "bg-green-300" : "bg-gray-200"} `}
+            />
           )}
         </div>
-
-        {/* Timeline Line */}
-        {index < timelineData.length - 1 && (
-          <div className={`
-            absolute left-4 top-12 w-0.5 h-8
-            ${isCompleted ? 'bg-green-300' : 'bg-gray-200'}
-          `} />
-        )}
-      </div>
-    );
-  }, [currentStep, isPlaying, timelineData.length, handleStepClick]);
+      );
+    },
+    [currentStep, isPlaying, timelineData.length, handleStepClick],
+  );
 
   // Render explanation if available
   const explanation = explanations[stage.id];
 
   if (timelineData.length === 0) {
     return (
-      <div className="flex items-center justify-center h-32 text-gray-500">
+      <div className="flex h-32 items-center justify-center text-gray-500">
         <div className="text-center">
-          <div className="text-lg mb-2">No timeline data available</div>
-          <div className="text-sm">This stage doesn't contain timeline visualization data</div>
+          <div className="mb-2 text-lg">No timeline data available</div>
+          <div className="text-sm">
+            This stage doesn't contain timeline visualization data
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="timeline-panel h-full flex flex-col">
+    <div className="timeline-panel flex h-full flex-col">
       {/* Panel Header */}
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">Execution Timeline</h3>
+      <div className="mb-4 flex items-center justify-between">
+        <h3 className="text-lg font-semibold text-gray-900">
+          Execution Timeline
+        </h3>
         <div className="flex items-center space-x-2">
           {timelineStats && (
             <span className="text-sm text-gray-600">
@@ -257,70 +278,80 @@ export function TimelinePanel({ stage, onUpdate, onSelect, isActive }: TimelineP
 
       {/* Timeline Statistics */}
       {timelineStats && (
-        <div className="mb-4 p-3 bg-gray-50 rounded-md">
-          <div className="text-sm font-medium text-gray-700 mb-2">Timeline Statistics</div>
+        <div className="mb-4 rounded-md bg-gray-50 p-3">
+          <div className="mb-2 text-sm font-medium text-gray-700">
+            Timeline Statistics
+          </div>
           <div className="grid grid-cols-2 gap-2 text-xs">
             <div className="text-gray-600">Total Steps:</div>
             <div className="font-medium">{timelineStats.totalSteps}</div>
             <div className="text-gray-600">Total Duration:</div>
             <div className="font-medium">{timelineStats.totalDuration}ms</div>
             <div className="text-gray-600">Completed:</div>
-            <div className="font-medium text-green-600">{timelineStats.completedSteps}</div>
+            <div className="font-medium text-green-600">
+              {timelineStats.completedSteps}
+            </div>
             <div className="text-gray-600">Errors:</div>
-            <div className="font-medium text-red-600">{timelineStats.errorSteps}</div>
+            <div className="font-medium text-red-600">
+              {timelineStats.errorSteps}
+            </div>
             <div className="text-gray-600">Avg Duration:</div>
-            <div className="font-medium">{Math.round(timelineStats.averageStepDuration)}ms</div>
+            <div className="font-medium">
+              {Math.round(timelineStats.averageStepDuration)}ms
+            </div>
           </div>
         </div>
       )}
 
       {/* Timeline Controls */}
-      <div className="mb-4 p-3 bg-gray-50 rounded-md">
+      <div className="mb-4 rounded-md bg-gray-50 p-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <button
+              type="button"
               onClick={handlePlayPause}
-              className={`
-                px-3 py-1 rounded text-sm font-medium transition-colors
-                ${isPlaying 
-                  ? 'bg-red-500 hover:bg-red-600 text-white' 
-                  : 'bg-green-500 hover:bg-green-600 text-white'
-                }
-              `}
+              className={`rounded px-3 py-1 text-sm font-medium transition-colors ${
+                isPlaying
+                  ? "bg-red-500 text-white hover:bg-red-600"
+                  : "bg-green-500 text-white hover:bg-green-600"
+              } `}
             >
-              {isPlaying ? '⏸️ Pause' : '▶️ Play'}
+              {isPlaying ? "⏸️ Pause" : "▶️ Play"}
             </button>
-            
+
             <button
+              type="button"
               onClick={handlePrevious}
               disabled={currentStep === 0}
-              className="px-3 py-1 rounded text-sm font-medium bg-gray-500 hover:bg-gray-600 disabled:bg-gray-300 text-white transition-colors"
+              className="rounded bg-gray-500 px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-gray-600 disabled:bg-gray-300"
             >
               ⏮️ Previous
             </button>
-            
+
             <button
+              type="button"
               onClick={handleNext}
               disabled={currentStep === timelineData.length - 1}
-              className="px-3 py-1 rounded text-sm font-medium bg-gray-500 hover:bg-gray-600 disabled:bg-gray-300 text-white transition-colors"
+              className="rounded bg-gray-500 px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-gray-600 disabled:bg-gray-300"
             >
               ⏭️ Next
             </button>
-            
+
             <button
+              type="button"
               onClick={handleReset}
-              className="px-3 py-1 rounded text-sm font-medium bg-gray-500 hover:bg-gray-600 text-white transition-colors"
+              className="rounded bg-gray-500 px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-gray-600"
             >
               🔄 Reset
             </button>
           </div>
-          
+
           <div className="flex items-center space-x-2">
             <label className="text-xs text-gray-600">Speed:</label>
             <select
               value={playbackSpeed}
               onChange={(e) => setPlaybackSpeed(Number(e.target.value))}
-              className="text-xs border border-gray-300 rounded px-2 py-1"
+              className="rounded border border-gray-300 px-2 py-1 text-xs"
               aria-label="Playback speed"
             >
               <option value={0.5}>0.5x</option>
@@ -328,7 +359,7 @@ export function TimelinePanel({ stage, onUpdate, onSelect, isActive }: TimelineP
               <option value={2}>2x</option>
               <option value={4}>4x</option>
             </select>
-            
+
             <label className="flex items-center space-x-1">
               <input
                 type="checkbox"
@@ -340,31 +371,41 @@ export function TimelinePanel({ stage, onUpdate, onSelect, isActive }: TimelineP
             </label>
           </div>
         </div>
-        
+
         {/* Progress Bar */}
         <div className="mt-3">
-          <div className="flex items-center justify-between text-xs text-gray-600 mb-1">
-            <span>Step {currentStep + 1} of {timelineData.length}</span>
-            <span>{Math.round(((currentStep + 1) / timelineData.length) * 100)}%</span>
+          <div className="mb-1 flex items-center justify-between text-xs text-gray-600">
+            <span>
+              Step {currentStep + 1} of {timelineData.length}
+            </span>
+            <span>
+              {Math.round(((currentStep + 1) / timelineData.length) * 100)}%
+            </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="h-2 w-full rounded-full bg-gray-200">
             <div
-              className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${((currentStep + 1) / timelineData.length) * 100}%` }}
+              className="h-2 rounded-full bg-blue-500 transition-all duration-300"
+              style={{
+                width: `${((currentStep + 1) / timelineData.length) * 100}%`,
+              }}
             />
           </div>
         </div>
       </div>
 
       {/* Timeline Steps */}
-      <div className="flex-1 overflow-auto space-y-2">
-        {timelineData.map((step, index) => renderTimelineStep(step, index))}
+      <div className="flex-1 space-y-2 overflow-auto">
+        {timelineData.map((step: TimelineStep, index: number) =>
+          renderTimelineStep(step, index),
+        )}
       </div>
 
       {/* Current Step Details */}
       {timelineData[currentStep] && (
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-          <div className="text-sm font-medium text-blue-800 mb-2">Current Step Details</div>
+        <div className="mt-4 rounded-md border border-blue-200 bg-blue-50 p-3">
+          <div className="mb-2 text-sm font-medium text-blue-800">
+            Current Step Details
+          </div>
           <div className="text-xs text-blue-700">
             <div>Label: {timelineData[currentStep].label}</div>
             <div>Description: {timelineData[currentStep].description}</div>
@@ -376,8 +417,10 @@ export function TimelinePanel({ stage, onUpdate, onSelect, isActive }: TimelineP
 
       {/* Explanation */}
       {explanation && (
-        <div className="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-md">
-          <div className="text-sm font-medium text-gray-700 mb-2">AI Explanation</div>
+        <div className="mt-4 rounded-md border border-gray-200 bg-gray-50 p-3">
+          <div className="mb-2 text-sm font-medium text-gray-700">
+            AI Explanation
+          </div>
           <div className="text-sm text-gray-600">{explanation}</div>
         </div>
       )}
@@ -385,13 +428,16 @@ export function TimelinePanel({ stage, onUpdate, onSelect, isActive }: TimelineP
       {/* Export Controls */}
       <div className="mt-4 flex justify-end">
         <button
-          onClick={() => onUpdate({ 
-            payload: { 
-              ...stage.payload, 
-              visual: JSON.stringify(timelineData, null, 2) 
-            } 
-          })}
-          className="text-xs text-blue-600 hover:text-blue-800 underline"
+          type="button"
+          onClick={() =>
+            onUpdate({
+              payload: {
+                ...stage.payload,
+                visual: JSON.stringify(timelineData, null, 2),
+              },
+            })
+          }
+          className="text-xs text-blue-600 underline hover:text-blue-800"
         >
           Export Timeline
         </button>

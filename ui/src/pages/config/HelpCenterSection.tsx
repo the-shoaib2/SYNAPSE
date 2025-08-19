@@ -63,7 +63,7 @@ export function HelpCenterSection() {
           onClick={() =>
             ideMessenger.post(
               "openUrl",
-              "https://github.com/synapsedev/synapse/issues/new/choose",
+              "https://github.com/the-shoaib2/SYNAPSE/issues/new/choose",
             )
           }
         />

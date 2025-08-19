@@ -1,6 +1,6 @@
 ---
 title: "@Docs"
-description: Learn how to access and search your project's documentation directly within Continue
+description: Learn how to access and search your project's documentation directly within Synapse
 keywords:
   [
     documentation,
@@ -15,7 +15,7 @@ keywords:
 toc_max_heading_level: 5
 ---
 
-The [`@Docs` context provider](../custom-providers#docs) allows you to efficiently reference documentation directly within Continue.
+The [`@Docs` context provider](../custom-providers#docs) allows you to efficiently reference documentation directly within Synapse.
 
 ## Enabling the `@Docs` context provider
 
@@ -181,7 +181,7 @@ The GitHub API rate limits public requests to 60 per hour. If you want to reliab
 
 ### Local Crawling
 
-By default, Continue crawls documentation sites using a specialized crawling service that provides the best experience for most users and documentation sites.
+By default, Synapse crawls documentation sites using a specialized crawling service that provides the best experience for most users and documentation sites.
 
 If your documentation is private, you can skip the default crawler and use a local crawler instead by setting `useLocalCrawling` to `true`.
 
@@ -229,7 +229,7 @@ Further notes:
 
 You can view indexing statuses and manage your documentation sites from the `@docs indexes` section of the `More` page (three dots)
 
-- Continue does not automatically re-index your docs. Use `Click to re-index` to trigger a reindex for a specific source
+- Synapse does not automatically re-index your docs. Use `Click to re-index` to trigger a reindex for a specific source
 - While a site is indexing, click `Cancel indexing` to cancel the process
 - Failed indexing attempts will show an error status bar and icon
 - Delete a documentation site from your configuration using the trash icon
@@ -240,7 +240,7 @@ You can also view the overall status of currently indexing docs from a hideable 
 
 ![Documentation indexing peek](/images/docs-indexing-peek.png)
 
-You can also use the following IDE command to force a re-index of all docs: `Continue: Docs Force Re-Index`.
+You can also use the following IDE command to force a re-index of all docs: `Synapse: Docs Force Re-Index`.
 
 ## Examples
 

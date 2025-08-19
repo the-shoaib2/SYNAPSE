@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useCanvasContext } from "./CanvasContext";
-import { CanvasMessage, MessageAgentType } from "./types";
+import type { CanvasMessage, MessageAgentType } from "./types";
 
 export const CanvasMessageHandler: React.FC = () => {
   const { addMessage, setConnectionStatus } = useCanvasContext();
@@ -36,11 +36,11 @@ export const CanvasMessageHandler: React.FC = () => {
     window.addEventListener("message", handleMessage);
 
     // Set connection status
-    setConnectionStatus(true);
+    setConnectionStatus("connected");
 
     return () => {
       window.removeEventListener("message", handleMessage);
-      setConnectionStatus(false);
+      setConnectionStatus("disconnected");
     };
   }, [setConnectionStatus]);
 
@@ -223,8 +223,9 @@ export const CanvasMessageHandler: React.FC = () => {
       id: generateMessageId(),
       agent: "canvas",
       version: "1.0",
-      timestamp: new Date().toISOString(),
+      timestamp: Date.now(),
       type: "command",
+      content: `Sending command: ${command}`,
       payload: {
         command,
         parameters,
@@ -244,7 +245,7 @@ export const CanvasMessageHandler: React.FC = () => {
 
   // Request execution trace
   const requestExecutionTrace = (filePath: string, language: string) => {
-    sendCommand("execution-engine", "startTrace", { filePath, language });
+    sendCommand("execution-trace", "startTrace", { filePath, language });
   };
 
   // Request AST generation
@@ -254,17 +255,17 @@ export const CanvasMessageHandler: React.FC = () => {
 
   // Request CFG generation
   const requestCFGGeneration = (code: string, language: string) => {
-    sendCommand("compiler", "generateCFG", { code, language });
+    sendCommand("parser", "generateCFG", { code, language });
   };
 
   // Request algorithm simulation
   const requestAlgorithmSimulation = (algorithm: string, data: any) => {
-    sendCommand("execution-engine", "simulateAlgorithm", { algorithm, data });
+    sendCommand("execution-trace", "simulateAlgorithm", { algorithm, data });
   };
 
   // Request AI annotation
   const requestAIAnnotation = (context: any) => {
-    sendCommand("ai-annotator", "generateAnnotation", { context });
+    sendCommand("ai-annotation", "generateAnnotation", { context });
   };
 
   // Expose methods to window for external access
@@ -280,7 +281,7 @@ export const CanvasMessageHandler: React.FC = () => {
     };
 
     return () => {
-      delete (window as any).CanvasAPI;
+      (window as any).CanvasAPI = undefined;
     };
   }, []);
 

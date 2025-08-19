@@ -25,7 +25,7 @@ export const ASTVisualizerContent: React.FC<ASTVisualizerContentProps> = ({
       </div>
       <div className="content-body">
         <p>AST visualization will be implemented here</p>
-        <p>Content: {JSON.stringify(panel.data.content, null, 2)}</p>
+        <p>Content: {JSON.stringify((panel.data as any)?.content, null, 2)}</p>
       </div>
     </div>
   );

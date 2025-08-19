@@ -1,13 +1,13 @@
 import {
-    AssistantUnrolled,
-    ConfigResult,
-    FQSN,
-    FullSlug,
-    SecretResult,
+  AssistantUnrolled,
+  ConfigResult,
+  FQSN,
+  FullSlug,
+  SecretResult,
 } from "@synapse/config-yaml";
 
 /**
- * Interface for the Continue Hub client.
+ * Interface for the Synapse Hub client.
  */
 export interface IContinueHubClient {
   resolveFQSNs(

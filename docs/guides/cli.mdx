@@ -1,9 +1,9 @@
 ---
-title: "Continue CLI (cn)"
+title: "Synapse CLI (cn)"
 description: "Context engineering on the command line"
 ---
 
-<Warning>Continue CLI (cn) is currently in Alpha</Warning>
+<Warning>Synapse CLI (cn) is currently in Alpha</Warning>
 
 `cn` is an open-source, modular coding agent for the command line.
 
@@ -53,7 +53,7 @@ echo "$(git diff) Generate a conventional commit name for the current git change
 
 ## Configuration
 
-`cn` uses [`config.yaml`](./reference.mdx), the exact same configuration file as Continue. This means that you can log in to [Continue Hub](./hub/introduction.mdx) or use your existing local configuration.
+`cn` uses [`config.yaml`](./reference.mdx), the exact same configuration file as Synapse. This means that you can log in to [Synapse Hub](./hub/introduction.mdx) or use your existing local configuration.
 
 To switch between configurations, you can use the `/config` slash command in `cn`, or you can start it with the `--config` flag (e.g. `cn --config continuedev/default-agent` or `cn --config ~/.synapse/config.yaml`).
 
@@ -63,11 +63,11 @@ Learn how to add custom models [here](./customization/models.mdx). Then, you can
 
 ### Rules
 
-`cn` supports [rules](./customize/deep-dives/rules.mdx) in the same way as the Continue IDE extensions. You can also use the `--rule` flag to manually include a rule from the hub. For example, `cn --rule nate/spanish` will tell `cn` to use [this rule](https://hub.synapse.dev/nate/spanish) to always speak in Spanish.
+`cn` supports [rules](./customize/deep-dives/rules.mdx) in the same way as the Synapse IDE extensions. You can also use the `--rule` flag to manually include a rule from the hub. For example, `cn --rule nate/spanish` will tell `cn` to use [this rule](https://hub.synapse.dev/nate/spanish) to always speak in Spanish.
 
 ### Tools
 
-`cn` supports MCP tools, which can be configured in the [same way](./customize/deep-dives/mcp.mdx) as with the Continue IDE extensions.
+`cn` supports MCP tools, which can be configured in the [same way](./customize/deep-dives/mcp.mdx) as with the Synapse IDE extensions.
 
 #### Tool Permissions
 

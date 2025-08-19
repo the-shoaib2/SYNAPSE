@@ -1,19 +1,19 @@
 ---
 title: "Understanding Assistants: Hub vs Local Configuration"
-description: "Master the two approaches to configuring AI assistants in Continue - choosing the right path for your development workflow"
+description: "Master the two approaches to configuring AI assistants in Synapse - choosing the right path for your development workflow"
 ---
 
-Every developer has unique needs when it comes to AI assistance. Some prefer the convenience of cloud-managed configurations, while others need the control and privacy of local setups. Continue offers both paths, and this guide will help you choose the right one for your workflow.
+Every developer has unique needs when it comes to AI assistance. Some prefer the convenience of cloud-managed configurations, while others need the control and privacy of local setups. Synapse offers both paths, and this guide will help you choose the right one for your workflow.
 
 ## The Two Paths to AI Assistance
 
-Think of Continue's configuration options like choosing between a managed service and self-hosting. Both get you to the same destination—powerful AI assistance in your IDE—but the journey and control level differ significantly.
+Think of Synapse's configuration options like choosing between a managed service and self-hosting. Both get you to the same destination—powerful AI assistance in your IDE—but the journey and control level differ significantly.
 
 ### Accessing Your Assistant Configuration
 
 Before we dive into the specifics, let's understand how to access your configuration:
 
-1. Open the Continue Chat sidebar by pressing <kbd>cmd/ctrl</kbd> + <kbd>L</kbd> (VS Code) or <kbd>cmd/ctrl</kbd> + <kbd>J</kbd> (JetBrains)
+1. Open the Synapse Chat sidebar by pressing <kbd>cmd/ctrl</kbd> + <kbd>L</kbd> (VS Code) or <kbd>cmd/ctrl</kbd> + <kbd>J</kbd> (JetBrains)
 2. Click the Assistant selector above the main chat input
 3. Hover over an assistant and click:
    - `new window` icon for Hub assistants
@@ -23,7 +23,7 @@ Before we dive into the specifics, let's understand how to access your configura
 
 ## Hub Assistants: The Managed Experience
 
-Hub Assistants represent the "it just works" philosophy. When you [sign in to Continue Hub](https://auth.synapse.dev/), you gain access to a curated ecosystem of pre-configured assistants that sync seamlessly across all your development environments.
+Hub Assistants represent the "it just works" philosophy. When you [sign in to Synapse Hub](https://auth.synapse.dev/), you gain access to a curated ecosystem of pre-configured assistants that sync seamlessly across all your development environments.
 
 ### Why Choose Hub Assistants?
 
@@ -39,7 +39,7 @@ Hub Assistants represent the "it just works" philosophy. When you [sign in to Co
 
 The journey from zero to AI-powered coding takes just four steps:
 
-1. **Select Your Assistant**: Click the assistant selector in your IDE's Continue panel
+1. **Select Your Assistant**: Click the assistant selector in your IDE's Synapse panel
 2. **Explore or Create**: Browse community assistants or craft your own specialized helper
 3. **Secure Your Keys**: Add API keys as [User Secrets](https://hub.synapse.dev/settings/secrets) in the hub—they're encrypted and never exposed
 4. **Sync and Code**: Click "Reload config" to pull your latest settings
@@ -79,9 +79,9 @@ Local configuration lives in a single YAML file in your home directory:
 
 ### The Local Assistant Experience
 
-When you edit your `config.yaml`, Continue provides intelligent autocomplete for all available options. Save the file, and Continue automatically reloads your configuration—no restart required.
+When you edit your `config.yaml`, Synapse provides intelligent autocomplete for all available options. Save the file, and Synapse automatically reloads your configuration—no restart required.
 
-The first time you use Continue, it generates a `config.yaml` with sensible defaults. From there, you can customize everything from model selection to context providers, slash commands, and more.
+The first time you use Synapse, it generates a `config.yaml` with sensible defaults. From there, you can customize everything from model selection to context providers, slash commands, and more.
 
 For the complete configuration reference, see our [config.yaml documentation](/reference).
 
@@ -166,11 +166,11 @@ You can switch between them seamlessly using the assistant selector in your IDE.
 
 **Config Not Loading?**
 - Verify file location matches your OS
-- Check YAML syntax (Continue will show errors)
+- Check YAML syntax (Synapse will show errors)
 - Ensure file permissions allow reading
 
 **Autocomplete Not Working?**
-- Update to the latest Continue version
+- Update to the latest Synapse version
 - Check that you're editing the correct file
 
 ## Next Steps
@@ -183,4 +183,4 @@ Now that you understand both configuration approaches, you're ready to dive deep
 
 Remember, the best configuration is the one that helps you code more effectively. Start simple, experiment freely, and gradually refine your setup as you discover what works best for your workflow.
 
-Happy coding with Continue! 🚀
+Happy coding with Synapse! 🚀

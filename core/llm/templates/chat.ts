@@ -57,7 +57,7 @@ function llama2TemplateMessages(msgs: ChatMessage[]): string {
 
   if (msgs[0].role === "assistant") {
     // These models aren't trained to handle assistant message coming first,
-    // and typically these are just introduction messages from Continue
+    // and typically these are just introduction messages from Synapse
     msgs.shift();
   }
 
@@ -295,8 +295,7 @@ const graniteTemplateMessages = templateFactory(
 export {
   anthropicTemplateMessages,
   chatmlTemplateMessages,
-  codeLlama70bTemplateMessages,
-  deepseekTemplateMessages,
+  codeLlama70bTemplateMessages, codestralTemplateMessages, deepseekTemplateMessages,
   gemmaTemplateMessage,
   graniteTemplateMessages,
   llama2TemplateMessages,
@@ -308,6 +307,6 @@ export {
   phindTemplateMessages,
   templateAlpacaMessages,
   xWinCoderTemplateMessages,
-  zephyrTemplateMessages,
-  codestralTemplateMessages,
+  zephyrTemplateMessages
 };
+

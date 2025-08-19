@@ -7,7 +7,7 @@ import {
   optimizePrompt,
   selectSystemPrompt,
 } from "./SystemPrompts";
-import { PipelinePlan } from "./types";
+import { PipelinePlan, VisualType } from "./types";
 
 interface EnhancedCanvasProps {
   initialPanels?: any[];
@@ -135,7 +135,7 @@ export const EnhancedCanvas: React.FC<EnhancedCanvasProps> = ({
           inputs: [input, systemPrompt.prompt],
           outputs: ["enhanced_analysis"],
           editable: false,
-          visualType: "explanation",
+          visualType: "explanation" as VisualType,
           payload: {
             explain: `Enhanced analysis using ${systemPrompt.name} system prompt`,
             systemPrompt: systemPrompt.prompt,
@@ -149,7 +149,7 @@ export const EnhancedCanvas: React.FC<EnhancedCanvasProps> = ({
           inputs: ["enhanced_analysis"],
           outputs: ["analysis_results"],
           editable: false,
-          visualType: "explanation",
+          visualType: "explanation" as VisualType,
           payload: {
             explain:
               "Comprehensive analysis based on system prompt requirements",
@@ -163,7 +163,7 @@ export const EnhancedCanvas: React.FC<EnhancedCanvasProps> = ({
           inputs: ["analysis_results"],
           outputs: ["visualizations"],
           editable: true,
-          visualType: "multi-panel",
+          visualType: "multi-panel" as VisualType,
           payload: {
             explain:
               "Generate multiple visualization formats based on analysis",
@@ -177,7 +177,7 @@ export const EnhancedCanvas: React.FC<EnhancedCanvasProps> = ({
           inputs: ["visualizations"],
           outputs: ["interactive_components"],
           editable: true,
-          visualType: "interactive",
+          visualType: "interactive" as VisualType,
           payload: {
             explain: "Create interactive elements for user exploration",
           },
@@ -190,7 +190,7 @@ export const EnhancedCanvas: React.FC<EnhancedCanvasProps> = ({
           inputs: ["analysis_results"],
           outputs: ["optimization_recommendations"],
           editable: true,
-          visualType: "explanation",
+          visualType: "explanation" as VisualType,
           payload: {
             explain:
               "Provide optimization suggestions and improvement recommendations",
@@ -209,7 +209,7 @@ export const EnhancedCanvas: React.FC<EnhancedCanvasProps> = ({
         inputs: ["analysis_results"],
         outputs: ["php_insights"],
         editable: false,
-        visualType: "explanation",
+        visualType: "explanation" as VisualType,
         payload: {
           explain: "PHP-specific best practices and optimization analysis",
         },
@@ -225,7 +225,7 @@ export const EnhancedCanvas: React.FC<EnhancedCanvasProps> = ({
         inputs: ["analysis_results"],
         outputs: ["performance_metrics"],
         editable: false,
-        visualType: "performance-graph",
+        visualType: "performance-graph" as VisualType,
         payload: {
           explain: "Detailed performance analysis and optimization insights",
         },
@@ -241,7 +241,7 @@ export const EnhancedCanvas: React.FC<EnhancedCanvasProps> = ({
         inputs: ["analysis_results"],
         outputs: ["security_report"],
         editable: false,
-        visualType: "security-matrix",
+        visualType: "security-matrix" as VisualType,
         payload: {
           explain:
             "Comprehensive security analysis and vulnerability assessment",
@@ -355,19 +355,21 @@ export const EnhancedCanvas: React.FC<EnhancedCanvasProps> = ({
         <div className="follow-up-suggestions">
           <h4>💡 Suggested Next Steps</h4>
           <div className="suggestions-grid">
-            {processedInput.suggestedActions.map((action, index) => (
-              <button
-                key={index}
-                className="suggestion-btn"
-                onClick={() => {
-                  const newInput = `${processedInput.original}\n\n${action}`;
-                  setUserInput(newInput);
-                  processUserInput(newInput);
-                }}
-              >
-                {action}
-              </button>
-            ))}
+            {processedInput.suggestedActions.map(
+              (action: unknown, index: number) => (
+                <button
+                  key={index}
+                  className="suggestion-btn"
+                  onClick={() => {
+                    const newInput = `${processedInput.original}\n\n${action}`;
+                    setUserInput(newInput);
+                    processUserInput(newInput);
+                  }}
+                >
+                  {String(action)}
+                </button>
+              ),
+            )}
           </div>
         </div>
       )}

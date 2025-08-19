@@ -10,9 +10,9 @@ import { CreateRuleBlockArgs } from "core/tools/implementations/createRuleBlock"
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IdeMessengerContext } from "../../context/IdeMessenger";
+import { Button } from "../ui";
 import Spinner from "../ui/Spinner";
 import { ToolTip } from "../ui/Tooltip";
-import { Button } from "../ui";
 import { useRuleGeneration } from "./useRuleGeneration";
 
 interface GenerationScreenProps {
@@ -283,7 +283,7 @@ export function GenerationScreen({
                     !formData.name
                   }
                 >
-                  Continue
+                  Synapse
                 </Button>
               </div>
               {formError && (

@@ -1,10 +1,10 @@
 blank_issues_enabled: false
 contact_links:
   - name: Have a feature request?
-    url: https://github.com/synapsedev/synapse/discussions
+    url: https://github.com/the-shoaib2/SYNAPSE/discussions
     about: Upvote existing suggestions or make a new one
   - name: Have a question?
-    url: https://github.com/synapsedev/synapse/discussions
+    url: https://github.com/the-shoaib2/SYNAPSE/discussions
     about: Search for existing questions or ask a new one
   - name: Something else? Join the Synapse Community
     url: https://discord.gg/vapESyrFmJ

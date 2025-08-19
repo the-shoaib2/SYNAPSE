@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Canvas } from "./Canvas";
 import "./Canvas.css";
 import {
+  type VisualSystemPrompt,
   categorizeVisualPrompt,
   optimizeVisualPrompt,
   selectVisualSystemPrompt,
-  type VisualSystemPrompt,
 } from "./VisualSystemPrompts";
-import { PipelinePlan } from "./types";
+import type { PipelinePlan, VisualType } from "./types";
 
 interface VisualCanvasProps {
   initialPanels?: any[];
@@ -213,7 +213,7 @@ export const VisualCanvas: React.FC<VisualCanvasProps> = ({
         inputs: ["quality_visuals"],
         outputs: ["performance_profiling_visuals"],
         editable: false,
-        visualType: "performance-dashboard",
+        visualType: "performance-dashboard" as VisualType,
         payload: {
           visual: "performance-dashboard",
           explain: "Create comprehensive performance dashboard",
@@ -230,7 +230,7 @@ export const VisualCanvas: React.FC<VisualCanvasProps> = ({
         inputs: ["quality_visuals"],
         outputs: ["security_visuals"],
         editable: false,
-        visualType: "security-matrix",
+        visualType: "security-matrix" as VisualType,
         payload: {
           visual: "security-matrix",
           explain: "Generate security assessment matrix",
@@ -238,7 +238,7 @@ export const VisualCanvas: React.FC<VisualCanvasProps> = ({
       });
     }
 
-    return visualPipeline;
+    return visualPipeline as PipelinePlan;
   };
 
   return (

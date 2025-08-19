@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Continue Hub IDE API
- * API for Continue IDE to fetch assistants and other related information. These endpoints are primarily used by the Continue IDE extensions for VS Code and JetBrains.
+ * Synapse Hub IDE API
+ * API for Synapse IDE to fetch assistants and other related information. These endpoints are primarily used by the Synapse IDE extensions for VS Code and JetBrains.
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
 /**
  *
  * @export

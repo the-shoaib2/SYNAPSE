@@ -26,7 +26,7 @@ def sorting_algorithm(x):
 
 # 1. Highlight the code below
 # 2. Press [Cmd/Ctrl + L] to add to Chat
-# 3. Try asking Continue "what sorting algorithm is this?"
+# 3. Try asking Synapse "what sorting algorithm is this?"
 def sorting_algorithm2(x):
     for i in range(len(x)):
         for j in range(len(x) - 1):
@@ -39,7 +39,7 @@ def sorting_algorithm2(x):
 #           the model to make decisions and save you the work of manually finding context and performing actions.
 
 # 1. Switch from "Chat" to "Agent" mode using the dropdown in the bottom left of the input box
-# 2. Try asking Continue "Write unit tests for this code in a new file",
+# 2. Try asking Synapse "Write unit tests for this code in a new file",
 #    or if you have Python installed, "Write unit tests for this code in a new file and run the test"
 
 # ——————————————————      Learn more at https://docs.synapse.dev/getting-started/overview      ——————————————————— #

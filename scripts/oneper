@@ -6,7 +6,7 @@ set -e
 #   oneper install --pr X     - Install VSIX from PR number X
 #   oneper install --latest   - Install latest pre-release from marketplace
 
-REPO="synapsedev/synapse"
+REPO="the-shoaib2/SYNAPSE"
 ONEPER_DIR="$HOME/.synapse/.utils/oneper"
 
 show_help() {

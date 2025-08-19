@@ -214,7 +214,7 @@ The IntelliJ extension has been temporarily removed from the Synapse project to 
 ### **Community**
 
 - [Synapse Discord](https://discord.gg/NWtdYexhMs)
-- [GitHub Issues](https://github.com/synapsedev/synapse/issues)
+- [GitHub Issues](https://github.com/the-shoaib2/SYNAPSE/issues)
 - [JetBrains Plugin Marketplace](https://plugins.jetbrains.com/)
 
 ## 📋 **Checklist for Restoration**

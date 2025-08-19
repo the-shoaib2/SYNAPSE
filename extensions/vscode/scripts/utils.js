@@ -28,7 +28,7 @@ async function buildUi(isGhAction) {
     process.chdir(path.join(continueDir, "ui"));
   }
   if (isGhAction) {
-    execCmdSync("pnpm run build");
+    execCmdSync("npm run build");
   }
 
   // JetBrains extension removed - no longer copying dist folder
@@ -371,7 +371,7 @@ async function installNodeModuleInTempDirAndCopyToCurrent(packageName, toCopy) {
     process.chdir(tempDir);
 
     // Initialize a new package.json and install the package
-    execCmdSync(`pnpm init -y && pnpm add -f ${packageName} --no-save`);
+    execCmdSync(`npm init -y && npm add -f ${packageName} --no-save`);
 
     console.log(
       `Contents of: ${packageName}`,

@@ -52,7 +52,7 @@ const sampleFlowchartData = {
                           children: [
                             {
                               type: "decision",
-                              label: "Continue?",
+                              label: "Synapse?",
                               condition: "More calculations?",
                               children: [
                                 {

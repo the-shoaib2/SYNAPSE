@@ -1,6 +1,6 @@
-# Docker + pnpm Setup for Synapse
+# Docker + npm Setup for Synapse
 
-This document explains how to use Docker and pnpm for development and production deployment of the Synapse project.
+This document explains how to use Docker and npm for development and production deployment of the Synapse project.
 
 ## 🚀 Quick Start
 
@@ -33,7 +33,7 @@ docker-compose -f docker/docker-compose.dev.yml up --build
 
 ```bash
 # Start development environment
-pnpm docker:dev
+npm run docker:dev
 
 # View logs
 docker-compose -f docker/docker-compose.dev.yml logs -f
@@ -52,79 +52,78 @@ docker exec -it synapse-development bash
 
 ```bash
 # Build production image
-pnpm docker:build
+npm run docker:build
 
 # Run production container
-pnpm docker:run
+npm run docker:run
 
 # Or manually
 docker build -t synapse .
 docker run -p 3000:3000 -p 3001:3001 -p 3002:3002 synapse
 ```
 
-## 📦 pnpm Commands
+## 📦 npm Commands
 
 ### Local Development (without Docker)
 
 ```bash
 # Install dependencies
-pnpm install
+npm install
 
 # Start all services
-pnpm dev
+npm run dev
 
 # Start specific service
-pnpm dev:ui      # UI only
-pnpm dev:core     # Core only
-pnpm dev:vscode   # VSCode extension
-pnpm dev:docs     # Documentation
+npm run dev:ui      # UI only
+npm run dev:core     # Core only
+npm run dev:vscode   # VSCode extension
+npm run dev:docs     # Documentation
 
 # Build all packages
-pnpm build
+npm run build
 
 # Test all packages
-pnpm test
+npm run test
 
 # Lint all packages
-pnpm lint
+npm run lint
 ```
 
 ### Package Management
 
 ```bash
 # Add dependency to root
-pnpm add <package>
+npm add <package>
 
 # Add dependency to specific package
-pnpm --filter <package-name> add <dependency>
+npm --workspace <package-name> add <dependency>
 
 # Add dev dependency
-pnpm add -D <package>
+npm add -D <package>
 
 # Remove dependency
-pnpm remove <package>
+npm remove <package>
 
 # Update dependencies
-pnpm update
+npm update
 ```
 
 ## 🔧 Migration from npm
 
-If you're migrating from npm to pnpm:
+If you're migrating from npm to npm:
 
 ```bash
 # Run migration script
-chmod +x scripts/migrate-to-pnpm.sh
-./scripts/migrate-to-pnpm.sh
+chmod +x scripts/migrate-to-npm.sh
+./scripts/migrate-to-npm.sh
 ```
 
 The script will:
 
-1. Install pnpm globally
-2. Remove npm lock files
-3. Clean node_modules
-4. Install dependencies with pnpm
-5. Update .gitignore
+1. Remove npm lock files
+2. Clean node_modules
+3. Install dependencies with npm
+4. Update .gitignore
 
 ## 🏗️ Project Structure
 
@@ -144,10 +143,10 @@ synapse/
 │   ├── Dockerfile.dev    # Development Dockerfile
 │   ├── docker-compose.dev.yml # Development compose
 │   └── .dockerignore     # Docker ignore rules
-├── pnpm-workspace.yaml   # pnpm workspace config
+├── package.json          # npm workspace config
 ```
 
-## 🌟 Benefits of Docker + pnpm
+## 🌟 Benefits of Docker + npm
 
 ### Docker Benefits
 
@@ -156,7 +155,7 @@ synapse/
 - **Easy Deployment**: Production-ready containers
 - **Team Collaboration**: Everyone has the same setup
 
-### pnpm Benefits
+### npm Benefits
 
 - **Faster**: Parallel installation and efficient disk usage
 - **Monorepo Support**: Better workspace management
@@ -193,15 +192,15 @@ synapse/
    docker build --no-cache -t synapse .
    ```
 
-4. **pnpm Install Fails**
+4. **npm Install Fails**
 
    ```bash
-   # Clear pnpm store
-   pnpm store prune
+   # Clear npm cache
+   npm cache clean --force
 
    # Reinstall
    rm -rf node_modules
-   pnpm install
+   npm install
    ```
 
 ### Getting Help
@@ -212,7 +211,7 @@ synapse/
 
 ## 📚 Additional Resources
 
-- [pnpm Documentation](https://pnpm.io/)
+- [npm Documentation](https://docs.npmjs.com/)
 - [Docker Documentation](https://docs.docker.com/)
 - [Docker Compose Documentation](https://docs.docker.com/compose/)
 - [Synapse Documentation](https://docs.synapse.dev/)
@@ -222,7 +221,7 @@ synapse/
 When contributing to Synapse:
 
 1. Use the Docker development environment
-2. Follow the pnpm workspace structure
+2. Follow the npm workspace structure
 3. Test your changes in the containerized environment
 4. Update this documentation if needed
 

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { CanvasPanel } from "../CanvasPanel";
-import { CanvasPanelType } from "../types";
+import type { CanvasPanelType } from "../types";
 
 export interface LayoutTabsProps {
   panels: CanvasPanelType[];
@@ -58,12 +58,23 @@ export const LayoutTabs: React.FC<LayoutTabsProps> = ({
           <div
             key={panel.id}
             className={`tab-header ${activeTab === panel.id ? "active" : ""}`}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleTabClick(panel.id);
+              }
+            }}
             onClick={() => handleTabClick(panel.id)}
           >
             <span className="tab-icon">{panel.icon}</span>
-            <span className="tab-title">{panel.config.title}</span>
+            <span className="tab-title">
+              {String(panel.config?.title || "Untitled")}
+            </span>
             {panel.state.isClosable && (
               <button
+                type="button"
                 className="tab-close-button"
                 onClick={(e) => handleTabClose(panel.id, e)}
                 title="Close tab"
@@ -100,4 +111,3 @@ export const LayoutTabs: React.FC<LayoutTabsProps> = ({
     </div>
   );
 };
-

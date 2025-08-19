@@ -435,7 +435,7 @@ class Ollama extends BaseLLM implements ModelInstaller {
           content: res.message.content,
         };
         if (res.message.tool_calls) {
-          // Continue handles the response as a tool call delta but
+          // Synapse handles the response as a tool call delta but
           // But ollama returns the full object in one response with no streaming
           chatMessage.toolCalls = res.message.tool_calls.map((tc) => ({
             type: "function",
