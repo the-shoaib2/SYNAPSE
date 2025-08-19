@@ -1,10 +1,10 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Code2, Brain, FileCode, Zap, Search, Palette, Sparkles, ArrowRight, Check, Users, Globe, Shield } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { motion } from "framer-motion"
+import { ArrowRight, Brain, Check, Code2, FileCode, Globe, Palette, Search, Shield, Sparkles, Users, Zap } from "lucide-react"
 
 const features = [
   {
@@ -90,9 +90,16 @@ export default function FeaturesPage() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center"
             >
-              <Button size="lg" className="w-full sm:w-auto group">
-                <Code2 className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                Try SYNAPSE Free
+              <Button size="lg" className="w-full sm:w-auto group" asChild>
+                <a 
+                  href="https://marketplace.visualstudio.com/items?itemName=Synapse.synapse-dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center"
+                >
+                  <Code2 className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                  Try SYNAPSE Free
+                </a>
               </Button>
               <Button variant="outline" size="lg" className="w-full sm:w-auto group">
                 <ArrowRight className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />

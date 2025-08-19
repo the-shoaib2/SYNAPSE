@@ -1,23 +1,17 @@
 "use client"
 
-import { useState } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Menu, Search as SearchIcon, Code2, X } from "lucide-react"
-import { SynapseLogo } from "@/components/synapse-logo"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { useSession } from "next-auth/react"
-import { useIsMobile } from "@/hooks/use-mobile"
-import { cn } from "@/lib/utils"
-import { useRouter } from "next/navigation"
-import { UserAvatar } from "./user-avatar"
-import { handleNavigation } from "@/lib/utils"
-import { signOut } from "next-auth/react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { LogOut } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { useIsMobile } from "@/hooks/use-mobile"
+import { cn, handleNavigation } from "@/lib/utils"
+import { LogOut, Menu } from "lucide-react"
+import { signOut, useSession } from "next-auth/react"
+import { useTheme } from "next-themes"
+import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
+import { useState } from "react"
+import { UserAvatar } from "./user-avatar"
 
 const navLinks = [
   { name: 'Docs', href: '/docs' },
@@ -91,8 +85,14 @@ export function PublicHeader() {
             <Button variant="outline" size="sm" className="rounded-full px-4" onClick={() => handleNavigation('/login')}>
               Sign in
             </Button>
-            <Button variant="default" size="sm" className="rounded-full px-4" onClick={() => handleNavigation('/register')}>
-              Get Started
+            <Button variant="default" size="sm" className="rounded-full px-4" asChild>
+              <a 
+                href="https://marketplace.visualstudio.com/items?itemName=Synapse.synapse-dev"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get Started
+              </a>
             </Button>
           </div>
         )}
@@ -164,7 +164,14 @@ export function PublicHeader() {
                         <Link href="/login" onClick={() => setIsMenuOpen(false)}>Sign In</Link>
                       </Button>
                       <Button className="w-full" asChild>
-                        <Link href="/register" onClick={() => setIsMenuOpen(false)}>Get Started</Link>
+                        <a 
+                          href="https://marketplace.visualstudio.com/items?itemName=Synapse.synapse-dev"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          Get Started
+                        </a>
                       </Button>
                     </div>
                   )}

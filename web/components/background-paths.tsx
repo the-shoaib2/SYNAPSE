@@ -1,7 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion"
 
 function FloatingPaths({ position }: { position: number }) {
   const paths = Array.from({ length: 36 }, (_, i) => ({
@@ -121,13 +121,21 @@ export default function BackgroundPaths({
             <Button
               variant="ghost"
               className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold shadow-md transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 border border-primary/10 group-hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              asChild
             >
-              <span className="opacity-90 group-hover:opacity-100 transition-opacity">Install Now</span>
-              <span
-                className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all duration-300"
+              <a 
+                href="https://marketplace.visualstudio.com/items?itemName=Synapse.synapse-dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center"
               >
-                →
-              </span>
+                <span className="opacity-90 group-hover:opacity-100 transition-opacity">Try Extension</span>
+                <span
+                  className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all duration-300"
+                >
+                  →
+                </span>
+              </a>
             </Button>
           </div>
         </motion.div>

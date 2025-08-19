@@ -26,6 +26,11 @@ server/exe/**
 !out/node_modules/**
 !node_modules/@vscode/ripgrep/bin/rg
 
+# Exclude large binary and model files
+bin/**
+models/**
+tmp/**
+
 # Ensure media files are included
 !media/**
 !media/readme.gif

@@ -1,10 +1,10 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Code2, Check, Star, Zap, Crown } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { motion } from "framer-motion"
+import { Check, Code2, Crown, Zap } from "lucide-react"
 import { useState } from "react"
 
 const plans = [
@@ -172,12 +172,18 @@ export default function PricingPage() {
                       ))}
                     </div>
                     <Button 
-                      className={`w-full group ${plan.popular ? '' : 'variant-outline'}`}
-                      variant={plan.popular ? 'default' : 'outline'}
+                      className={`w-full group ${plan.popular ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'}`}
+                      asChild
                     >
-                      <span className="group-hover:scale-105 transition-transform">
-                        {plan.name === 'Free' ? 'Get Started' : 'Start Free Trial'}
-                      </span>
+                      <a 
+                        href="https://marketplace.visualstudio.com/items?itemName=Synapse.synapse-dev"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span className="group-hover:scale-105 transition-transform">
+                          {plan.name === 'Free' ? 'Get Started' : 'Start Free Trial'}
+                        </span>
+                      </a>
                     </Button>
                   </CardContent>
                 </Card>
@@ -263,8 +269,14 @@ export default function PricingPage() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center"
           >
-            <Button size="lg" variant="secondary" className="w-full sm:w-auto group bg-white text-gray-800 hover:bg-gray-100">
-              <span className="group-hover:scale-105 transition-transform">Start Free Trial</span>
+            <Button size="lg" variant="secondary" className="w-full sm:w-auto group bg-white text-gray-800 hover:bg-gray-100" asChild>
+              <a 
+                href="https://marketplace.visualstudio.com/items?itemName=Synapse.synapse-dev"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="group-hover:scale-105 transition-transform">Start Free Trial</span>
+              </a>
             </Button>
             <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-gray-800 w-full sm:w-auto group">
               <span className="group-hover:scale-105 transition-transform">Contact Sales</span>
