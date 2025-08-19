@@ -401,7 +401,11 @@ export function selectVisualSystemPrompt(input: string): VisualSystemPrompt {
 
 export function enhanceVisualPromptWithContext(
   input: string,
-  context?: any,
+  context?: {
+    language?: string;
+    framework?: string;
+    complexity?: string;
+  },
 ): string {
   let enhanced = input;
 

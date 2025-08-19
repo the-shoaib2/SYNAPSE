@@ -1,6 +1,6 @@
-import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react';
-import { PipelineStage } from '../types';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useCanvas } from '../CanvasContext';
+import type { PipelineStage } from '../types';
 
 interface EditorPanelProps {
   stage: PipelineStage;
@@ -250,6 +250,7 @@ export function EditorPanel({ stage, onUpdate, onSelect, isActive }: EditorPanel
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button
+              type="button"
               onClick={handleSave}
               disabled={!editorState.isDirty}
               className="px-3 py-1 rounded text-sm font-medium bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white transition-colors"
@@ -258,6 +259,7 @@ export function EditorPanel({ stage, onUpdate, onSelect, isActive }: EditorPanel
             </button>
             
             <button
+              type="button"
               onClick={handleRevert}
               disabled={!editorState.isDirty}
               className="px-3 py-1 rounded text-sm font-medium bg-gray-500 hover:bg-gray-600 disabled:bg-gray-400 text-white transition-colors"
@@ -266,6 +268,7 @@ export function EditorPanel({ stage, onUpdate, onSelect, isActive }: EditorPanel
             </button>
             
             <button
+              type="button"
               onClick={handleFormat}
               className="px-3 py-1 rounded text-sm font-medium bg-blue-500 hover:bg-blue-600 text-white transition-colors"
             >
@@ -334,7 +337,7 @@ export function EditorPanel({ stage, onUpdate, onSelect, isActive }: EditorPanel
             `}>
               {Array.from({ length: Math.max(editorStats.lines, 1) }, (_, i) => (
                 <div
-                  key={i + 1}
+                  key={`line-${i + 1}`}
                   className={`
                     text-right py-0.5
                     ${i + 1 === editorState.cursorPosition.line ? 'text-blue-600 font-semibold' : ''}
@@ -401,6 +404,7 @@ export function EditorPanel({ stage, onUpdate, onSelect, isActive }: EditorPanel
       {/* Export Controls */}
       <div className="mt-4 flex justify-end">
         <button
+          type="button"
           onClick={() => onUpdate({ 
             payload: { 
               ...stage.payload, 

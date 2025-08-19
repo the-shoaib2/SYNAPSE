@@ -34,13 +34,17 @@ export { default as VisualCanvasDemo } from "./VisualCanvasDemo";
 export type {
   AIAgent,
   CanvasConfig,
+  CanvasMessage,
   CanvasPanel,
   CanvasPanelType,
+  CanvasPosition,
   CanvasState,
   EdgeData,
   ExecutionStep,
   GraphData,
+  MessageAgentType,
   NodeData,
+  PanelType,
   PipelineStage,
   VisualType,
 } from "./types";

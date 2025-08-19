@@ -23,6 +23,8 @@
   "scripts": {
     "test": "jest",
     "build": "node build.js",
+    "tsc:check": "tsc -p ./ --noEmit",
+    "tsc:watch": "tsc -p ./ --noEmit --watch",
     "rebuild": "node build.js --esbuild-only",
     "build:darwin-x64": "node build.js --os darwin-x64"
   },

@@ -104,6 +104,7 @@ export class InlineTipManager {
       console.log("Error getting theme, using fallback:", error);
       // Return a basic fallback theme
       return {
+        base: "vs-dark",
         colors: {
           "editor.background": "#1e1e1e",
           "editor.foreground": "#d4d4d4"

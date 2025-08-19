@@ -1,12 +1,14 @@
-import React, {
-  createContext,
+import {
   ReactNode,
+  createContext,
   useCallback,
   useContext,
   useReducer,
+  useState,
 } from "react";
 import {
   CanvasConfig,
+  CanvasMessage,
   CanvasState,
   ExecutionStep,
   PanelState,
@@ -237,6 +239,13 @@ interface CanvasContextType {
   getPanelState: (id: string) => PanelState | undefined;
   isStageCompleted: (id: string) => boolean;
   getStageDependencies: (id: string) => PipelineStage[];
+
+  // Message handling methods
+  addMessage: (message: CanvasMessage) => void;
+  setConnectionStatus: (status: string) => void;
+
+  // State access
+  explanations: Record<string, string>;
 }
 
 // Create context
@@ -259,7 +268,7 @@ export function CanvasProvider({
     pipeline: initialPipeline,
   });
 
-  const [config, setConfig] = React.useState<CanvasConfig>({
+  const [config, setConfig] = useState<CanvasConfig>({
     ...defaultConfig,
     ...initialConfig,
   });
@@ -393,6 +402,17 @@ export function CanvasProvider({
     [getStageById],
   );
 
+  // Message handling methods
+  const addMessage = useCallback((message: CanvasMessage) => {
+    // TODO: Implement message handling logic
+    console.log("Adding message:", message);
+  }, []);
+
+  const setConnectionStatus = useCallback((status: string) => {
+    // TODO: Implement connection status logic
+    console.log("Setting connection status:", status);
+  }, []);
+
   const contextValue: CanvasContextType = {
     state,
     config,
@@ -413,6 +433,9 @@ export function CanvasProvider({
     getPanelState,
     isStageCompleted,
     getStageDependencies,
+    addMessage,
+    setConnectionStatus,
+    explanations: state.explanations,
   };
 
   return (
@@ -430,3 +453,6 @@ export function useCanvas() {
   }
   return context;
 }
+
+// Alias for backward compatibility
+export const useCanvasContext = useCanvas;

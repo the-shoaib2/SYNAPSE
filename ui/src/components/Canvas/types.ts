@@ -1,7 +1,7 @@
 // ------------------------------
 // Canvas Panel Types (Extended)
 // ------------------------------
-export type CanvasPanelType =
+export type PanelType =
   | "code-editor"
   | "output-console"
   | "flowchart"
@@ -10,6 +10,7 @@ export type CanvasPanelType =
   | "chart"
   | "pipeline"
   | "ast-tree"
+  | "ast-visualizer"
   | "token-stream"
   | "ir-graph"
   | "assembly"
@@ -47,19 +48,25 @@ export type CanvasPanelType =
   | "memory-heap"
   | "register-table"
   | "execution-trace"
+  | "cfg-graph"
+  | "variable-watch"
+  | "call-stack"
+  | "algorithm-simulation"
+  | "ai-annotations"
+  | "custom"
   | "custom-interactive";
 
 // Canvas Panel Interface for useCanvasWindow hook
-export interface CanvasPanel {
+export interface CanvasPanelType {
   id: string;
-  type: CanvasPanelType;
+  type: PanelType;
   title?: string;
   description?: string;
   icon?: string;
-  content?: any;
-  config?: Record<string, any>;
+  content?: unknown;
+  config?: Record<string, unknown>;
   state: PanelState;
-  data?: any;
+  data?: unknown;
   actions?: Array<{
     id: string;
     label: string;
@@ -70,7 +77,7 @@ export interface CanvasPanel {
     action: () => void;
   }>;
   onStateChange?: (state: PanelState) => void;
-  onDataUpdate?: (data: any) => void;
+  onDataUpdate?: (data: unknown) => void;
   onAction?: (actionId: string) => void;
   onClose?: () => void;
   onResize?: (dimensions: { width: number; height: number }) => void;
@@ -85,6 +92,9 @@ export interface CanvasPanel {
     maxHeight?: number;
   };
 }
+
+// Alias for backward compatibility
+export type CanvasPanel = CanvasPanelType;
 
 // ------------------------------
 // Panel State Extended
@@ -124,7 +134,35 @@ export type MessageAgentType =
   | "tester"
   | "refactorer"
   | "code-transformer"
-  | "profiler";
+  | "profiler"
+  | "execution-engine"
+  | "compiler"
+  | "ai-annotator"
+  | "execution-trace"
+  | "ast-update"
+  | "cfg-update"
+  | "variable-update"
+  | "call-stack-update"
+  | "algorithm-step"
+  | "visualization-update"
+  | "ai-annotation"
+  | "error"
+  | "status"
+  | "command"
+  | "response"
+  | "heartbeat";
+
+// Canvas Message interface
+export interface CanvasMessage {
+  id: string;
+  type: MessageAgentType;
+  content: string;
+  timestamp: number;
+  agent?: string;
+  version?: string;
+  payload?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
+}
 
 // ------------------------------
 // AI Agent Extended Types
@@ -148,7 +186,7 @@ export interface AIAgent {
   capabilities: string[];
   active?: boolean;
   lastRun?: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   assignedStages?: string[];
   isStreaming?: boolean;
   autoExplain?: boolean;
@@ -179,17 +217,17 @@ export interface PipelineStage {
   editable: boolean;
   visualType: VisualType;
   payload: {
-    visual?: any;
+    visual?: string | unknown;
     explain?: string;
     runCommands?: string[];
-    metadata?: Record<string, any>;
+    metadata?: Record<string, unknown>;
     logs?: string[];
     performance?: Record<string, number>;
-    simulationState?: any;
-    coverage?: any;
+    simulationState?: unknown;
+    coverage?: unknown;
     snapshot?: string;
-    metrics?: any;
-    debugInfo?: any;
+    metrics?: unknown;
+    debugInfo?: unknown;
   };
   dependencies?: string[];
   status?: PipelineStatus;
@@ -245,7 +283,11 @@ export type VisualType =
   | "debugger-watch"
   | "thread-visual"
   | "memory-heap"
-  | "register-table";
+  | "register-table"
+  | "multi-panel"
+  | "interactive"
+  | "performance-dashboard"
+  | "security-matrix";
 
 // ------------------------------
 // Canvas Event Types (Extended)
@@ -273,7 +315,7 @@ export interface CanvasEvent {
     | "mouse-hover"
     | "simulation-step"
     | "debug-step";
-  payload?: any;
+  payload?: unknown;
   timestamp?: number;
   agentId?: string;
   stageId?: string;
@@ -295,9 +337,9 @@ export interface CanvasAnalytics {
   stageExecutionTimes?: Record<string, number>;
   memoryUsage?: Record<string, number>;
   cpuUsage?: Record<string, number>;
-  simulationStats?: Record<string, any>;
-  optimizationStats?: Record<string, any>;
-  debugStats?: Record<string, any>;
+  simulationStats?: Record<string, unknown>;
+  optimizationStats?: Record<string, unknown>;
+  debugStats?: Record<string, unknown>;
 }
 
 // ------------------------------
@@ -307,12 +349,12 @@ export interface NodeData {
   id: string;
   label: string;
   type: string;
-  data?: any;
+  data?: unknown;
   position: { x: number; y: number };
   children?: string[];
   parent?: string;
   expanded?: boolean;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface EdgeData {
@@ -321,15 +363,24 @@ export interface EdgeData {
   target: string;
   label?: string;
   type?: string;
-  data?: any;
+  data?: unknown;
   animated?: boolean;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface GraphData {
   nodes: NodeData[];
   edges: EdgeData[];
   layout: "hierarchical" | "force" | "dagre" | "custom" | "3d";
+  metadata?: Record<string, unknown>;
+}
+
+// Canvas Position interface
+export interface CanvasPosition {
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
 }
 
 // ------------------------------
@@ -340,7 +391,7 @@ export interface ExecutionStep {
   timestamp: number;
   status: "started" | "completed" | "failed";
   duration?: number;
-  output?: any;
+  output?: unknown;
   error?: string;
 }
 
@@ -371,7 +422,7 @@ export interface CanvasConfig {
 // ------------------------------
 export interface PipelinePlan {
   pipeline: PipelineStage[];
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   version?: string;
   createdAt?: number;
   updatedAt?: number;
@@ -380,7 +431,7 @@ export interface PipelinePlan {
 export interface PipelineExecutionState {
   stageId: string;
   status: PipelineStatus;
-  result?: any;
+  result?: unknown;
   error?: string;
   startTime?: number;
   endTime?: number;
@@ -388,7 +439,7 @@ export interface PipelineExecutionState {
 }
 
 export interface PipelineEngine {
-  executeStage(stage: PipelineStage, inputs: any[]): Promise<any>;
+  executeStage(stage: PipelineStage, inputs: unknown[]): Promise<unknown>;
   canExecute(stage: PipelineStage): boolean;
-  getRenderer(stage: PipelineStage): React.ComponentType<any>;
+  getRenderer(stage: PipelineStage): React.ComponentType<unknown>;
 }

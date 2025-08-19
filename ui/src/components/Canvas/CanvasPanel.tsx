@@ -66,7 +66,7 @@ export const CanvasPanel: React.FC<CanvasPanelProps> = ({
   const handleDataUpdate = useCallback(
     (newData: any) => {
       const updatedData = {
-        ...panel.data,
+        ...((panel.data as Record<string, unknown>) || {}),
         content: newData,
         timestamp: Date.now(),
       };

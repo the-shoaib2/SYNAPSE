@@ -1,11 +1,11 @@
-import { FromWebviewProtocol, ToWebviewProtocol } from "core/protocol";
-import { Message } from "core/protocol/messenger";
+import type { FromWebviewProtocol, ToWebviewProtocol } from "core/protocol";
+import type { Message } from "core/protocol/messenger";
 import { extractMinimalStackTraceInfo } from "core/util/extractMinimalStackTraceInfo";
 import { Telemetry } from "core/util/posthog";
 import { v4 as uuidv4 } from "uuid";
 import * as vscode from "vscode";
 
-import { IMessenger } from "../../../core/protocol/messenger";
+import type { IMessenger } from "core/protocol/messenger";
 
 import { handleLLMError } from "./util/errorHandling";
 
@@ -14,10 +14,10 @@ export class VsCodeWebviewProtocol
 {
   listeners = new Map<
     keyof FromWebviewProtocol,
-    ((message: Message) => any)[]
+    ((message: Message) => unknown)[]
   >();
 
-  send(messageType: string, data: any, messageId?: string): string {
+  send(messageType: string, data: unknown, messageId?: string): string {
     const id = messageId ?? uuidv4();
     this.webview?.postMessage({
       messageType,
@@ -55,7 +55,7 @@ export class VsCodeWebviewProtocol
         throw new Error(`Invalid webview protocol msg: ${JSON.stringify(msg)}`);
       }
 
-      const respond = (message: any) =>
+      const respond = (message: unknown) =>
         this.send(msg.messageType, message, msg.messageId);
 
       const handlers =
@@ -85,12 +85,12 @@ export class VsCodeWebviewProtocol
           } else {
             respond({ done: true, content: response, status: "success" });
           }
-        } catch (e: any) {
+        } catch (e: unknown) {
           if (await handleLLMError(e)) {
             // Respond without an error, so the UI doesn't show the error component
             respond({ done: true, status: "error" });
           }
-          let message = e.message;
+          let message = e instanceof Error ? e.message : String(e);
           respond({ done: true, error: message, status: "error" });
 
           const stringified = JSON.stringify({ msg }, null, 2);
@@ -109,9 +109,9 @@ export class VsCodeWebviewProtocol
             if (e.cause.name === "ConnectTimeoutError") {
               message = `Connection timed out. If you expect it to take a long time to connect, you can increase the timeout in config.json by setting "requestOptions": { "timeout": 10000 }. You can find the full config reference here: https://docs.synapse.dev/reference/config`;
             } else if (e.cause.code === "ECONNREFUSED") {
-                              message = `Connection was refused. This likely means that there is no server running at the specified URL. If you are running your own server you may need to set the "apiBase" parameter in config.json. For example, you can set up an OpenAI-compatible server like here: https://docs.synapse.dev/reference/Model%20Providers/openai#openai-compatible-servers--apis`;
+              message = `Connection was refused. This likely means that there is no server running at the specified URL. If you are running your own server you may need to set the "apiBase" parameter in config.json. For example, you can set up an OpenAI-compatible server like here: https://docs.synapse.dev/reference/Model%20Providers/openai#openai-compatible-servers--apis`;
             } else {
-                              message = `The request failed with "${e.cause.name}": ${e.cause.message}. If you're having trouble setting up Synapse, please see the troubleshooting guide for help.`;
+              message = `The request failed with "${e.cause.name}": ${e.cause.message}. If you're having trouble setting up Synapse, please see the troubleshooting guide for help.`;
             }
           }
 

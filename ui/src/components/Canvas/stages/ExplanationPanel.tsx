@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useCanvas } from "../CanvasContext";
-import { PipelineStage } from "../types";
+import type { PipelineStage } from "../types";
 
 interface ExplanationPanelProps {
   stage: PipelineStage;
@@ -14,7 +14,15 @@ interface ExplanationSection {
   title: string;
   content: string;
   type: "text" | "code" | "list" | "table" | "diagram";
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
+}
+
+interface ParsedExplanationData {
+  id: string;
+  title: string;
+  content: string;
+  type: string;
+  metadata: Record<string, unknown>;
 }
 
 export function ExplanationPanel({
@@ -30,8 +38,15 @@ export function ExplanationPanel({
   const [isGenerating, setIsGenerating] = useState(false);
   const [showRawData, setShowRawData] = useState(false);
 
+  // Helper function to safely access object properties
+  const safeGet = (obj: unknown, key: string): unknown => {
+    return obj && typeof obj === "object" && key in obj
+      ? (obj as Record<string, unknown>)[key]
+      : undefined;
+  };
+
   // Parse explanation data from stage payload
-  const explanationData = useMemo(() => {
+  const explanationData: ParsedExplanationData[] = useMemo(() => {
     try {
       if (stage.payload?.visual) {
         const data =
@@ -41,31 +56,62 @@ export function ExplanationPanel({
 
         // Convert to explanation sections
         if (Array.isArray(data)) {
-          return data.map((item: any, index: number) => ({
-            id: item.id || `section-${index}`,
-            title: item.title || item.name || `Section ${index + 1}`,
-            content: item.content || item.text || item.description || "",
-            type: item.type || "text",
-            metadata: item.metadata || {},
-          }));
-        } else if (data.sections) {
-          return data.sections.map((section: any, index: number) => ({
-            id: section.id || `section-${index}`,
-            title: section.title || section.name || `Section ${index + 1}`,
+          return data.map((item: unknown, index: number) => ({
+            id: (safeGet(item, "id") as string) || `section-${index}`,
+            title:
+              (safeGet(item, "title") as string) ||
+              (safeGet(item, "name") as string) ||
+              `Section ${index + 1}`,
             content:
-              section.content || section.text || section.description || "",
-            type: section.type || "text",
-            metadata: section.metadata || {},
+              (safeGet(item, "content") as string) ||
+              (safeGet(item, "text") as string) ||
+              (safeGet(item, "description") as string) ||
+              "",
+            type:
+              (safeGet(item, "type") as
+                | "text"
+                | "code"
+                | "list"
+                | "table"
+                | "diagram") || "text",
+            metadata:
+              (safeGet(item, "metadata") as Record<string, unknown>) || {},
           }));
-        } else if (data.explanation) {
+        }
+        if (safeGet(data, "sections")) {
+          const sections = safeGet(data, "sections") as unknown[];
+          return sections.map((section: unknown, index: number) => ({
+            id: (safeGet(section, "id") as string) || `section-${index}`,
+            title:
+              (safeGet(section, "title") as string) ||
+              (safeGet(section, "name") as string) ||
+              `Section ${index + 1}`,
+            content:
+              (safeGet(section, "content") as string) ||
+              (safeGet(section, "text") as string) ||
+              (safeGet(section, "description") as string) ||
+              "",
+            type:
+              (safeGet(section, "type") as
+                | "text"
+                | "code"
+                | "list"
+                | "table"
+                | "diagram") || "text",
+            metadata:
+              (safeGet(section, "metadata") as Record<string, unknown>) || {},
+          }));
+        }
+        if (safeGet(data, "explanation")) {
           // Single explanation format
           return [
             {
               id: "main-explanation",
               title: "Explanation",
-              content: data.explanation,
-              type: "text",
-              metadata: data.metadata || {},
+              content: (safeGet(data, "explanation") as string) || "",
+              type: "text" as const,
+              metadata:
+                (safeGet(data, "metadata") as Record<string, unknown>) || {},
             },
           ];
         }
@@ -84,7 +130,7 @@ export function ExplanationPanel({
   useEffect(() => {
     if (explanationData.length > 0 && expandedSections.size === 0) {
       const initialExpanded = new Set<string>(
-        explanationData.map((section: ExplanationSection) => section.id),
+        explanationData.map((section: ParsedExplanationData) => section.id),
       );
       setExpandedSections(initialExpanded);
     }
@@ -106,7 +152,9 @@ export function ExplanationPanel({
 
   // Handle expand/collapse all
   const handleExpandAll = useCallback(() => {
-    const allSectionIds = new Set<string>(explanationData.map((section: ExplanationSection) => section.id));
+    const allSectionIds = new Set<string>(
+      explanationData.map((section: ParsedExplanationData) => section.id),
+    );
     setExpandedSections(allSectionIds);
   }, [explanationData]);
 
@@ -119,7 +167,7 @@ export function ExplanationPanel({
     setIsGenerating(true);
     try {
       // Simulate explanation generation
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log("Generated explanation for stage:", stage.id);
     } catch (error) {
       console.error("Failed to generate explanation:", error);
@@ -130,7 +178,7 @@ export function ExplanationPanel({
 
   // Render explanation section
   const renderSection = useCallback(
-    (section: ExplanationSection) => {
+    (section: ParsedExplanationData) => {
       const isExpanded = expandedSections.has(section.id);
 
       return (
@@ -142,6 +190,12 @@ export function ExplanationPanel({
           <div
             className="flex cursor-pointer items-center justify-between bg-gray-50 p-3 transition-colors hover:bg-gray-100"
             onClick={() => handleSectionToggle(section.id)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleSectionToggle(section.id);
+              }
+            }}
           >
             <div className="flex items-center space-x-2">
               <div
@@ -166,7 +220,7 @@ export function ExplanationPanel({
   );
 
   // Render section content based on type
-  const renderSectionContent = useCallback((section: ExplanationSection) => {
+  const renderSectionContent = useCallback((section: ParsedExplanationData) => {
     switch (section.type) {
       case "code":
         return (
@@ -181,9 +235,9 @@ export function ExplanationPanel({
           if (Array.isArray(listItems)) {
             return (
               <ul className="list-inside list-disc space-y-2">
-                {listItems.map((item: any, index: number) => (
-                  <li key={index} className="text-gray-700">
-                    {item}
+                {listItems.map((item: unknown, index: number) => (
+                  <li key={`list-item-${index}`} className="text-gray-700">
+                    {String(item)}
                   </li>
                 ))}
               </ul>
@@ -219,9 +273,9 @@ export function ExplanationPanel({
                     </tr>
                   </thead>
                   <tbody>
-                    {tableData.map((row: any, index: number) => (
+                    {tableData.map((row: unknown, index: number) => (
                       <tr
-                        key={index}
+                        key={`table-row-${index}`}
                         className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
                       >
                         {headers.map((header: string) => (
@@ -229,7 +283,7 @@ export function ExplanationPanel({
                             key={header}
                             className="border border-gray-300 px-3 py-2 text-sm text-gray-700"
                           >
-                            {String(row[header])}
+                            {String(safeGet(row, header))}
                           </td>
                         ))}
                       </tr>
@@ -270,7 +324,7 @@ export function ExplanationPanel({
     if (explanationData.length === 0) return null;
 
     const typeCounts = explanationData.reduce(
-      (acc: Record<string, number>, section: ExplanationSection) => {
+      (acc: Record<string, number>, section: ParsedExplanationData) => {
         acc[section.type] = (acc[section.type] || 0) + 1;
         return acc;
       },
@@ -278,7 +332,8 @@ export function ExplanationPanel({
     );
 
     const totalContentLength = explanationData.reduce(
-      (sum: number, section: ExplanationSection) => sum + section.content.length,
+      (sum: number, section: ParsedExplanationData) =>
+        sum + section.content.length,
       0,
     );
 
@@ -301,6 +356,7 @@ export function ExplanationPanel({
             This stage doesn't contain explanation data
           </div>
           <button
+            type="button"
             onClick={handleGenerateExplanation}
             disabled={isGenerating}
             className="mt-3 rounded-md bg-blue-600 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-700 disabled:bg-blue-400"
@@ -367,6 +423,7 @@ export function ExplanationPanel({
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <button
+              type="button"
               onClick={handleExpandAll}
               className="rounded bg-gray-500 px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-gray-600"
             >
@@ -374,6 +431,7 @@ export function ExplanationPanel({
             </button>
 
             <button
+              type="button"
               onClick={handleCollapseAll}
               className="rounded bg-gray-500 px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-gray-600"
             >
@@ -381,6 +439,7 @@ export function ExplanationPanel({
             </button>
 
             <button
+              type="button"
               onClick={handleGenerateExplanation}
               disabled={isGenerating}
               className="rounded bg-blue-500 px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-blue-600 disabled:bg-blue-400"
@@ -422,7 +481,9 @@ export function ExplanationPanel({
 
       {/* Explanation Sections */}
       <div className="flex-1 overflow-auto">
-        {explanationData.map((section: ExplanationSection) => renderSection(section))}
+        {explanationData.map((section: ParsedExplanationData) =>
+          renderSection(section),
+        )}
       </div>
 
       {/* Raw Data Display */}
@@ -438,6 +499,7 @@ export function ExplanationPanel({
       {/* Export Controls */}
       <div className="mt-4 flex justify-end">
         <button
+          type="button"
           onClick={() =>
             onUpdate({
               payload: {

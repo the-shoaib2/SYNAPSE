@@ -1,26 +1,17 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { Connection, Edge, Node, NodeTypes } from "reactflow";
 import ReactFlow, {
   addEdge,
   Background,
-  Connection,
   Controls,
-  Edge,
   MiniMap,
-  Node,
-  NodeTypes,
   Panel,
   useEdgesState,
   useNodesState,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { useCanvas } from "../CanvasContext";
-import { PipelineStage } from "../types";
+import type { PipelineStage } from "../types";
 
 interface FlowchartPanelProps {
   stage: PipelineStage;

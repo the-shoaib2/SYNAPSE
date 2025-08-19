@@ -1,4 +1,4 @@
-import { CanvasPanelType, CanvasPosition } from "../types";
+import type { CanvasPanelType, CanvasPosition } from "../types";
 
 export class LayoutGrid {
   private columns: number;
@@ -81,8 +81,8 @@ export class LayoutGrid {
     return (
       position.x >= 0 &&
       position.y >= 0 &&
-      position.x + position.width <= 100 &&
-      position.y + position.height <= 100
+      position.x + (position.width || 0) <= 100 &&
+      position.y + (position.height || 0) <= 100
     );
   }
 
@@ -95,9 +95,8 @@ export class LayoutGrid {
 
     return {
       ...position,
-      x: Math.max(0, Math.min(snappedX, 100 - position.width)),
-      y: Math.max(0, Math.min(snappedY, 100 - position.height)),
+      x: Math.max(0, Math.min(snappedX, 100 - (position.width || 0))),
+      y: Math.max(0, Math.min(snappedY, 100 - (position.height || 0))),
     };
   }
 }
-

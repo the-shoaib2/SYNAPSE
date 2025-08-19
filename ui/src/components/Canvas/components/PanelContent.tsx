@@ -1,10 +1,10 @@
 import React from "react";
 import { CanvasPanel } from "../types";
 import { AIAnnotationsContent } from "./content/AIAnnotationsContent";
-import { AlgorithmSimulationContent } from "./content/AlgorithmSimulationContent";
 import { ASTVisualizerContent } from "./content/ASTVisualizerContent";
-import { CallStackContent } from "./content/CallStackContent";
+import { AlgorithmSimulationContent } from "./content/AlgorithmSimulationContent";
 import { CFGGraphContent } from "./content/CFGGraphContent";
+import { CallStackContent } from "./content/CallStackContent";
 import { ChartContent } from "./content/ChartContent";
 import { CodeEditorContent } from "./content/CodeEditorContent";
 import { ExecutionTraceContent } from "./content/ExecutionTraceContent";
@@ -166,7 +166,9 @@ export const PanelContent: React.FC<PanelContentProps> = ({
         return (
           <div className="panel-content-default">
             <p>Unsupported panel type: {panel.type}</p>
-            <p>Content: {JSON.stringify(panel.data.content, null, 2)}</p>
+            <p>
+              Content: {JSON.stringify((panel.data as any)?.content, null, 2)}
+            </p>
           </div>
         );
     }
