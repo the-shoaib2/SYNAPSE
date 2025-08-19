@@ -18,7 +18,7 @@ const platforms = [
     steps: [
       "Open VS Code",
       "Go to Extensions (Ctrl+Shift+X)",
-      "Search for 'B.A.B.Y. Code Assistant'",
+      "Search for 'SYNAPSE Code Assistant'",
       "Click Install"
     ]
   },
@@ -31,7 +31,7 @@ const platforms = [
     steps: [
       "Open Cursor",
       "Go to Extensions (Ctrl+Shift+X)",
-      "Search for 'B.A.B.Y. Code Assistant'",
+      "Search for 'SYNAPSE Code Assistant'",
       "Click Install"
     ]
   },
@@ -44,7 +44,7 @@ const platforms = [
     steps: [
       "Open VS Code Insiders",
       "Go to Extensions (Ctrl+Shift+X)",
-      "Search for 'B.A.B.Y. Code Assistant'",
+      "Search for 'SYNAPSE Code Assistant'",
       "Click Install"
     ]
   },
@@ -57,7 +57,7 @@ const platforms = [
     steps: [
       "Open Windsurf",
       "Go to Extensions (Ctrl+Shift+X)",
-      "Search for 'B.A.B.Y. Code Assistant'",
+      "Search for 'SYNAPSE Code Assistant'",
       "Click Install"
     ]
   },
@@ -70,7 +70,7 @@ const platforms = [
     steps: [
       "Open Trae AI",
       "Go to Extensions (Ctrl+Shift+X)",
-      "Search for 'B.A.B.Y. Code Assistant'",
+      "Search for 'SYNAPSE Code Assistant'",
       "Click Install"
     ]
   }
@@ -105,7 +105,7 @@ export default function InstallOptionsSection() {
         >
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Popular Code Editors</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Install B.A.B.Y. in your favorite code editor for seamless integration
+            Install SYNAPSE in your favorite code editor for seamless integration
           </p>
         </motion.div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">

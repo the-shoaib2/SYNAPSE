@@ -16,8 +16,8 @@ import { LoadingBar } from "@/components/loading-bar"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "B.A.B.Y. - Basic Assistant Bring Your Help",
-  description: "AI-powered code assistant for flow diagrams, summaries, and more",
+  title: "Synapse - Your AI-Powered Coding Companion",
+  description: "Open-source AI code assistant with VS Code and JetBrains extensions. Features agent mode, inline editing, autocomplete, and multi-model support for enhanced development productivity.",
 }
 
 export default async function RootLayout({

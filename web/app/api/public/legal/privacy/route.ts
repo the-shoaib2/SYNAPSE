@@ -10,7 +10,7 @@ export async function GET() {
         title: "Introduction",
         icon: "Shield",
         content: [
-          "B.A.B.Y. (\"we,\" \"our,\" or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI-powered code analysis and development platform.",
+          "SYNAPSE (\"we,\" \"our,\" or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI-powered code analysis and development platform.",
           "By using our service, you consent to the data practices described in this policy."
         ]
       },

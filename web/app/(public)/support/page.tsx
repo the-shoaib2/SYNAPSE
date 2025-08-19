@@ -42,7 +42,7 @@ const supportOptions = [
 
 const commonIssues = [
   {
-    title: "How do I install B.A.B.Y.?",
+    title: "How do I install SYNAPSE?",
     description: "Step-by-step installation guide for all platforms",
     category: "Installation"
   },
@@ -57,7 +57,7 @@ const commonIssues = [
     category: "Features"
   },
   {
-    title: "Can I use B.A.B.Y. offline?",
+    title: "Can I use SYNAPSE offline?",
     description: "Understanding offline capabilities and limitations",
     category: "Features"
   }
@@ -95,7 +95,7 @@ export default function SupportPage() {
               How Can We Help?
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
-              Get the help you need to make the most of B.A.B.Y. Our support team is here to assist you.
+              Get the help you need to make the most of SYNAPSE Our support team is here to assist you.
             </p>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -364,7 +364,7 @@ export default function SupportPage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-lg sm:text-xl mb-6 sm:mb-8 opacity-90"
           >
-            Join thousands of developers who are already using B.A.B.Y. to write better code.
+            Join thousands of developers who are already using SYNAPSE to write better code.
           </motion.p>
           <motion.div 
             initial={{ opacity: 0, y: 20 }}

@@ -35,7 +35,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-# B.A.B.Y. - Enhanced Account Balance System
+# SYNAPSE - Enhanced Account Balance System
 
 A comprehensive meal management system with advanced account balance tracking, expense management, and meal rate calculations.
 
@@ -171,9 +171,9 @@ The system uses the following key models:
 - Automated meal rate adjustments
 - Budget tracking and alerts
 
-## VS Code Extension: B.A.B.Y.
+## VS Code Extension: SYNAPSE
 
-A VS Code extension version of B.A.B.Y. is being developed in the `vscode-extension/` folder. This extension will bring the AI code assistant, flow diagrams, and code summarization features directly to your editor.
+A VS Code extension version of SYNAPSE is being developed in the `vscode-extension/` folder. This extension will bring the AI code assistant, flow diagrams, and code summarization features directly to your editor.
 
 ### Getting Started
 1. Go to the `vscode-extension/` folder.
@@ -181,4 +181,4 @@ A VS Code extension version of B.A.B.Y. is being developed in the `vscode-extens
 3. Run `npm run watch` or `npm run build` to build the extension.
 4. Open the folder in VS Code and press `F5` to launch a new Extension Development Host.
 
-The extension will open a webview panel with the B.A.B.Y. assistant UI. More features coming soon!
+The extension will open a webview panel with the SYNAPSE assistant UI. More features coming soon!

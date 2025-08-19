@@ -106,10 +106,10 @@ export default function AboutPage() {
               AI Code Assistant
             </Badge>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-4 sm:mb-6">
-              {data?.hero?.title || "Building Better Code Understanding"}
+              Who We Are
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
-              {data?.hero?.subtitle || "B.A.B.Y. was born from a simple observation: understanding code can be challenging, but it doesn't have to be."}
+              Synapse was built to redefine how developers interact with code. Traditional editors focus on syntax. We focus on understanding. Our mission is to empower every developer with an AI companion that can plan, explain, visualize, and accelerate software creation.
             </p>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -119,7 +119,7 @@ export default function AboutPage() {
             >
               <Button size="lg" className="w-full sm:w-auto group">
                 <Code2 className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                {data?.hero?.ctaPrimary?.text || "Try B.A.B.Y."}
+                {data?.hero?.ctaPrimary?.text || "Try SYNAPSE"}
               </Button>
               <Button variant="outline" size="lg" className="w-full sm:w-auto group">
                 <Globe className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
@@ -211,10 +211,10 @@ export default function AboutPage() {
                   <div className="w-12 h-12 sm:w-16 sm:h-16 mb-4 bg-primary/10 rounded-full flex items-center justify-center">
                     <Target className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                   </div>
-                  <CardTitle className="text-xl sm:text-2xl group-hover:text-primary transition-colors">{data?.mission?.title || "Our Mission"}</CardTitle>
+                  <CardTitle className="text-xl sm:text-2xl group-hover:text-primary transition-colors">Our Mission</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">{data?.mission?.description || "Loading mission description..."}</p>
+                  <p className="text-muted-foreground">To empower every developer with an AI companion that can plan, explain, visualize, and accelerate software creation.</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -224,10 +224,10 @@ export default function AboutPage() {
                   <div className="w-12 h-12 sm:w-16 sm:h-16 mb-4 bg-primary/10 rounded-full flex items-center justify-center">
                     <Star className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                   </div>
-                  <CardTitle className="text-xl sm:text-2xl group-hover:text-primary transition-colors">{data?.vision?.title || "Our Vision"}</CardTitle>
+                  <CardTitle className="text-xl sm:text-2xl group-hover:text-primary transition-colors">Our Vision</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">{data?.vision?.description || "Loading vision description..."}</p>
+                  <p className="text-muted-foreground">To create a unified workspace where AI, code, and creativity converge — from idea to production.</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -248,63 +248,91 @@ export default function AboutPage() {
             variants={itemVariants}
             className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Our Values</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Why Synapse?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              The principles that guide everything we do
+              What makes Synapse the perfect choice for developers
             </p>
           </motion.div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {data?.values?.map((value, index) => {
-              const IconComponent = iconMap[value.icon as keyof typeof iconMap] || Heart
-              
-              return (
-                <motion.div
-                  key={value.title}
-                  variants={cardVariants}
-                  whileHover="hover"
-                  className="group"
-                >
-                  <Card className="text-center hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 group-hover:bg-primary/5 backdrop-blur-sm">
-                    <CardContent className="pt-6">
-                      <motion.div 
-                        className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <IconComponent className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform" />
-                      </motion.div>
-                      <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{value.title}</h3>
-                      <p className="text-sm sm:text-base text-muted-foreground">{value.description}</p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              )
-            }) || Array.from({ length: 6 }).map((_, i) => {
-              const IconComponent = iconMap[Object.keys(iconMap)[i % Object.keys(iconMap).length] as keyof typeof iconMap] || Heart
-              
-              return (
-                <motion.div
-                  key={i}
-                  variants={cardVariants}
-                  whileHover="hover"
-                  className="group"
-                >
-                  <Card className="text-center hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 group-hover:bg-primary/5 backdrop-blur-sm">
-                    <CardContent className="pt-6">
-                      <motion.div 
-                        className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <IconComponent className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform" />
-                      </motion.div>
-                      <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">Loading Value...</h3>
-                      <p className="text-sm sm:text-base text-muted-foreground">Loading value description...</p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              )
-            })}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <motion.div
+              variants={cardVariants}
+              whileHover="hover"
+              className="group"
+            >
+              <Card className="text-center hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 group-hover:bg-primary/5 backdrop-blur-sm">
+                <CardContent className="pt-6">
+                  <motion.div 
+                    className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform" />
+                  </motion.div>
+                  <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">AI-First Workflows</h3>
+                  <p className="text-sm sm:text-base text-muted-foreground">Designed for AI-first workflows</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+            
+            <motion.div
+              variants={cardVariants}
+              whileHover="hover"
+              className="group"
+            >
+              <Card className="text-center hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 group-hover:bg-primary/5 backdrop-blur-sm">
+                <CardContent className="pt-6">
+                  <motion.div 
+                    className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform" />
+                  </motion.div>
+                  <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">For All Levels</h3>
+                  <p className="text-sm sm:text-base text-muted-foreground">Flexible for beginners to advanced developers</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+            
+            <motion.div
+              variants={cardVariants}
+              whileHover="hover"
+              className="group"
+            >
+              <Card className="text-center hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 group-hover:bg-primary/5 backdrop-blur-sm">
+                <CardContent className="pt-6">
+                  <motion.div 
+                    className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Globe className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform" />
+                  </motion.div>
+                  <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">Multi-AI Support</h3>
+                  <p className="text-sm sm:text-base text-muted-foreground">Supports multi-AI collaboration (OpenAI, Anthropic, local LLMs, and more)</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+            
+            <motion.div
+              variants={cardVariants}
+              whileHover="hover"
+              className="group"
+            >
+              <Card className="text-center hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 group-hover:bg-primary/5 backdrop-blur-sm">
+                <CardContent className="pt-6">
+                  <motion.div 
+                    className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform" />
+                  </motion.div>
+                  <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">100% Extensible</h3>
+                  <p className="text-sm sm:text-base text-muted-foreground">100% extensible and open to customization</p>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </motion.section>
@@ -324,7 +352,7 @@ export default function AboutPage() {
           >
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Meet Our Team</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              The passionate people behind B.A.B.Y.
+              The passionate people behind SYNAPSE
             </p>
           </motion.div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">

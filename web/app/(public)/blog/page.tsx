@@ -8,57 +8,49 @@ import { motion } from "framer-motion"
 
 const blogPosts = [
   {
-    title: "Introducing B.A.B.Y.: The Future of Code Analysis",
-    description: "Discover how our new AI-powered code assistant is revolutionizing the way developers write and understand code.",
-    author: "B.A.B.Y. Team",
+    title: "Introducing Synapse Canvas – Visual Coding Reimagined",
+    description: "Discover how Synapse's visual canvas transforms the way developers plan, design, and collaborate on code architectures.",
+    author: "Synapse Team",
     date: "2024-01-15",
     category: "Product",
     readTime: "5 min read",
     featured: true
   },
   {
-    title: "How Flow Diagrams Improve Code Understanding",
-    description: "Learn how visual representations of code flow can help teams better understand complex systems.",
+    title: "Why Multi-AI Workflows Are the Future of Development",
+    description: "Learn how combining multiple AI models creates more powerful and flexible development experiences.",
     author: "Sarah Chen",
     date: "2024-01-12",
-    category: "Tutorial",
+    category: "Industry",
     readTime: "8 min read"
   },
   {
-    title: "AI-Powered Code Optimization: A Deep Dive",
-    description: "Explore the algorithms behind B.A.B.Y.'s intelligent code optimization suggestions.",
+    title: "End-to-End Encryption for AI Workspaces Explained",
+    description: "Explore how Synapse ensures your code and data remain private while leveraging AI assistance.",
     author: "Dr. Michael Rodriguez",
     date: "2024-01-10",
-    category: "Technical",
+    category: "Security",
     readTime: "12 min read"
   },
   {
-    title: "Building Better Code Reviews with B.A.B.Y.",
-    description: "Tips and tricks for using B.A.B.Y. to improve your code review process.",
+    title: "From Code to Canvas: Visualizing Compiler Phases with Synapse",
+    description: "See how Synapse's visual tools help developers understand complex compilation processes.",
     author: "Alex Thompson",
     date: "2024-01-08",
-    category: "Best Practices",
+    category: "Technical",
     readTime: "6 min read"
   },
   {
-    title: "The Evolution of AI in Software Development",
-    description: "A comprehensive look at how AI is transforming the software development landscape.",
-    author: "B.A.B.Y. Team",
+    title: "The Future of Open Source + AI Collaboration",
+    description: "A comprehensive look at how open-source AI tools are transforming collaborative development.",
+    author: "Synapse Team",
     date: "2024-01-05",
     category: "Industry",
     readTime: "10 min read"
-  },
-  {
-    title: "Getting Started with B.A.B.Y. CLI",
-    description: "A step-by-step guide to using B.A.B.Y. from the command line.",
-    author: "David Kim",
-    date: "2024-01-03",
-    category: "Tutorial",
-    readTime: "7 min read"
   }
 ]
 
-const categories = ["All", "Product", "Tutorial", "Technical", "Best Practices", "Industry"]
+const categories = ["All", "Product", "Industry", "Security", "Technical"]
 
 export default function BlogPage() {
   return (
@@ -81,10 +73,10 @@ export default function BlogPage() {
               Blog & Updates
             </Badge>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-4 sm:mb-6">
-              B.A.B.Y. Blog
+              Welcome to the Synapse Blog
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
-              Stay updated with the latest features, tutorials, and insights about AI-powered code analysis and development.
+              Insights, tutorials, and updates from the world of AI-powered coding.
             </p>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -201,7 +193,7 @@ export default function BlogPage() {
           >
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Latest Articles</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Explore our latest insights, tutorials, and updates about B.A.B.Y. and AI-powered development
+              Explore our latest insights, tutorials, and updates about SYNAPSE and AI-powered development
             </p>
           </motion.div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -263,7 +255,7 @@ export default function BlogPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-2xl sm:text-3xl font-bold mb-4"
           >
-            Stay Updated with B.A.B.Y.
+            Stay Updated with SYNAPSE
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

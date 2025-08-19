@@ -450,7 +450,7 @@ export default function RegisterForm() {
       <div className="mb-2">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <Code2 className="h-6 w-6" />
-          <span className="text-xl">B.A.B.Y.</span>
+          <span className="text-xl">SYNAPSE</span>
         </Link>
       </div>
      

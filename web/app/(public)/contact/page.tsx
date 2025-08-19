@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { Mail, Phone, MapPin, Clock, MessageCircle, HelpCircle, Send, Users, RefreshCw, CheckCircle, AlertCircle, ArrowRight } from "lucide-react"
+import { Mail, Phone, MapPin, Clock, MessageCircle, HelpCircle, Send, Users, RefreshCw, CheckCircle, AlertCircle, ArrowRight, Globe } from "lucide-react"
 import { motion } from "framer-motion"
 import { useState, useRef, useEffect } from "react"
 import { useToast } from "@/hooks/use-toast"
@@ -306,10 +306,10 @@ export default function ContactPage() {
               Get in Touch
             </Badge>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-4 sm:mb-6">
-              {data?.hero?.title || "Get in Touch with B.A.B.Y."}
+              We'd love to hear from you.
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
-              {data?.hero?.subtitle || "Have questions about our AI code assistant? We're here to help you understand code better."}
+              Got feedback, partnership ideas, or need help? Reach out.
             </p>
           </motion.div>
         </div>
@@ -579,63 +579,70 @@ export default function ContactPage() {
 
             {/* Contact Info */}
             <motion.div variants={itemVariants} className="order-1 lg:order-2">
-              <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 sm:mb-6">Office Locations</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 sm:mb-6">Contact Information</h2>
               <div className="space-y-4 sm:space-y-6">
-                {data?.officeLocations?.map((office, index) => (
-                  <motion.div
-                    key={office.city}
-                    variants={cardVariants}
-                    whileHover="hover"
-                    className="group"
-                  >
-                    <Card className="hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 group-hover:bg-primary/5 backdrop-blur-sm">
-                      <CardHeader>
-                        <CardTitle className="flex items-center text-lg sm:text-xl group-hover:text-primary transition-colors">
-                          <MapPin className="w-5 h-5 mr-2 text-primary group-hover:scale-110 transition-transform" />
-                          {office.city}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-3">
-                        <p className="text-muted-foreground">{office.address}</p>
-                        <p className="text-muted-foreground flex items-center">
-                          <Phone className="w-4 h-4 mr-2" />
-                          {office.phone}
-                        </p>
-                        <p className="text-muted-foreground flex items-center">
-                          <Clock className="w-4 h-4 mr-2" />
-                          {office.hours}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                )) || Array.from({ length: 2 }).map((_, i) => (
-                  <motion.div
-                    key={i}
-                    variants={cardVariants}
-                    whileHover="hover"
-                    className="group"
-                  >
-                    <Card className="hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 group-hover:bg-primary/5 backdrop-blur-sm">
-                      <CardHeader>
-                        <CardTitle className="flex items-center text-lg sm:text-xl group-hover:text-primary transition-colors">
-                          <MapPin className="w-5 h-5 mr-2 text-primary group-hover:scale-110 transition-transform" />
-                          Loading Office...
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-3">
-                        <p className="text-muted-foreground">Loading address...</p>
-                        <p className="text-muted-foreground flex items-center">
-                          <Phone className="w-4 h-4 mr-2" />
-                          Loading phone...
-                        </p>
-                        <p className="text-muted-foreground flex items-center">
-                          <Clock className="w-4 h-4 mr-2" />
-                          Loading hours...
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
+                {/* Email */}
+                <motion.div variants={cardVariants} whileHover="hover" className="group">
+                  <Card className="hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 group-hover:bg-primary/5 backdrop-blur-sm">
+                    <CardHeader>
+                      <CardTitle className="flex items-center text-lg sm:text-xl group-hover:text-primary transition-colors">
+                        <Mail className="w-5 h-5 mr-2 text-primary group-hover:scale-110 transition-transform" />
+                        Email
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">support@synapse.dev</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                {/* Community */}
+                <motion.div variants={cardVariants} whileHover="hover" className="group">
+                  <Card className="hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 group-hover:bg-primary/5 backdrop-blur-sm">
+                    <CardHeader>
+                      <CardTitle className="flex items-center text-lg sm:text-xl group-hover:text-primary transition-colors">
+                        <MessageCircle className="w-5 h-5 mr-2 text-primary group-hover:scale-110 transition-transform" />
+                        Community
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">Join Discord/Slack (link placeholder)</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                {/* Office */}
+                <motion.div variants={cardVariants} whileHover="hover" className="group">
+                  <Card className="hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 group-hover:bg-primary/5 backdrop-blur-sm">
+                    <CardHeader>
+                      <CardTitle className="flex items-center text-lg sm:text-xl group-hover:text-primary transition-colors">
+                        <MapPin className="w-5 h-5 mr-2 text-primary group-hover:scale-110 transition-transform" />
+                        Office
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <p className="text-muted-foreground font-semibold">Synapse HQ</p>
+                      <p className="text-muted-foreground">123 Innovation Street</p>
+                      <p className="text-muted-foreground">Remote / Global</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                {/* Socials */}
+                <motion.div variants={cardVariants} whileHover="hover" className="group">
+                  <Card className="hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 group-hover:bg-primary/5 backdrop-blur-sm">
+                    <CardHeader>
+                      <CardTitle className="flex items-center text-lg sm:text-xl group-hover:text-primary transition-colors">
+                        <Globe className="w-5 h-5 mr-2 text-primary group-hover:scale-110 transition-transform" />
+                        Socials
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <p className="text-muted-foreground">Twitter/X: @synapse_dev</p>
+                      <p className="text-muted-foreground">GitHub: github.com/synapse</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               </div>
             </motion.div>
           </div>

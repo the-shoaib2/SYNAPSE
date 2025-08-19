@@ -53,7 +53,7 @@ export default function LoginForm() {
       <div className="mb-4">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <Code2 className="h-6 w-6" />
-          <span className="text-xl">B.A.B.Y.</span>
+          <span className="text-xl">SYNAPSE</span>
         </Link>
       </div>
 

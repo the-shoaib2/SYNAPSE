@@ -57,7 +57,7 @@ export default function BabyAnalyzer() {
         <span className="inline-flex items-center justify-center rounded-full bg-primary/10 p-2 shadow-sm">
           <Code2 className="w-10 h-10 text-primary" />
         </span>
-        <span className="text-3xl font-extrabold tracking-tight text-foreground">B.A.B.Y.</span>
+        <span className="text-3xl font-extrabold tracking-tight text-foreground">SYNAPSE</span>
         <span className="ml-2 text-base font-medium text-muted-foreground hidden sm:inline">Basic Assistant Bring Your Help</span>
       </motion.header>
       <motion.div

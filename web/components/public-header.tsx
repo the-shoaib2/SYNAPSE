@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Menu, Search as SearchIcon, Code2, X } from "lucide-react"
@@ -19,7 +20,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { LogOut } from "lucide-react"
 
 const navLinks = [
-  { name: 'Ai', href: '/ai' },
   { name: 'Docs', href: '/docs' },
   { name: 'Blog', href: '/blog' },
   { name: 'Pricing', href: '/pricing' },
@@ -31,6 +31,7 @@ export function PublicHeader() {
   const router = useRouter()
   const pathname = usePathname()
   const { data: session } = useSession()
+  const { theme } = useTheme()
   const isMobile = useIsMobile()
   const [searchQuery, setSearchQuery] = useState('')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -53,8 +54,13 @@ export function PublicHeader() {
             onClick={() => handleNavigation('/')}
             className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
           >
-            <SynapseLogo type="svg" width={32} height={32} className="h-8 w-8" />
-            <span className="font-bold text-xl">Synapse</span>
+            <img 
+              src={theme === 'light' ? '/media/SYNAPSE-DARK.png' : '/media/SYNAPSE-LIGHT.png'} 
+              alt="Synapse" 
+              width={160} 
+              height={42} 
+              className="h-8" 
+            />
           </button>
           <nav className="hidden md:flex items-center ml-8 space-x-2 text-sm font-medium">
             {navLinks.map((link) => (
