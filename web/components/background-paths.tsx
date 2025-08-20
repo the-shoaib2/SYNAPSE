@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 function FloatingPaths({ position }: { position: number }) {
   const paths = Array.from({ length: 36 }, (_, i) => ({
@@ -16,11 +16,15 @@ function FloatingPaths({ position }: { position: number }) {
     // Use shadcn color for stroke
     color: undefined, // not used
     width: 0.5 + i * 0.03,
-  }))
+  }));
 
   return (
-    <div className="absolute inset-0 pointer-events-none">
-      <svg className="w-full h-full text-foreground/60" viewBox="0 0 696 316" fill="none">
+    <div className="pointer-events-none absolute inset-0">
+      <svg
+        className="text-foreground/60 h-full w-full"
+        viewBox="0 0 696 316"
+        fill="none"
+      >
         <title>Background Paths</title>
         {paths.map((path) => (
           <motion.path
@@ -44,7 +48,7 @@ function FloatingPaths({ position }: { position: number }) {
         ))}
       </svg>
     </div>
-  )
+  );
 }
 
 export default function BackgroundPaths({
@@ -53,30 +57,31 @@ export default function BackgroundPaths({
   showGif = false,
   gifSrc,
 }: {
-  title?: string
-  subtitle?: string
-  showGif?: boolean
-  gifSrc?: string
+  title?: string;
+  subtitle?: string;
+  showGif?: boolean;
+  gifSrc?: string;
 }) {
   // Use provided subtitle or split title if a line break is present
   const mainTitle = title;
-  const finalSubtitle = subtitle || (title.includes("\n") ? title.split("\n")[1] : undefined);
+  const finalSubtitle =
+    subtitle || (title.includes("\n") ? title.split("\n")[1] : undefined);
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-background dark:bg-background">
+    <div className="bg-background dark:bg-background relative flex min-h-screen w-full items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <FloatingPaths position={1} />
         <FloatingPaths position={-1} />
       </div>
-      <div className="relative z-10 container mx-auto px-4 md:px-6 text-center">
+      <div className="container relative z-10 mx-auto px-4 text-center md:px-6">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
-          className="max-w-4xl mx-auto"
+          className="mx-auto max-w-4xl"
         >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tighter text-foreground bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <h1 className="text-foreground from-primary to-secondary mb-4 bg-gradient-to-r bg-clip-text text-3xl font-bold tracking-tighter text-transparent sm:text-4xl md:text-5xl">
             {mainTitle.split(" ").map((word, wordIndex) => (
-              <span key={wordIndex} className="inline-block mr-4 last:mr-0">
+              <span key={wordIndex} className="mr-4 inline-block last:mr-0">
                 {word.split("").map((letter, letterIndex) => (
                   <motion.span
                     key={`${wordIndex}-${letterIndex}`}
@@ -88,7 +93,7 @@ export default function BackgroundPaths({
                       stiffness: 150,
                       damping: 25,
                     }}
-                    className="inline-block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+                    className="from-primary to-secondary inline-block bg-gradient-to-r bg-clip-text text-transparent"
                   >
                     {letter}
                   </motion.span>
@@ -96,63 +101,63 @@ export default function BackgroundPaths({
               </span>
             ))}
           </h1>
-          
+
           {showGif && gifSrc && (
             <div className="mb-6">
-              <img 
-                src={gifSrc} 
-                alt="Synapse Demo" 
-                className="mx-auto max-w-2xl w-full h-auto rounded-lg shadow-lg"
+              <img
+                src={gifSrc}
+                alt="Synapse Demo"
+                className="mx-auto h-auto w-full max-w-2xl rounded-lg shadow-lg"
               />
             </div>
           )}
-          
+
           {finalSubtitle && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5, delay: showGif ? 1.5 : 0.5 }}
-              className="text-xl sm:text-2xl md:text-3xl font-medium mb-8 text-muted-foreground bg-gradient-to-r from-primary/70 to-secondary/70 bg-clip-text text-transparent"
+              className="text-muted-foreground from-primary/70 to-secondary/70 mb-8 bg-gradient-to-r bg-clip-text text-xl font-medium text-transparent sm:text-2xl md:text-3xl"
             >
               {finalSubtitle}
             </motion.div>
           )}
-          <div className="flex justify-center gap-4 mt-2">
+          <div className="mt-2 flex justify-center gap-4">
             <Button
               variant="ghost"
-              className="rounded-full px-8 py-6 text-lg font-semibold shadow-md transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 border border-primary/10 group-hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 border-primary/10 focus:ring-primary/50 rounded-full border px-8 py-6 text-lg font-semibold shadow-md transition-all duration-300 focus:outline-none focus:ring-2 group-hover:-translate-y-0.5"
               asChild
             >
-              <a 
+              <a
                 href="https://marketplace.visualstudio.com/items?itemName=Synapse.synapse-dev"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center"
               >
-                <span className="opacity-90 group-hover:opacity-100 transition-opacity">Try Extension</span>
-                <span
-                  className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all duration-300"
-                >
+                <span className="opacity-90 transition-opacity group-hover:opacity-100">
+                  Try Extension
+                </span>
+                <span className="ml-3 opacity-70 transition-all duration-300 group-hover:translate-x-1.5 group-hover:opacity-100">
                   →
                 </span>
               </a>
             </Button>
-            
+
             <Button
               variant="ghost"
-              className="relative overflow-hidden rounded-full px-8 py-6 text-lg font-semibold shadow-md transition-all duration-300 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 border border-blue-400/30 group-hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400/50 before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent"
+              className="relative overflow-hidden rounded-full border border-blue-400/30 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 px-8 py-6 text-lg font-semibold text-white shadow-md transition-all duration-300 before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400/50 group-hover:-translate-y-0.5"
               asChild
             >
-              <a 
+              <a
                 href="https://canvas-synapse.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center relative z-10"
+                className="relative z-10 flex items-center"
               >
-                <span className="opacity-90 group-hover:opacity-100 transition-opacity">Try Canvas</span>
-                <span
-                  className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all duration-300"
-                >
+                <span className="opacity-90 transition-opacity group-hover:opacity-100">
+                  Try Canvas
+                </span>
+                <span className="ml-3 opacity-70 transition-all duration-300 group-hover:translate-x-1.5 group-hover:opacity-100">
                   →
                 </span>
               </a>
