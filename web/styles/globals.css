@@ -219,6 +219,16 @@
   }
 }
 
+/* Shimmer animation */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 /* Mobile-specific utilities */
 @layer utilities {
   .mobile-only {

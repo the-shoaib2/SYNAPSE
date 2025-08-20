@@ -1,10 +1,11 @@
 "use client"
 
 import IntroductionSection from "@/components/install/IntroductionSection"
+import HeadlineSection from "@/components/magicui/headline-section"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { motion } from "framer-motion"
-import { Code2, Globe, Palette, Puzzle, Shield, Zap } from "lucide-react"
+import { motion } from "motion/react"
+import { Palette, Puzzle, Shield, Zap } from "lucide-react"
 
 const features = [
   {
@@ -35,39 +36,7 @@ export default function HomePage() {
       <IntroductionSection />
       
       {/* Headline Section */}
-      <motion.section 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30"
-      >
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-            Build. Learn. Innovate. <span className="text-primary">Faster with Synapse.</span>
-          </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-4xl mx-auto mb-8">
-            Synapse is an intelligent coding workspace that merges AI-driven assistance, visual workflows, and real-time collaboration — designed to supercharge developers, creators, and teams.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="group" asChild>
-              <a 
-                href="https://marketplace.visualstudio.com/items?itemName=Synapse.synapse-dev"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center"
-              >
-                <Code2 className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                Get Started Free
-              </a>
-            </Button>
-            <Button variant="outline" size="lg" className="group">
-              <Globe className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-              Explore Docs
-            </Button>
-          </div>
-        </div>
-      </motion.section>
+      <HeadlineSection />
 
       {/* Key Features */}
       <motion.section 

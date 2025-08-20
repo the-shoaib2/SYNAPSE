@@ -117,10 +117,10 @@ export default function BackgroundPaths({
               {finalSubtitle}
             </motion.div>
           )}
-          <div className="flex justify-center mt-2">
+          <div className="flex justify-center gap-4 mt-2">
             <Button
               variant="ghost"
-              className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold shadow-md transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 border border-primary/10 group-hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="rounded-full px-8 py-6 text-lg font-semibold shadow-md transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 border border-primary/10 group-hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
               asChild
             >
               <a 
@@ -130,6 +130,26 @@ export default function BackgroundPaths({
                 className="flex items-center"
               >
                 <span className="opacity-90 group-hover:opacity-100 transition-opacity">Try Extension</span>
+                <span
+                  className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all duration-300"
+                >
+                  →
+                </span>
+              </a>
+            </Button>
+            
+            <Button
+              variant="ghost"
+              className="relative overflow-hidden rounded-full px-8 py-6 text-lg font-semibold shadow-md transition-all duration-300 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 border border-blue-400/30 group-hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400/50 before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent"
+              asChild
+            >
+              <a 
+                href="https://canvas-synapse.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center relative z-10"
+              >
+                <span className="opacity-90 group-hover:opacity-100 transition-opacity">Try Canvas</span>
                 <span
                   className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all duration-300"
                 >
