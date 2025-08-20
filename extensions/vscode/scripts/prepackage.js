@@ -320,28 +320,42 @@ void (async () => {
 
   fs.mkdirSync("out/node_modules", { recursive: true });
 
-  await Promise.all(
-    NODE_MODULES_TO_COPY.map(
-      (mod) =>
-        new Promise((resolve, reject) => {
-          fs.mkdirSync(`out/node_modules/${mod}`, { recursive: true });
-          ncp(
-            path.join(__dirname, `../../../node_modules/${mod}`),
-            `out/node_modules/${mod}`,
-            { dereference: true },
-            function (error) {
-              if (error) {
-                console.error(`[error] Error copying ${mod}`, error);
-                reject(error);
-              } else {
-                console.log(`[info] Copied ${mod}`);
-                resolve();
-              }
-            },
-          );
-        }),
-    ),
-  );
+  // Filter out modules that don't exist
+  const existingModules = NODE_MODULES_TO_COPY.filter(mod => {
+    const modulePath = path.join(__dirname, `../../../node_modules/${mod}`);
+    const exists = fs.existsSync(modulePath);
+    if (!exists) {
+      console.log(`[info] Skipping ${mod} - not found in node_modules`);
+    }
+    return exists;
+  });
+
+  if (existingModules.length > 0) {
+    await Promise.all(
+      existingModules.map(
+        (mod) =>
+          new Promise((resolve, reject) => {
+            fs.mkdirSync(`out/node_modules/${mod}`, { recursive: true });
+            ncp(
+              path.join(__dirname, `../../../node_modules/${mod}`),
+              `out/node_modules/${mod}`,
+              { dereference: true },
+              function (error) {
+                if (error) {
+                  console.error(`[error] Error copying ${mod}`, error);
+                  reject(error);
+                } else {
+                  console.log(`[info] Copied ${mod}`);
+                  resolve();
+                }
+              },
+            );
+          }),
+      ),
+    );
+  } else {
+    console.log("[info] No optional binary modules found to copy");
+  }
 
   // delete esbuild/bin because platform-specific @esbuild is downloaded
   fs.rmSync(`out/node_modules/esbuild/bin`, { recursive: true });

@@ -2,7 +2,7 @@
   "name": "synapse-dev",
   "icon": "media/icon.png",
   "author": "Synapse Dev, Inc",
-  "version": "1.1.2",
+  "version": "1.1.14",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/the-shoaib2/SYNAPSE.git"
@@ -783,7 +783,7 @@
     "@vscode/vsce": "^2.22.0",
     "cargo-cp-artifact": "^0.1",
     "chai": "^4.5.0",
-    "esbuild": "^0.19.11",
+    "esbuild": "^0.17.19",
     "esbuild-visualizer": "^0.6.0",
     "eslint": "^8.28.0",
     "json-schema-to-typescript": "^12.0.0",

@@ -1,17 +1,17 @@
-import type React from "react"
+import { QueryProvider } from "@/components/providers/query-provider"
+import { SessionProvider } from "@/components/providers/session-provider"
+import { ThemeProvider } from "@/components/providers/theme-provider"
+import { getServerAuthSession } from "@/lib/auth/auth"
+import "@/styles/globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import "@/styles/globals.css"
-import { ThemeProvider } from "@/components/providers/theme-provider"
-import { SessionProvider } from "@/components/providers/session-provider"
-import { QueryProvider } from "@/components/providers/query-provider"
-import { getServerAuthSession } from "@/lib/auth/auth"
+import type React from "react"
 
-import { ToastProvider } from "@/components/providers/toast-provider"
 import InternetStatusBanner from "@/components/internet-status-card"
-import { PublicHeader } from "@/components/public-header"
-import { PublicFooter } from "@/components/public-footer"
 import { LoadingBar } from "@/components/loading-bar"
+import { ToastProvider } from "@/components/providers/toast-provider"
+import { PublicFooter } from "@/components/public-footer"
+import { PublicHeader } from "@/components/public-header"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -28,6 +28,26 @@ export default async function RootLayout({
   const session = await getServerAuthSession()
   return (
     <html lang="en" suppressHydrationWarning className="h-full">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('synapse-theme') || 'dark';
+                  if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                  } else {
+                    document.documentElement.classList.add('light');
+                    document.documentElement.setAttribute('data-theme', 'light');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={`${inter.className} h-full flex flex-col`}>
         <SessionProvider session={session}>
           <QueryProvider>
