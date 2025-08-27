@@ -8,7 +8,7 @@
 
 <div align="center">
 
-**[Synapse](https://docs.synapse.dev) enables developers to create, share, and use custom AI code assistants with our
+**[Synapse](https://docs-synapse.vercel.app) enables developers to create, share, and use custom AI code assistants with our
 open-source [VS Code](https://marketplace.visualstudio.com/items?itemName=Synapse.synapse)
 and [JetBrains](https://plugins.jetbrains.com/plugin/22707-synapse-extension) extensions
 and [hub of models, rules, and MCP tools](https://hub.synapse.dev)**
@@ -34,13 +34,13 @@ and [hub of models, rules, and MCP tools](https://hub.synapse.dev)**
 
 ## Agent
 
-[Agent](https://synapse.dev/docs/agent/how-to-use-it) enables you to make more substantial changes to your codebase
+[Agent](https://docs-synapse.vercel.app) enables you to make more substantial changes to your codebase
 
 ![agent](docs/images/agent.gif)
 
 ## Chat
 
-[Chat](https://synapse.dev/docs/chat/how-to-use-it) makes it easy to ask for help from an LLM without needing to leave
+[Chat](https://docs-synapse.vercel.app) makes it easy to ask for help from an LLM without needing to leave
 the IDE
 
 ![chat](docs/images/chat.gif)
